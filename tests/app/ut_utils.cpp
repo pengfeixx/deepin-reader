@@ -50,7 +50,7 @@ QString value_stub2(const QString &, const QString &)
     return "x11";
 }
 /*************测试用例****************/
-TEST_F(TestUtils, UT_Utils_getKeyshortcut_001)
+TEST_F(TestUtils, getKeyshortcut_test_001)
 {
     QEvent::Type type = QEvent::KeyPress;
     int key = Qt::Key_0;
@@ -59,7 +59,7 @@ TEST_F(TestUtils, UT_Utils_getKeyshortcut_001)
     EXPECT_TRUE(Utils::getKeyshortcut(&keyEvent) == "Ctrl+Alt+Meta+Shift+0");
 }
 
-TEST_F(TestUtils, UT_Utils_getInputDataSize_001)
+TEST_F(TestUtils, getInputDataSize_test_001)
 {
     EXPECT_TRUE(Utils::getInputDataSize(1023) == "1023 B");
     EXPECT_TRUE(Utils::getInputDataSize(1024 * 1023) == "1023.0 KB");
@@ -67,7 +67,7 @@ TEST_F(TestUtils, UT_Utils_getInputDataSize_001)
     EXPECT_TRUE(Utils::getInputDataSize(1024 * 1024 * 1025) == "1.0 GB");
 }
 
-TEST_F(TestUtils, UT_Utils_roundQPixmap_001)
+TEST_F(TestUtils, roundQPixmap_test_001)
 {
     QPixmap img_in;
     int radius = 0;
@@ -79,7 +79,7 @@ TEST_F(TestUtils, UT_Utils_roundQPixmap_001)
 
 }
 
-TEST_F(TestUtils, UT_Utils_copyText_001)
+TEST_F(TestUtils, copyText_test_001)
 {
     Stub s;
     s.set(ADDR(QClipboard, setText), setText_stub);
@@ -90,7 +90,7 @@ TEST_F(TestUtils, UT_Utils_copyText_001)
     EXPECT_TRUE(g_funcName == "setText_stub");
 }
 
-TEST_F(TestUtils, UT_Utils_getElidedText_001)
+TEST_F(TestUtils, getElidedText_test_001)
 {
     QFont font;
     QFontMetrics fontMetrics(font);
@@ -101,7 +101,7 @@ TEST_F(TestUtils, UT_Utils_getElidedText_001)
     EXPECT_TRUE(Utils::getElidedText(fontMetrics, size, text, alignment).endsWith("..."));
 }
 
-TEST_F(TestUtils, UT_Utils_copyFile_001)
+TEST_F(TestUtils, copyFile_test_001)
 {
     QString sourcePath = UTSOURCEDIR;
     sourcePath += "/files/normal.txt";
@@ -114,7 +114,7 @@ TEST_F(TestUtils, UT_Utils_copyFile_001)
     EXPECT_TRUE(Utils::copyFile(sourcePath, destinationPath));
 }
 
-TEST_F(TestUtils, UT_Utils_copyImage_001)
+TEST_F(TestUtils, copyImage_test_001)
 {
     QString sourcePath = UTSOURCEDIR;
     sourcePath += "/files/normal.png";
@@ -131,30 +131,30 @@ TEST_F(TestUtils, UT_Utils_copyImage_001)
     EXPECT_FALSE(Utils::copyImage(srcimg3, 0, 0, 100, 100).isNull());
 }
 
-TEST_F(TestUtils, UT_Utils_getHiglightColorList_001)
+TEST_F(TestUtils, getHiglightColorList_test_001)
 {
     EXPECT_TRUE(Utils::getHiglightColorList().size() == 8);
 }
 
-TEST_F(TestUtils, UT_Utils_setHiglightColorIndex_001)
+TEST_F(TestUtils, setHiglightColorIndex_test_001)
 {
     Utils::setHiglightColorIndex(2);
     EXPECT_TRUE(Utils::m_colorIndex == 2);
 }
 
-TEST_F(TestUtils, UT_Utils_getCurHiglightColor_001)
+TEST_F(TestUtils, getCurHiglightColor_test_001)
 {
     EXPECT_TRUE(Utils::getCurHiglightColor() == QColor("#9023FC"));
 }
 
-TEST_F(TestUtils, UT_Utils_setObjectNoFocusPolicy_001)
+TEST_F(TestUtils, setObjectNoFocusPolicy_test_001)
 {
     QWidget w;
     QWidget w1(&w);
     Utils::setObjectNoFocusPolicy(&w);
 }
 
-TEST_F(TestUtils, UT_Utils_isWayland_001)
+TEST_F(TestUtils, isWayland_test_001)
 {
     Stub s;
     s.set(ADDR(QProcessEnvironment, value), value_stub1);
@@ -162,7 +162,7 @@ TEST_F(TestUtils, UT_Utils_isWayland_001)
     EXPECT_TRUE(Utils::isWayland());
 }
 
-TEST_F(TestUtils, UT_Utils_isWayland_002)
+TEST_F(TestUtils, isWayland_test_002)
 {
     Stub s;
     s.set(ADDR(QProcessEnvironment, value), value_stub2);
@@ -170,7 +170,7 @@ TEST_F(TestUtils, UT_Utils_isWayland_002)
     EXPECT_FALSE(Utils::isWayland());
 }
 
-TEST_F(TestUtils, UT_Utils_setCurrentFilePath_001)
+TEST_F(TestUtils, setCurrentFilePath_test_001)
 {
     Utils::setCurrentFilePath("/test/path/file.pdf");
     EXPECT_TRUE(Utils::m_currenFilePath == "/test/path/file.pdf");

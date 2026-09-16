@@ -37,19 +37,19 @@ TEST_F(UT_RoundColorWidget, initTest)
 
 }
 
-TEST_F(UT_RoundColorWidget, UT_RoundColorWidget_setSelected_001)
+TEST_F(UT_RoundColorWidget, setSelected_test_001)
 {
     m_tester->setSelected(true);
     EXPECT_TRUE(m_tester->m_isSelected == true);
 }
 
-TEST_F(UT_RoundColorWidget, UT_RoundColorWidget_setSelected_002)
+TEST_F(UT_RoundColorWidget, setSelected_test_002)
 {
     m_tester->setSelected(false);
     EXPECT_TRUE(m_tester->m_isSelected == false);
 }
 
-TEST_F(UT_RoundColorWidget, UT_RoundColorWidget_mousePressEvent)
+TEST_F(UT_RoundColorWidget, mousePressEvent_test_001)
 {
     QSignalSpy spy(m_tester, SIGNAL(clicked()));
     m_tester->m_isSelected = false;
@@ -59,7 +59,7 @@ TEST_F(UT_RoundColorWidget, UT_RoundColorWidget_mousePressEvent)
     EXPECT_TRUE(spy.count() == 1);
 }
 
-TEST_F(UT_RoundColorWidget, UT_RoundColorWidget_paintEvent)
+TEST_F(UT_RoundColorWidget, paintEvent_test_001)
 {
     m_tester->m_isSelected = true;
     QPaintEvent paint(QRect(m_tester->rect()));
@@ -67,7 +67,7 @@ TEST_F(UT_RoundColorWidget, UT_RoundColorWidget_paintEvent)
     EXPECT_FALSE(m_tester->grab().isNull());
 }
 
-TEST_F(UT_RoundColorWidget, UT_RoundColorWidget_enterLeaveEvent)
+TEST_F(UT_RoundColorWidget, RoundColorWidget_test_001)
 {
     QEnterEvent enter(QPointF(1, 1), QPointF(1, 1), QPointF(1, 1));
     m_tester->enterEvent(&enter);

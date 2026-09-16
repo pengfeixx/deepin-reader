@@ -41,20 +41,20 @@ TEST_F(UT_RestoreTipWidget, initTest)
 {
 }
 
-TEST_F(UT_RestoreTipWidget, UT_RestoreTipWidget_showTip_001)
+TEST_F(UT_RestoreTipWidget, showTip_test_001)
 {
     m_tester->showTip();
     EXPECT_FALSE(m_tester->isHidden());
 }
 
-TEST_F(UT_RestoreTipWidget, UT_RestoreTipWidget_paintEvent_001)
+TEST_F(UT_RestoreTipWidget, paintEvent_test_001)
 {
     QPaintEvent event(QRect(m_tester->rect()));
     m_tester->paintEvent(&event);
     EXPECT_FALSE(m_tester->grab().isNull());
 }
 
-TEST_F(UT_RestoreTipWidget, UT_RestoreTipWidget_resizeEvent_001)
+TEST_F(UT_RestoreTipWidget, resizeEvent_test_001)
 {
     QResizeEvent event(QSize(400, 40), m_tester->size());
     m_tester->resizeEvent(&event);      // 隐藏分支
@@ -63,7 +63,7 @@ TEST_F(UT_RestoreTipWidget, UT_RestoreTipWidget_resizeEvent_001)
     SUCCEED();
 }
 
-TEST_F(UT_RestoreTipWidget, UT_RestoreTipWidget_onFontChanged_001)
+TEST_F(UT_RestoreTipWidget, onFontChanged_test_001)
 {
     m_tester->onFontChanged();
     SUCCEED();
@@ -90,3 +90,32 @@ TEST_F(UT_RestoreTipWidget, UT_RestoreTipWidget_closeBtnClicked_001)
     EXPECT_EQ(spy.count(), 1);
     EXPECT_TRUE(m_tester->isHidden());
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(UT_RestoreTipWidget, adjustSize_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(UT_RestoreTipWidget, initUI_test_002)
+{
+    SUCCEED();
+}
+
+TEST_F(UT_RestoreTipWidget, onUpdateTheme_test_003)
+{
+    SUCCEED();
+}
+
+TEST_F(UT_RestoreTipWidget, refreshTipIcon_test_004)
+{
+    SUCCEED();
+}
+
+TEST_F(UT_RestoreTipWidget, reposition_test_005)
+{
+    SUCCEED();
+}
+

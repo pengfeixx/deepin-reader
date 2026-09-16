@@ -84,12 +84,12 @@ protected:
     SideBarImageListView *m_pView = nullptr;
 };
 
-TEST_F(UT_NotesDelegate, initTest)
+TEST_F(UT_NotesDelegate, init_test_001)
 {
 
 }
 
-TEST_F(UT_NotesDelegate, UT_NotesDelegate_paint)
+TEST_F(UT_NotesDelegate, paint_test_001)
 {
     m_pView->getImageModel()->insertPageIndex(1);
     QPainter *painter = new QPainter;
@@ -128,7 +128,7 @@ QColor paintPixelAt(UT_NotesDelegate *fixture, const QPixmap &thumb, int rx, int
 } // namespace
 
 // 浅色主题：注释列表保持文档原始白底
-TEST_F(UT_NotesDelegate, UT_NotesDelegate_paintLightThemeKeepsWhitePage)
+TEST_F(UT_NotesDelegate, NotesDelegate_test_001)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -145,7 +145,7 @@ TEST_F(UT_NotesDelegate, UT_NotesDelegate_paintLightThemeKeepsWhitePage)
 }
 
 // 深色主题：白底反转为深色（走 NightFilter 主干滤镜）
-TEST_F(UT_NotesDelegate, UT_NotesDelegate_paintDarkThemeInvertsWhitePage)
+TEST_F(UT_NotesDelegate, NotesDelegate_test_002)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -162,7 +162,7 @@ TEST_F(UT_NotesDelegate, UT_NotesDelegate_paintDarkThemeInvertsWhitePage)
 }
 
 // 深色主题 + 图片对象蒙版：照片区域保持原始像素，白底反转为深色
-TEST_F(UT_NotesDelegate, UT_NotesDelegate_paintDarkThemeWithNightMaskKeepsPhotoPixels)
+TEST_F(UT_NotesDelegate, NotesDelegate_test_003)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -199,7 +199,7 @@ TEST_F(UT_NotesDelegate, UT_NotesDelegate_paintDarkThemeWithNightMaskKeepsPhotoP
     EXPECT_LT(canvas.pixelColor(10 + 40, 150).lightness(), 32);
 }
 
-TEST_F(UT_NotesDelegate, UT_NotesDelegate_sizeHint)
+TEST_F(UT_NotesDelegate, sizeHint_test_001)
 {
     m_pView->getImageModel()->insertPageIndex(1);
     QStyleOptionViewItem option;

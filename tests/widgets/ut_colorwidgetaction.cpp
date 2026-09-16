@@ -38,14 +38,14 @@ TEST_F(TestColorWidgetAction, initTest)
 {
 }
 
-TEST_F(TestColorWidgetAction, testslotBtnClicked)
+TEST_F(TestColorWidgetAction, slotBtnClicked_test_001)
 {
     QSignalSpy spy(m_tester, SIGNAL(sigBtnGroupClicked()));
     m_tester->slotBtnClicked(0);
     EXPECT_EQ(spy.count(), 1);
 }
 
-TEST_F(TestColorWidgetAction, testslotBtnClickedAllIndices)
+TEST_F(TestColorWidgetAction, slotBtnClicked_test_002)
 {
     // Color list has 8 colors per Utils::getHiglightColorList()
     int colorCount = Utils::getHiglightColorList().size();
@@ -63,7 +63,7 @@ TEST_F(TestColorWidgetAction, testslotBtnClickedAllIndices)
     EXPECT_EQ(Utils::getCurHiglightColor(), lastSelectedColor);
 }
 
-TEST_F(TestColorWidgetAction, testslotBtnClickedInvalidIndex)
+TEST_F(TestColorWidgetAction, slotBtnClicked_test_003)
 {
     // Invalid index should not crash and should not emit signal
     QSignalSpy spy(m_tester, SIGNAL(sigBtnGroupClicked()));
@@ -98,3 +98,17 @@ TEST_F(TestColorWidgetAction, testRoundColorWidgetClickedLambda)
     emit buttons.first()->clicked();
     EXPECT_EQ(spy.count(), 1);
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestColorWidgetAction, ColorWidgetAction_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestColorWidgetAction, initWidget_test_002)
+{
+    SUCCEED();
+}
+

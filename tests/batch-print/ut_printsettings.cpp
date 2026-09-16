@@ -84,7 +84,7 @@ TEST_F(PrintSettingsTest, SidesShortEdge) {
     EXPECT_EQ(opts.at(idx + 1), QStringLiteral("two-sided-short-edge"));
 }
 
-TEST_F(PrintSettingsTest, ColorModelAutoWithColorSupport) {
+TEST_F(PrintSettingsTest, mode_test_001) {
     PrintSettings s;
     s.colorMode = ColorMode::Auto;
     QStringList opts = toCupsOptions(s, true);
@@ -93,7 +93,7 @@ TEST_F(PrintSettingsTest, ColorModelAutoWithColorSupport) {
     EXPECT_EQ(opts.at(idx + 1), QStringLiteral("RGB"));
 }
 
-TEST_F(PrintSettingsTest, ColorModelAutoWithoutColorSupport) {
+TEST_F(PrintSettingsTest, mode_test_002) {
     PrintSettings s;
     s.colorMode = ColorMode::Auto;
     QStringList opts = toCupsOptions(s, false);
@@ -102,7 +102,7 @@ TEST_F(PrintSettingsTest, ColorModelAutoWithoutColorSupport) {
     EXPECT_EQ(opts.at(idx + 1), QStringLiteral("Gray"));
 }
 
-TEST_F(PrintSettingsTest, ColorModelColor) {
+TEST_F(PrintSettingsTest, mode_test_003) {
     PrintSettings s;
     s.colorMode = ColorMode::Color;
     QStringList opts = toCupsOptions(s, false);
@@ -111,7 +111,7 @@ TEST_F(PrintSettingsTest, ColorModelColor) {
     EXPECT_EQ(opts.at(idx + 1), QStringLiteral("RGB"));
 }
 
-TEST_F(PrintSettingsTest, ColorModelGray) {
+TEST_F(PrintSettingsTest, mode_test_004) {
     PrintSettings s;
     s.colorMode = ColorMode::Gray;
     QStringList opts = toCupsOptions(s, true);

@@ -47,7 +47,7 @@ TEST_F(NotifyClientTest, PartialSuccessBodyContainsBoth) {
     EXPECT_TRUE(body.contains(QStringLiteral("file2.docx")));
 }
 
-TEST_F(NotifyClientTest, ManyFailedFilesTruncated) {
+TEST_F(NotifyClientTest, run_test_001) {
     QStringList failed;
     for (int i = 0; i < 10; ++i)
         failed << QStringLiteral("file%1.pdf").arg(i);
@@ -64,26 +64,26 @@ TEST_F(NotifyClientTest, EmptyListBody) {
     EXPECT_FALSE(body.isEmpty());
 }
 
-TEST_F(NotifyClientTest, NotifyResultAllSuccessDoesNotCrash) {
+TEST_F(NotifyClientTest, Notify_test_001) {
     NotifyClient::notifyResult(3, 3, QStringList());
     SUCCEED();
 }
 
-TEST_F(NotifyClientTest, NotifyResultAllFailedDoesNotCrash) {
+TEST_F(NotifyClientTest, Notify_test_002) {
     QStringList failed;
     failed << QStringLiteral("file1.pdf") << QStringLiteral("file2.pdf");
     NotifyClient::notifyResult(2, 0, failed);
     SUCCEED();
 }
 
-TEST_F(NotifyClientTest, NotifyResultPartialSuccessDoesNotCrash) {
+TEST_F(NotifyClientTest, Notify_test_003) {
     QStringList failed;
     failed << QStringLiteral("file2.docx");
     NotifyClient::notifyResult(3, 2, failed);
     SUCCEED();
 }
 
-TEST_F(NotifyClientTest, NotifyResultManyFailedDoesNotCrash) {
+TEST_F(NotifyClientTest, Notify_test_004) {
     QStringList failed;
     for (int i = 0; i < 10; ++i)
         failed << QStringLiteral("file%1.pdf").arg(i);
@@ -91,7 +91,7 @@ TEST_F(NotifyClientTest, NotifyResultManyFailedDoesNotCrash) {
     SUCCEED();
 }
 
-TEST_F(NotifyClientTest, NotifyResultEmptyListDoesNotCrash) {
+TEST_F(NotifyClientTest, Notify_test_005) {
     NotifyClient::notifyResult(0, 0, QStringList());
     SUCCEED();
 }
@@ -112,12 +112,12 @@ TEST_F(NotifyClientTest, BuildBodyTotalZeroDoesNotContainErrorMessage) {
 }
 
 // Environment error path uses notifyError, not buildBody/notifyResult.
-TEST_F(NotifyClientTest, NotifyErrorDoesNotCrash) {
+TEST_F(NotifyClientTest, Notify_test_006) {
     NotifyClient::notifyError(ErrorMessages::cupsUnavailable());
     SUCCEED();
 }
 
-TEST_F(NotifyClientTest, NotifyErrorNoDefaultPrinterDoesNotCrash) {
+TEST_F(NotifyClientTest, Notify_test_007) {
     NotifyClient::notifyError(ErrorMessages::noDefaultPrinter());
     SUCCEED();
 }

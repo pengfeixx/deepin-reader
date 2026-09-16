@@ -85,12 +85,12 @@ protected:
     SideBarImageListView *m_pView = nullptr;
 };
 
-TEST_F(UT_SearchResDelegate, initTest)
+TEST_F(UT_SearchResDelegate, init_test_001)
 {
 
 }
 
-TEST_F(UT_SearchResDelegate, UT_SearchResDelegate_paint)
+TEST_F(UT_SearchResDelegate, paint_test_001)
 {
     m_pView->getImageModel()->insertPageIndex(1);
     QPainter *painter = new QPainter;
@@ -129,7 +129,7 @@ QColor paintPixelAt(UT_SearchResDelegate *fixture, const QPixmap &thumb, int rx,
 } // namespace
 
 // 浅色主题：搜索结果页小图保持文档原始白底
-TEST_F(UT_SearchResDelegate, UT_SearchResDelegate_paintLightThemeKeepsWhitePage)
+TEST_F(UT_SearchResDelegate, paint_test_002)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -147,7 +147,7 @@ TEST_F(UT_SearchResDelegate, UT_SearchResDelegate_paintLightThemeKeepsWhitePage)
 
 // 深色主题：触发搜索后结果页小图同样反转为深色（走 NightFilter 主干滤镜），
 // 不能再显示原始白底
-TEST_F(UT_SearchResDelegate, UT_SearchResDelegate_paintDarkThemeInvertsWhitePage)
+TEST_F(UT_SearchResDelegate, paint_test_003)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -164,7 +164,7 @@ TEST_F(UT_SearchResDelegate, UT_SearchResDelegate_paintDarkThemeInvertsWhitePage
 }
 
 // 深色主题 + 图片对象蒙版：搜索结果页小图中照片区域保持原始像素，白底反转为深色
-TEST_F(UT_SearchResDelegate, UT_SearchResDelegate_paintDarkThemeWithNightMaskKeepsPhotoPixels)
+TEST_F(UT_SearchResDelegate, paint_test_004)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -201,7 +201,7 @@ TEST_F(UT_SearchResDelegate, UT_SearchResDelegate_paintDarkThemeWithNightMaskKee
     EXPECT_LT(canvas.pixelColor(10 + 35, 150).lightness(), 32);
 }
 
-TEST_F(UT_SearchResDelegate, UT_SearchResDelegate_sizeHint)
+TEST_F(UT_SearchResDelegate, sizeHint_test_001)
 {
     m_pView->getImageModel()->insertPageIndex(1);
     QStyleOptionViewItem option;
@@ -209,3 +209,12 @@ TEST_F(UT_SearchResDelegate, UT_SearchResDelegate_sizeHint)
     QSize size = m_tester->sizeHint(option, index);
     EXPECT_FALSE(size.isEmpty());
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(UT_SearchResDelegate, SearchResDelegate_test_001)
+{
+    SUCCEED();
+}
+

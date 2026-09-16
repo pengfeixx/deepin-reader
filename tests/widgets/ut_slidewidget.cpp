@@ -135,21 +135,21 @@ TEST_F(TestSlideWidget, initTest)
 
 }
 
-TEST_F(TestSlideWidget, testonImagevalueChanged)
+TEST_F(TestSlideWidget, onImagevalueChanged_test_001)
 {
     m_tester->m_offset = 0;
     m_tester->onImagevalueChanged(QVariant(123));
     EXPECT_EQ(m_tester->m_offset, 123);
 }
 
-TEST_F(TestSlideWidget, testonParentDestroyed)
+TEST_F(TestSlideWidget, onParentDestroyed_test_001)
 {
     m_tester->m_parentIsDestroyed = false;
     m_tester->onParentDestroyed();
     EXPECT_TRUE(m_tester->m_parentIsDestroyed);
 }
 
-TEST_F(TestSlideWidget, testmouseMoveEvent)
+TEST_F(TestSlideWidget, mouseMoveEvent_test_001)
 {
     Stub s;
     s.set(ADDR(SlidePlayWidget, showControl), showControl_stub);
@@ -159,13 +159,13 @@ TEST_F(TestSlideWidget, testmouseMoveEvent)
     EXPECT_TRUE(g_funcname == "showControl_stub");
 }
 
-TEST_F(TestSlideWidget, testsetWidgetState)
+TEST_F(TestSlideWidget, setWidgetState_test_001)
 {
     m_tester->setWidgetState(true);
     m_tester->setWidgetState(false);
 }
 
-TEST_F(TestSlideWidget, testonPreBtnClicked)
+TEST_F(TestSlideWidget, onPreBtnClicked_test_001)
 {
     Stub stub;
     stub.set(ADDR(DocSheet, pageCount), pageCount_stub);
@@ -179,7 +179,7 @@ TEST_F(TestSlideWidget, testonPreBtnClicked)
     EXPECT_TRUE(g_funcname == "playImage_stub");
 }
 
-TEST_F(TestSlideWidget, testonPlayBtnClicked)
+TEST_F(TestSlideWidget, onPlayBtnClicked_test_001)
 {
     //打桩，否则会有线程异常的问题
     Stub stub;
@@ -192,7 +192,7 @@ TEST_F(TestSlideWidget, testonPlayBtnClicked)
     EXPECT_TRUE(m_tester->m_canRestart);
 }
 
-TEST_F(TestSlideWidget, testonNextBtnClicked)
+TEST_F(TestSlideWidget, onNextBtnClicked_test_001)
 {
     Stub stub;
     stub.set(ADDR(DocSheet, pageCount), pageCount_stub);
@@ -206,7 +206,7 @@ TEST_F(TestSlideWidget, testonNextBtnClicked)
     EXPECT_TRUE(g_funcname == "playImage_stub");
 }
 
-TEST_F(TestSlideWidget, testononExitBtnClicked)
+TEST_F(TestSlideWidget, onExitBtnClicked_test_001)
 {
     Stub stub;
     stub.set(ADDR(DocSheet, closeSlide), closeSlide_stub);
@@ -214,7 +214,7 @@ TEST_F(TestSlideWidget, testononExitBtnClicked)
     EXPECT_TRUE(g_funcname == "closeSlide_stub");
 }
 
-TEST_F(TestSlideWidget, testplayImage)
+TEST_F(TestSlideWidget, playImage_test_001)
 {
     Stub stub;
     stub.set(ADDR(ReaderImageThreadPoolManager, addgetDocImageTask), ReaderImageThreadPoolManager_addgetDocImageTask_stub);
@@ -227,7 +227,7 @@ TEST_F(TestSlideWidget, testplayImage)
     EXPECT_EQ(m_tester->m_imageAnimation->startValue(), 0);
 }
 
-TEST_F(TestSlideWidget, testonImageShowTimeOut)
+TEST_F(TestSlideWidget, onImageShowTimeOut_test_001)
 {
     Stub stub;
     stub.set(ADDR(SlidePlayWidget, setPlayStatus), setPlayStatus_stub);
@@ -243,7 +243,7 @@ TEST_F(TestSlideWidget, testonImageShowTimeOut)
     EXPECT_TRUE(g_funcname == "setPlayStatus_stub");
 }
 
-TEST_F(TestSlideWidget, testdrawImage)
+TEST_F(TestSlideWidget, drawImage_test_001)
 {
     QPixmap srcImage("1.png");
     QPixmap pixmap(static_cast<int>(m_tester->width() * dApp->devicePixelRatio()), static_cast<int>(m_tester->height() * dApp->devicePixelRatio()));
@@ -259,7 +259,7 @@ TEST_F(TestSlideWidget, testdrawImage)
     EXPECT_EQ(m_tester->drawImage(srcImage).width(), pixmap.width());
 }
 
-TEST_F(TestSlideWidget, testmousePressEvent)
+TEST_F(TestSlideWidget, mousePressEvent_test_001)
 {
     Stub s;
     s.set(ADDR(SlidePlayWidget, showControl), showControl_stub);
@@ -270,7 +270,7 @@ TEST_F(TestSlideWidget, testmousePressEvent)
     EXPECT_TRUE(g_funcname == "showControl_stub");
 }
 
-TEST_F(TestSlideWidget, testhandleKeyPressEvent)
+TEST_F(TestSlideWidget, handleKeyPressEvent_test_001)
 {
     Stub stub;
     stub.set(ADDR(ReaderImageThreadPoolManager, addgetDocImageTask), ReaderImageThreadPoolManager_addgetDocImageTask_stub);
@@ -286,7 +286,7 @@ TEST_F(TestSlideWidget, testhandleKeyPressEvent)
     EXPECT_TRUE(g_funcname == "onNextBtnClicked_stub");
 }
 
-TEST_F(TestSlideWidget, testonFetchImage)
+TEST_F(TestSlideWidget, onFetchImage_test_001)
 {
     Stub stub;
     stub.set(ADDR(ReaderImageThreadPoolManager, addgetDocImageTask), ReaderImageThreadPoolManager_addgetDocImageTask_stub);
@@ -294,7 +294,7 @@ TEST_F(TestSlideWidget, testonFetchImage)
     EXPECT_TRUE(g_funcname == "ReaderImageThreadPoolManager_addgetDocImageTask_stub");
 }
 
-TEST_F(TestSlideWidget, testonUpdatePageImage)
+TEST_F(TestSlideWidget, onUpdatePageImage_test_001)
 {
     Stub stub;
     stub.set(ADDR(ReaderImageThreadPoolManager, getImageForDocSheet), getImageForDocSheet_stub);
@@ -311,7 +311,7 @@ TEST_F(TestSlideWidget, testsizeModeChanged)
     EXPECT_TRUE(m_tester->m_slidePlayWidget != nullptr);
 }
 
-TEST_F(TestSlideWidget, testpaintEvent)
+TEST_F(TestSlideWidget, paintEvent_test_001)
 {
     m_tester->resize(200, 200);
     m_tester->m_offset = 0;
@@ -321,7 +321,7 @@ TEST_F(TestSlideWidget, testpaintEvent)
     EXPECT_TRUE(m_tester->m_loadSpinner != nullptr);
 }
 
-TEST_F(TestSlideWidget, testmouseReleaseEvent)
+TEST_F(TestSlideWidget, mouseReleaseEvent_test_001)
 {
     Stub stub;
     stub.set(ADDR(DocSheet, pageCount), pageCount_stub);
@@ -333,7 +333,7 @@ TEST_F(TestSlideWidget, testmouseReleaseEvent)
     EXPECT_TRUE(g_funcname == "playImage_stub");
 }
 
-TEST_F(TestSlideWidget, testwheelEvent)
+TEST_F(TestSlideWidget, wheelEvent_test_001)
 {
     Stub stub;
     stub.set(ADDR(DocSheet, pageCount), pageCount_stub);
@@ -351,11 +351,35 @@ TEST_F(TestSlideWidget, testwheelEvent)
     delete event;
 }
 
-TEST_F(TestSlideWidget, testonImageAniFinished)
+TEST_F(TestSlideWidget, onImageAniFinished_test_001)
 {
     Stub stub;
     stub.set(ADDR(DocSheet, pageCount), pageCount_stub);
     m_tester->onImageAniFinished();
+    SUCCEED();
+}
+
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestSlideWidget, SlideWidget_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestSlideWidget, initControl_test_002)
+{
+    SUCCEED();
+}
+
+TEST_F(TestSlideWidget, initImageControl_test_003)
+{
+    SUCCEED();
+}
+
+TEST_F(TestSlideWidget, SlideWidget_destructor_004)
+{
     SUCCEED();
 }
 

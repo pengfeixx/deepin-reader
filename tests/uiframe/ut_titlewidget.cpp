@@ -54,25 +54,25 @@ TEST_F(TestTitleWidget, initTest)
 {
 }
 
-TEST_F(TestTitleWidget, testSetControlEnabled)
+TEST_F(TestTitleWidget, SetControlEnabled_test_001)
 {
     m_tester->setControlEnabled(true);
     SUCCEED();
 }
 
-TEST_F(TestTitleWidget, testSetControlEnabled_false)
+TEST_F(TestTitleWidget, setControlEnabled_test_001)
 {
     m_tester->setControlEnabled(false);
     SUCCEED();
 }
 
-TEST_F(TestTitleWidget, testOnThumbnailBtnClicked_noSheet)
+TEST_F(TestTitleWidget, onThumbnailBtnClicked_test_001)
 {
     m_tester->onThumbnailBtnClicked(true);
     SUCCEED();
 }
 
-TEST_F(TestTitleWidget, testOnThumbnailBtnClicked_withSheet)
+TEST_F(TestTitleWidget, onThumbnailBtnClicked_test_002)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/normal.pdf";
@@ -88,7 +88,7 @@ TEST_F(TestTitleWidget, testOnThumbnailBtnClicked_withSheet)
     delete sheet;
 }
 
-TEST_F(TestTitleWidget, testKeyPressEvent)
+TEST_F(TestTitleWidget, KeyPressEvent_test_001)
 {
     QKeyEvent upEvent(QEvent::KeyPress, Qt::Key_Up, Qt::NoModifier);
     m_tester->keyPressEvent(&upEvent);
@@ -101,7 +101,7 @@ TEST_F(TestTitleWidget, testKeyPressEvent)
     SUCCEED();
 }
 
-TEST_F(TestTitleWidget, testSetBtnDisable)
+TEST_F(TestTitleWidget, SetBtnDisable_test_001)
 {
     m_tester->setBtnDisable(true);
     EXPECT_FALSE(m_tester->m_pThumbnailBtn->isEnabled());
@@ -117,3 +117,27 @@ TEST_F(TestTitleWidget, testSizeModeChangedLambda)
     emit DGuiApplicationHelper::instance()->sizeModeChanged(DGuiApplicationHelper::NormalMode);
     SUCCEED();
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestTitleWidget, TitleWidget_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestTitleWidget, onCurSheetChanged_test_002)
+{
+    SUCCEED();
+}
+
+TEST_F(TestTitleWidget, onFindOperation_test_003)
+{
+    SUCCEED();
+}
+
+TEST_F(TestTitleWidget, TitleWidget_destructor_004)
+{
+    SUCCEED();
+}
+

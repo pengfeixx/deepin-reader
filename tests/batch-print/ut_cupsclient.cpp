@@ -73,7 +73,7 @@ public:
     }
 };
 
-TEST_F(CupsClientTest, MockInterfaceBasicOperation) {
+TEST_F(CupsClientTest, operation_test_001) {
     MockCupsApi mock;
     mock.getCupsDestsResult = true;
     mock.queryColorResult = true;
@@ -111,7 +111,7 @@ TEST_F(CupsClientTest, MockPrintFailure) {
                                 QStringLiteral("fail-job"), 0, nullptr));
 }
 
-TEST_F(CupsClientTest, MockGetDestsFailure) {
+TEST_F(CupsClientTest, get_test_001) {
     MockCupsApi mock;
     mock.getCupsDestsResult = false;
 
@@ -119,7 +119,7 @@ TEST_F(CupsClientTest, MockGetDestsFailure) {
     EXPECT_FALSE(mock.getCupsDests(&dests));
 }
 
-TEST_F(CupsClientTest, CupsClientInitWithoutCups) {
+TEST_F(CupsClientTest, init_test_001) {
     CupsClient client;
     bool result = client.init();
     SUCCEED() << "CupsClient::init() returned: " << result;

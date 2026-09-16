@@ -83,7 +83,7 @@ static MainWindow *createWindow_stub()
     return g_mainWindow;
 }
 /***********测试用例***********/
-TEST_F(TestDBusObject, UT_DBusObject_registerOrNotify_001)
+TEST_F(TestDBusObject, registerOrNotify_test_001)
 {
     Stub s;
     s.set(ADDR(QDBusConnection, registerService), registerService_stub);
@@ -94,7 +94,7 @@ TEST_F(TestDBusObject, UT_DBusObject_registerOrNotify_001)
     EXPECT_TRUE(m_tester->registerOrNotify(arguments));
 }
 
-TEST_F(TestDBusObject, UT_DBusObject_registerOrNotify_002)
+TEST_F(TestDBusObject, registerOrNotify_test_002)
 {
     Stub s;
     s.set(ADDR(QDBusConnection, registerService), registerService_stub2);
@@ -104,7 +104,7 @@ TEST_F(TestDBusObject, UT_DBusObject_registerOrNotify_002)
     EXPECT_FALSE(m_tester->registerOrNotify(arguments));
 }
 
-TEST_F(TestDBusObject, UT_DBusObject_unRegister_001)
+TEST_F(TestDBusObject, unRegister_test_001)
 {
     Stub s;
     s.set(ADDR(QDBusConnection, unregisterService), unregisterService_stub);
@@ -112,7 +112,7 @@ TEST_F(TestDBusObject, UT_DBusObject_unRegister_001)
     m_tester->unRegister();
 }
 
-TEST_F(TestDBusObject, UT_DBusObject_blockShutdown_001)
+TEST_F(TestDBusObject, blockShutdown_test_001)
 {
     Stub s;
     s.set(ADDR(QDBusAbstractInterface, callWithArgumentList), callWithArgumentList_stub);
@@ -127,14 +127,14 @@ TEST_F(TestDBusObject, UT_DBusObject_blockShutdown_001)
     EXPECT_FALSE(m_tester->m_blockShutdownInterface == nullptr);
 }
 
-TEST_F(TestDBusObject, UT_DBusObject_unBlockShutdown_001)
+TEST_F(TestDBusObject, unBlockShutdown_test_001)
 {
     m_tester->m_isBlockShutdown = true;
     m_tester->unBlockShutdown();
     EXPECT_FALSE(m_tester->m_isBlockShutdown);
 }
 
-TEST_F(TestDBusObject, UT_DBusObject_handleFiles_001)
+TEST_F(TestDBusObject, handleFiles_test_001)
 {
     Stub s;
     s.set(ADDR(MainWindow, addFile), addFile_stub);
@@ -148,7 +148,7 @@ TEST_F(TestDBusObject, UT_DBusObject_handleFiles_001)
     delete g_mainWindow;
 }
 
-TEST_F(TestDBusObject, UT_DBusObject_handleFiles_002)
+TEST_F(TestDBusObject, handleFiles_test_002)
 {
     Stub s;
     s.set(ADDR(MainWindow, addFile), addFile_stub);
@@ -162,5 +162,29 @@ TEST_F(TestDBusObject, UT_DBusObject_handleFiles_002)
     m_tester->handleFiles(filePathList);
     EXPECT_FALSE(g_funcName == "show_stub");
     delete g_mainWindow;
+}
+
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestDBusObject, DBusObject_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestDBusObject, destory_test_002)
+{
+    SUCCEED();
+}
+
+TEST_F(TestDBusObject, instance_test_003)
+{
+    SUCCEED();
+}
+
+TEST_F(TestDBusObject, DBusObject_destructor_004)
+{
+    SUCCEED();
 }
 

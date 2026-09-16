@@ -42,35 +42,35 @@ QString name_stub2()
 }
 
 /***********测试用例***********/
-TEST_F(TestGlobal, UT_Global_fileType_001)
+TEST_F(TestGlobal, type_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/normal.pdf";
     EXPECT_TRUE(fileType(strPath) == PDF);
 }
 
-TEST_F(TestGlobal, UT_Global_fileType_002)
+TEST_F(TestGlobal, type_test_002)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/normal.djvu";
     EXPECT_TRUE(fileType(strPath) == DJVU);
 }
 
-TEST_F(TestGlobal, UT_Global_fileType_003)
+TEST_F(TestGlobal, type_test_003)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/normal.pptx";
     EXPECT_TRUE(fileType(strPath) == PPTX);
 }
 
-TEST_F(TestGlobal, UT_Global_fileType_004)
+TEST_F(TestGlobal, type_test_004)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/normal.docx";
     EXPECT_TRUE(fileType(strPath) == DOCX);
 }
 
-TEST_F(TestGlobal, UT_Global_fileType_005)
+TEST_F(TestGlobal, type_test_005)
 {
     Stub s;
     s.set(ADDR(QMimeType, name), name_stub);
@@ -78,7 +78,7 @@ TEST_F(TestGlobal, UT_Global_fileType_005)
     EXPECT_TRUE(fileType("1.ps") == PS);
 }
 
-TEST_F(TestGlobal, UT_Global_fileType_006)
+TEST_F(TestGlobal, type_test_006)
 {
     Stub s;
     s.set(ADDR(QMimeType, name), name_stub2);
@@ -86,7 +86,7 @@ TEST_F(TestGlobal, UT_Global_fileType_006)
     EXPECT_TRUE(fileType("1.docx") == DOCX);
 }
 
-TEST_F(TestGlobal, UT_Global_supportsSearch)
+TEST_F(TestGlobal, search_test_001)
 {
     EXPECT_TRUE(supportsSearch(PDF));
     EXPECT_TRUE(supportsSearch(DOCX));

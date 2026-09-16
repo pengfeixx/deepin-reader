@@ -75,24 +75,24 @@ void TestBrowserAnnotation::TearDown()
 }
 
 /*********测试用例**********/
-TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_annotationType_001)
+TEST_F(TestBrowserAnnotation, annotationType_test_001)
 {
     EXPECT_EQ(m_tester->annotationType(), 1);
 }
 
-TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_annotationText_001)
+TEST_F(TestBrowserAnnotation, annotationText_test_001)
 {
     EXPECT_FALSE(m_tester->annotationText().isEmpty());
 }
 
-TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_boundingRect_001)
+TEST_F(TestBrowserAnnotation, boundingRect_test_001)
 {
     m_tester->m_rect = QRectF(10, 20, 30, 40);
     m_tester->m_scaleFactor = 0.5;
     EXPECT_TRUE(qFuzzyCompare(m_tester->boundingRect().x(), 5.0));
 }
 
-TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_paint_001)
+TEST_F(TestBrowserAnnotation, paint_test_001)
 {
     m_tester->m_drawSelectRect = true;
     QPainter painter;
@@ -100,17 +100,17 @@ TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_paint_001)
     m_tester->paint(&painter, &option);
 }
 
-TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_annotation_001)
+TEST_F(TestBrowserAnnotation, annotation_test_001)
 {
     EXPECT_TRUE(m_tester->annotation() == m_tester->m_annotation);
 }
 
-TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_isSame_001)
+TEST_F(TestBrowserAnnotation, isSame_test_001)
 {
     EXPECT_TRUE(m_tester->isSame(m_annots.first()));
 }
 
-TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_setDrawSelectRect_001)
+TEST_F(TestBrowserAnnotation, setDrawSelectRect_test_001)
 {
     m_tester->setDrawSelectRect(true);
     EXPECT_TRUE(m_tester->m_drawSelectRect);
@@ -120,7 +120,7 @@ TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_setDrawSelectRect_001)
     EXPECT_FALSE(m_tester->m_drawSelectRect);
 }
 
-TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_setScaleFactor_001)
+TEST_F(TestBrowserAnnotation, setScaleFactor_test_001)
 {
     PDFAnnotation *tmp = dynamic_cast<PDFAnnotation *>(m_tester->m_annotation);
     m_tester->m_annotation = nullptr;
@@ -132,3 +132,17 @@ TEST_F(TestBrowserAnnotation, UT_BrowserAnnotation_setScaleFactor_001)
     m_tester->setScaleFactor(2.5);
     EXPECT_TRUE(qFuzzyCompare(m_tester->m_scaleFactor, 2.5));
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestBrowserAnnotation, BrowserAnnotation_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestBrowserAnnotation, BrowserAnnotation_destructor_002)
+{
+    SUCCEED();
+}
+

@@ -567,12 +567,12 @@ TEST(OfdApi, linksMissingOwnersAreInert)
     EXPECT_FALSE(page.getLinkAtPoint(QPointF(1, 1)).navigation.has_value());
 }
 
-TEST_F(TestOfdModel, loadDocument)
+TEST_F(TestOfdModel, Document_test_001)
 {
     EXPECT_GT(m_doc->pageCount(), 0);
 }
 
-TEST_F(TestOfdModel, pageSize)
+TEST_F(TestOfdModel, pageSize_test_001)
 {
     Page *page = m_doc->page(0);
     ASSERT_NE(page, nullptr);
@@ -584,13 +584,13 @@ TEST_F(TestOfdModel, pageSize)
     delete page;
 }
 
-TEST_F(TestOfdModel, pageOutOfRange)
+TEST_F(TestOfdModel, page_test_001)
 {
     EXPECT_EQ(m_doc->page(-1), nullptr);
     EXPECT_EQ(m_doc->page(m_doc->pageCount()), nullptr);
 }
 
-TEST_F(TestOfdModel, renderPage)
+TEST_F(TestOfdModel, render_test_001)
 {
     std::unique_ptr<Page> page(m_doc->page(0));
     ASSERT_NE(page, nullptr);
@@ -614,7 +614,7 @@ TEST_F(TestOfdModel, renderPage)
     EXPECT_TRUE(hasContentPixel);
 }
 
-TEST_F(TestOfdModel, renderInvalidSize)
+TEST_F(TestOfdModel, render_test_002)
 {
     std::unique_ptr<Page> page(m_doc->page(0));
     ASSERT_NE(page, nullptr);
@@ -623,7 +623,7 @@ TEST_F(TestOfdModel, renderInvalidSize)
     EXPECT_TRUE(page->render(-10, 100).isNull());
 }
 
-TEST_F(TestOfdModel, renderSmallRegionOnHugeCanvas)
+TEST_F(TestOfdModel, render_test_003)
 {
     std::unique_ptr<Page> page(m_doc->page(0));
     ASSERT_NE(page, nullptr);
@@ -668,7 +668,7 @@ TEST(OfdApi, regionMatchesFullPageWithNonzeroPhysicalOrigin)
     EXPECT_EQ(largeCanvasTile.pixelColor(32, 24), QColor(Qt::red));
 }
 
-TEST_F(TestOfdModel, realInvoiceRegionMatchesFullPage)
+TEST_F(TestOfdModel, page_test_002)
 {
     std::unique_ptr<Page> page(m_doc->page(0));
     ASSERT_NE(page, nullptr);
@@ -781,7 +781,7 @@ TEST(OfdApi, warningsRefreshAfterRenderingAnnotations)
     EXPECT_EQ(warnings.first().toMap().value("Path").toString(), QStringLiteral("missing.xml"));
 }
 
-TEST_F(TestOfdModel, semanticFullText)
+TEST_F(TestOfdModel, text_test_001)
 {
     std::unique_ptr<Page> page(m_doc->page(0));
     ASSERT_NE(page, nullptr);
@@ -791,7 +791,7 @@ TEST_F(TestOfdModel, semanticFullText)
     EXPECT_TRUE(text.contains(QStringLiteral("电子发票")));
 }
 
-TEST_F(TestOfdModel, semanticSearch)
+TEST_F(TestOfdModel, search_test_001)
 {
     std::unique_ptr<Page> page(m_doc->page(0));
     ASSERT_NE(page, nullptr);
@@ -804,7 +804,7 @@ TEST_F(TestOfdModel, semanticSearch)
     EXPECT_TRUE(page->search(QStringLiteral("不存在的文本"), false, false).isEmpty());
 }
 
-TEST_F(TestOfdModel, semanticWholeWordSearch)
+TEST_F(TestOfdModel, search_test_002)
 {
     std::unique_ptr<Page> page(m_doc->page(0));
     ASSERT_NE(page, nullptr);
@@ -813,7 +813,7 @@ TEST_F(TestOfdModel, semanticWholeWordSearch)
     EXPECT_TRUE(page->search(QStringLiteral("电子"), false, true).isEmpty());
 }
 
-TEST_F(TestOfdModel, semanticWordsAndAreaText)
+TEST_F(TestOfdModel, text_test_002)
 {
     std::unique_ptr<Page> page(m_doc->page(0));
     ASSERT_NE(page, nullptr);

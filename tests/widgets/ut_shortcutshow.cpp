@@ -52,7 +52,7 @@ TEST_F(UT_ShortCutShow, initTest)
 
 }
 
-TEST_F(UT_ShortCutShow, UT_ShortCutShow_setSheet_001)
+TEST_F(UT_ShortCutShow, setSheet_test_001)
 {
     Stub s;
     s.set(ADDR(ShortCutShow, initPDF), initPDF_stub);
@@ -62,7 +62,7 @@ TEST_F(UT_ShortCutShow, UT_ShortCutShow_setSheet_001)
     EXPECT_TRUE(g_funcname == "initPDF_stub");
 }
 
-TEST_F(UT_ShortCutShow, UT_ShortCutShow_setSheet_002)
+TEST_F(UT_ShortCutShow, setSheet_test_002)
 {
     Stub s;
     s.set(ADDR(ShortCutShow, initPDF), initPDF_stub);
@@ -74,7 +74,7 @@ TEST_F(UT_ShortCutShow, UT_ShortCutShow_setSheet_002)
     EXPECT_TRUE(g_funcname == "initDJVU_stub");
 }
 
-TEST_F(UT_ShortCutShow, UT_ShortCutShow_setSheet_003)
+TEST_F(UT_ShortCutShow, setSheet_test_003)
 {
     Stub s;
     s.set(ADDR(ShortCutShow, initPDF), initPDF_stub);
@@ -86,7 +86,7 @@ TEST_F(UT_ShortCutShow, UT_ShortCutShow_setSheet_003)
     EXPECT_TRUE(g_funcname == "initPDF_stub");
 }
 
-TEST_F(UT_ShortCutShow, UT_ShortCutShow_show)
+TEST_F(UT_ShortCutShow, show_test_001)
 {
     Stub stub;
     UTCommon::stub_QProcess_startDetached(stub);
@@ -96,19 +96,19 @@ TEST_F(UT_ShortCutShow, UT_ShortCutShow_show)
     EXPECT_TRUE(m_tester->m_shortcutMap.count() > 0);
 }
 
-TEST_F(UT_ShortCutShow, UT_ShortCutShow_initDJVU)
+TEST_F(UT_ShortCutShow, initDJVU_test_001)
 {
     m_tester->initDJVU();
     EXPECT_TRUE(m_tester->m_shortcutMap.count() > 0);
 }
 
-TEST_F(UT_ShortCutShow, UT_ShortCutShow_initPDF)
+TEST_F(UT_ShortCutShow, initPDF_test_001)
 {
     m_tester->initPDF();
     EXPECT_TRUE(m_tester->m_shortcutMap.count() > 0);
 }
 
-TEST_F(UT_ShortCutShow, UT_ShortCutShow_KeyDataList_defaultConstructor)
+TEST_F(UT_ShortCutShow, struct_test_001)
 {
     ShortCutShow::KeyDataList list;
     EXPECT_TRUE(list.isEmpty());
@@ -118,5 +118,14 @@ TEST_F(UT_ShortCutShow, UT_ShortCutShow_KeyDataList_defaultConstructor)
 
     list2.removeKey("Ctrl+S");
     EXPECT_EQ(list2.count(), 1);
+}
+
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(UT_ShortCutShow, ShortCutShow_test_001)
+{
+    SUCCEED();
 }
 

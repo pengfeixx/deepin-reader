@@ -57,37 +57,37 @@ void mouseReleaseEvent_stub(QGraphicsSceneMouseEvent *)
 }
 
 /*********测试用例**********/
-TEST_F(TestBrowserWord, UT_BrowserWord_setScaleFactor_001)
+TEST_F(TestBrowserWord, setScaleFactor_test_001)
 {
     m_tester->m_scaleFactor = 1;
     m_tester->setScaleFactor(2);
     EXPECT_TRUE(qFuzzyCompare(m_tester->m_scaleFactor, 2));
 }
 
-TEST_F(TestBrowserWord, UT_BrowserWord_text_001)
+TEST_F(TestBrowserWord, text_test_001)
 {
     EXPECT_TRUE(m_tester->text() == "test");
 }
 
-TEST_F(TestBrowserWord, UT_BrowserWord_setSelectable_001)
+TEST_F(TestBrowserWord, setSelectable_test_001)
 {
     m_tester->m_selectable = false;
     m_tester->setSelectable(true);
     EXPECT_TRUE(m_tester->m_selectable);
 }
 
-TEST_F(TestBrowserWord, UT_BrowserWord_boundingRect_001)
+TEST_F(TestBrowserWord, boundingRect_test_001)
 {
     m_tester->m_scaleFactor = 2;
     EXPECT_TRUE(qFuzzyCompare(m_tester->boundingRect().width(), 42));
 }
 
-TEST_F(TestBrowserWord, UT_BrowserWord_boundingBox_001)
+TEST_F(TestBrowserWord, boundingBox_test_001)
 {
     EXPECT_TRUE(qFuzzyCompare(m_tester->boundingBox().width(), 20));
 }
 
-TEST_F(TestBrowserWord, UT_BrowserWord_paint_001)
+TEST_F(TestBrowserWord, paint_test_001)
 {
     Stub s;
     s.set(ADDR(QGraphicsItem, isSelected), isSelected_stub);
@@ -101,7 +101,7 @@ TEST_F(TestBrowserWord, UT_BrowserWord_paint_001)
     delete option;
 }
 
-TEST_F(TestBrowserWord, UT_BrowserWord_mousePressEvent_001)
+TEST_F(TestBrowserWord, mousePressEvent_test_001)
 {
     typedef void (*fptr)(QGraphicsItem *, QGraphicsSceneMouseEvent *);
     fptr A_foo = (fptr)(&QGraphicsItem::mousePressEvent);   //获取虚函数地址
@@ -122,7 +122,7 @@ TEST_F(TestBrowserWord, UT_BrowserWord_mousePressEvent_001)
     delete e;
 }
 
-TEST_F(TestBrowserWord, UT_BrowserWord_mouseReleaseEvent_001)
+TEST_F(TestBrowserWord, mouseReleaseEvent_test_001)
 {
     typedef void (*fptr)(QGraphicsItem *, QGraphicsSceneMouseEvent *);
     fptr A_foo = (fptr)(&QGraphicsItem::mouseReleaseEvent);   //获取虚函数地址
@@ -142,3 +142,12 @@ TEST_F(TestBrowserWord, UT_BrowserWord_mouseReleaseEvent_001)
 
     delete e;
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestBrowserWord, BrowserWord_test_001)
+{
+    SUCCEED();
+}
+

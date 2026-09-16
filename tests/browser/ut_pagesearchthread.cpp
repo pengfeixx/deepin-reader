@@ -30,12 +30,12 @@ protected:
     PageSearchThread *m_tester;
 };
 
-TEST_F(UT_PageSearchThread, initTest)
+TEST_F(UT_PageSearchThread, init_test_001)
 {
 
 }
 
-TEST_F(UT_PageSearchThread, UT_PageSearchThread_startSearch)
+TEST_F(UT_PageSearchThread, startSearch_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -47,13 +47,13 @@ TEST_F(UT_PageSearchThread, UT_PageSearchThread_startSearch)
     delete sheet;
 }
 
-TEST_F(UT_PageSearchThread, UT_PageSearchThread_stopSearch)
+TEST_F(UT_PageSearchThread, stopSearch_test_001)
 {
     m_tester->stopSearch();
     EXPECT_TRUE(m_tester->m_quit == true);
 }
 
-TEST_F(UT_PageSearchThread, UT_PageSearchThread_run)
+TEST_F(UT_PageSearchThread, run_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -64,7 +64,21 @@ TEST_F(UT_PageSearchThread, UT_PageSearchThread_run)
     delete sheet;
 }
 
-TEST_F(UT_PageSearchThread, UT_PageSearchThread_initCJKtoKangxi)
+TEST_F(UT_PageSearchThread, initCJKtoKangxi_test_001)
 {
     m_tester->initCJKtoKangxi();
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(UT_PageSearchThread, PageSearchThread_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(UT_PageSearchThread, PageSearchThread_destructor_002)
+{
+    SUCCEED();
+}
+

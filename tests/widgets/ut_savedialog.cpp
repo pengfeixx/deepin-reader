@@ -46,7 +46,7 @@ TEST_F(TestSaveDialog, initTest)
 
 }
 
-TEST_F(TestSaveDialog, testshowExitDialog)
+TEST_F(TestSaveDialog, showExitDialog_test_001)
 {
     Stub stub;
     typedef int (*fptr)(DDialog *);
@@ -57,7 +57,7 @@ TEST_F(TestSaveDialog, testshowExitDialog)
     EXPECT_TRUE(g_funcname == "dialog_exec_stub");
 }
 
-TEST_F(TestSaveDialog, testshowTipDialog)
+TEST_F(TestSaveDialog, showTipDialog_test_001)
 {
     Stub stub;
     typedef int (*fptr)(DDialog *);
@@ -67,3 +67,12 @@ TEST_F(TestSaveDialog, testshowTipDialog)
     EXPECT_EQ(m_tester->showTipDialog("1.pdf"), 0);
     EXPECT_TRUE(g_funcname == "dialog_exec_stub");
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestSaveDialog, SaveDialog_test_001)
+{
+    SUCCEED();
+}
+

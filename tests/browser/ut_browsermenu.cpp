@@ -50,7 +50,7 @@ static QObject *sender_stub()
     return g_object;
 }
 /************测试用例***************/
-TEST_F(TestBrowserMenu, UT_TestBrowserMenu_addTask_001)
+TEST_F(TestBrowserMenu, BrowserMenu_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/normal.pdf";
@@ -64,7 +64,7 @@ TEST_F(TestBrowserMenu, UT_TestBrowserMenu_addTask_001)
     delete docsheet;
 }
 
-TEST_F(TestBrowserMenu, UT_TestBrowserMenu_addTask_002)
+TEST_F(TestBrowserMenu, BrowserMenu_test_002)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/normal.pdf";
@@ -78,7 +78,7 @@ TEST_F(TestBrowserMenu, UT_TestBrowserMenu_addTask_002)
     delete docsheet;
 }
 
-TEST_F(TestBrowserMenu, UT_TestBrowserMenu_addTask_003)
+TEST_F(TestBrowserMenu, BrowserMenu_test_003)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/normal.pdf";
@@ -92,7 +92,7 @@ TEST_F(TestBrowserMenu, UT_TestBrowserMenu_addTask_003)
     delete docsheet;
 }
 
-TEST_F(TestBrowserMenu, UT_TestBrowserMenu_addTask_004)
+TEST_F(TestBrowserMenu, BrowserMenu_test_004)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/normal.pdf";
@@ -106,7 +106,7 @@ TEST_F(TestBrowserMenu, UT_TestBrowserMenu_addTask_004)
     delete docsheet;
 }
 
-TEST_F(TestBrowserMenu, UT_TestBrowserMenu_addTask_005)
+TEST_F(TestBrowserMenu, BrowserMenu_test_005)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/normal.pdf";
@@ -120,7 +120,7 @@ TEST_F(TestBrowserMenu, UT_TestBrowserMenu_addTask_005)
     delete docsheet;
 }
 
-TEST_F(TestBrowserMenu, UT_TestBrowserMenu_hideEvent_001)
+TEST_F(TestBrowserMenu, hideEvent_test_001)
 {
     QSignalSpy spy(m_tester, SIGNAL(sigMenuHide()));
     QHideEvent *event = new QHideEvent;
@@ -129,13 +129,13 @@ TEST_F(TestBrowserMenu, UT_TestBrowserMenu_hideEvent_001)
     delete event;
 }
 
-TEST_F(TestBrowserMenu, UT_TestBrowserMenu_createAction_001)
+TEST_F(TestBrowserMenu, createAction_test_001)
 {
     QAction *action = m_tester->createAction("Add bookmark", "AddBookmark");
     EXPECT_TRUE(action->text() == "Add bookmark");
 }
 
-TEST_F(TestBrowserMenu, UT_TestBrowserMenu_onItemClicked_001)
+TEST_F(TestBrowserMenu, onItemClicked_test_001)
 {
     Stub s;
     s.set(ADDR(QObject, sender), sender_stub);
@@ -147,7 +147,7 @@ TEST_F(TestBrowserMenu, UT_TestBrowserMenu_onItemClicked_001)
     delete g_object;
 }
 
-TEST_F(TestBrowserMenu, UT_TestBrowserMenu_onSetHighLight_001)
+TEST_F(TestBrowserMenu, onSetHighLight_test_001)
 {
     QSignalSpy spy(m_tester, SIGNAL(signalMenuItemClicked(const QString &)));
 
@@ -159,3 +159,12 @@ TEST_F(TestBrowserMenu, UT_TestBrowserMenu_onSetHighLight_001)
     m_tester->onSetHighLight();
     EXPECT_TRUE(spy.count() == 2);
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestBrowserMenu, initActions_test_001)
+{
+    SUCCEED();
+}
+

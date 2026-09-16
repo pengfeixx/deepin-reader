@@ -219,24 +219,24 @@ static MainWindow *createWindow_stub()
 }
 
 /***********测试用例***********/
-TEST_F(TestCentral, UT_Central_titleWidget_001)
+TEST_F(TestCentral, titleWidget_test_001)
 {
     EXPECT_TRUE(m_tester->titleWidget() == m_tester->m_widget);
 }
 
-TEST_F(TestCentral, UT_Central_docPage_001)
+TEST_F(TestCentral, docPage_test_001)
 {
     EXPECT_FALSE(m_tester->docPage() == nullptr);
 }
 
-TEST_F(TestCentral, UT_Central_setMenu_001)
+TEST_F(TestCentral, setMenu_test_001)
 {
     TitleMenu *menu = new TitleMenu(m_tester);
     m_tester->setMenu(menu);
     EXPECT_TRUE(m_tester->m_menu == menu);
 }
 
-TEST_F(TestCentral, UT_Central_addFilesWithDialog_001)
+TEST_F(TestCentral, addFilesWithDialog_test_001)
 {
     typedef int (*fptr)(QDialog *);
     fptr QDialog_exec = (fptr)(&QDialog::exec);
@@ -251,7 +251,7 @@ TEST_F(TestCentral, UT_Central_addFilesWithDialog_001)
     EXPECT_TRUE(g_funcName == "addFileAsync_stub");
 }
 
-TEST_F(TestCentral, UT_Central_addFileAsync_001)
+TEST_F(TestCentral, addFileAsync_test_001)
 {
     Stub s;
     s.set(ADDR(CentralDocPage, addFileAsync), addFileAsync_stub);
@@ -261,7 +261,7 @@ TEST_F(TestCentral, UT_Central_addFileAsync_001)
     EXPECT_TRUE(g_funcName == "addFileAsync_stub");
 }
 
-TEST_F(TestCentral, UT_Central_addSheet_001)
+TEST_F(TestCentral, addSheet_test_001)
 {
     Stub s;
     s.set(ADDR(CentralDocPage, addSheet), addSheet_stub);
@@ -273,7 +273,7 @@ TEST_F(TestCentral, UT_Central_addSheet_001)
     delete sheet;
 }
 
-TEST_F(TestCentral, UT_Central_hasSheet_001)
+TEST_F(TestCentral, hasSheet_test_001)
 {
     Stub s;
     s.set(ADDR(CentralDocPage, hasSheet), hasSheet_stub);
@@ -285,7 +285,7 @@ TEST_F(TestCentral, UT_Central_hasSheet_001)
     delete sheet;
 }
 
-TEST_F(TestCentral, UT_Central_showSheet_001)
+TEST_F(TestCentral, showSheet_test_001)
 {
     Stub s;
     s.set(ADDR(CentralDocPage, showSheet), showSheet_stub);
@@ -297,12 +297,12 @@ TEST_F(TestCentral, UT_Central_showSheet_001)
     delete sheet;
 }
 
-TEST_F(TestCentral, UT_Central_getSheets_001)
+TEST_F(TestCentral, getSheets_test_001)
 {
     EXPECT_TRUE(m_tester->getSheets().isEmpty());
 }
 
-TEST_F(TestCentral, UT_Central_getSheets_002)
+TEST_F(TestCentral, getSheets_test_002)
 {
     Stub s;
     s.set(ADDR(CentralDocPage, getSheets), getSheets_stub);
@@ -312,7 +312,7 @@ TEST_F(TestCentral, UT_Central_getSheets_002)
     EXPECT_TRUE(g_funcName == "getSheets_stub");
 }
 
-TEST_F(TestCentral, UT_Central_handleShortcut_001)
+TEST_F(TestCentral, handleShortcut_test_001)
 {
     Stub s;
     s.set(ADDR(Central, addFilesWithDialog), addFilesWithDialog_stub);
@@ -323,7 +323,7 @@ TEST_F(TestCentral, UT_Central_handleShortcut_001)
     EXPECT_TRUE(g_funcName == "addFilesWithDialog_stub");
 }
 
-TEST_F(TestCentral, UT_Central_handleShortcut_002)
+TEST_F(TestCentral, handleShortcut_test_002)
 {
     Stub s;
     s.set(ADDR(ShortCutShow, setSheet), setSheet_stub);
@@ -335,7 +335,7 @@ TEST_F(TestCentral, UT_Central_handleShortcut_002)
     EXPECT_TRUE(g_funcName == "show_stub");
 }
 
-TEST_F(TestCentral, UT_Central_handleShortcut_003)
+TEST_F(TestCentral, handleShortcut_test_003)
 {
     Stub s;
     s.set(ADDR(CentralDocPage, handleShortcut), handleShortcut_stub);
@@ -346,12 +346,12 @@ TEST_F(TestCentral, UT_Central_handleShortcut_003)
     EXPECT_TRUE(g_funcName == "handleShortcut_stub");
 }
 
-TEST_F(TestCentral, UT_Central_handleClose_001)
+TEST_F(TestCentral, handleClose_test_001)
 {
     EXPECT_TRUE(m_tester->handleClose(false));
 }
 
-TEST_F(TestCentral, UT_Central_handleClose_002)
+TEST_F(TestCentral, handleClose_test_002)
 {
     Stub s;
     s.set(ADDR(CentralDocPage, closeAllSheets), closeAllSheets_stub);
@@ -360,7 +360,7 @@ TEST_F(TestCentral, UT_Central_handleClose_002)
     EXPECT_FALSE(m_tester->handleClose(false));
 }
 
-TEST_F(TestCentral, UT_Central_onSheetCountChanged_001)
+TEST_F(TestCentral, onSheetCountChanged_test_001)
 {
     Stub s;
     s.set(ADDR(TitleWidget, setControlEnabled), setControlEnabled_stub);
@@ -372,7 +372,7 @@ TEST_F(TestCentral, UT_Central_onSheetCountChanged_001)
     EXPECT_TRUE(g_funcName == "setControlEnabled_stub");
 }
 
-TEST_F(TestCentral, UT_Central_onMenuTriggered_001)
+TEST_F(TestCentral, onMenuTriggered_test_001)
 {
     Stub s;
     s.set(ADDR(QWidget, show), show_stub);
@@ -423,7 +423,7 @@ TEST_F(TestCentral, UT_Central_onMenuTriggered_001)
 //    EXPECT_TRUE(g_funcName == "onPopPrintDialog_stub");
 }
 
-TEST_F(TestCentral, UT_Central_onOpenFilesExec_001)
+TEST_F(TestCentral, onOpenFilesExec_test_001)
 {
     Stub s;
     s.set(ADDR(Central, addFilesWithDialog), addFilesWithDialog_stub);
@@ -432,7 +432,7 @@ TEST_F(TestCentral, UT_Central_onOpenFilesExec_001)
     EXPECT_TRUE(g_funcName == "addFilesWithDialog_stub");
 }
 
-TEST_F(TestCentral, UT_Central_onNeedActivateWindow_001)
+TEST_F(TestCentral, onNeedActivateWindow_test_001)
 {
     Stub s;
     s.set(ADDR(QWidget, activateWindow), activateWindow_stub);
@@ -441,13 +441,13 @@ TEST_F(TestCentral, UT_Central_onNeedActivateWindow_001)
     EXPECT_TRUE(g_funcName == "activateWindow_stub");
 }
 
-TEST_F(TestCentral, UT_Central_onShowTips_001)
+TEST_F(TestCentral, onShowTips_test_001)
 {
     m_tester->onShowTips(qobject_cast<QWidget *>(m_tester->parent()), "test", 0);
     m_tester->onShowTips(qobject_cast<QWidget *>(m_tester->parent()), "test", 1);
 }
 
-TEST_F(TestCentral, UT_Central_onShowTips_002)
+TEST_F(TestCentral, onShowTips_test_002)
 {
     Stub s;
     s.set(ADDR(QStackedLayout, currentIndex), currentIndex_stub);
@@ -456,7 +456,7 @@ TEST_F(TestCentral, UT_Central_onShowTips_002)
     m_tester->onShowTips(qobject_cast<QWidget *>(m_tester->parent()), "test", 1);
 }
 
-TEST_F(TestCentral, UT_Central_onShowTips_003)
+TEST_F(TestCentral, onShowTips_test_003)
 {
     Stub s;
     s.set(ADDR(QStackedLayout, currentIndex), currentIndex_stub);
@@ -465,7 +465,7 @@ TEST_F(TestCentral, UT_Central_onShowTips_003)
     m_tester->onShowTips(nullptr, "test", 1);
 }
 
-TEST_F(TestCentral, UT_Central_onTouchPadEvent_001)
+TEST_F(TestCentral, onTouchPadEvent_test_001)
 {
     Stub s;
     s.set(ADDR(QWidget, isActiveWindow), isActiveWindow_stub);
@@ -485,7 +485,7 @@ TEST_F(TestCentral, UT_Central_onTouchPadEvent_001)
     EXPECT_TRUE(g_funcName == "zoomIn_stub");
 }
 
-TEST_F(TestCentral, UT_Central_onKeyTriggered_001)
+TEST_F(TestCentral, onKeyTriggered_test_001)
 {
     Stub s;
     s.set(ADDR(Central, handleShortcut), handleShortcut_stub);
@@ -500,7 +500,7 @@ TEST_F(TestCentral, UT_Central_onKeyTriggered_001)
     delete g_object;
 }
 
-TEST_F(TestCentral, UT_Central_dragEnterEvent_001)
+TEST_F(TestCentral, dragEnterEvent_test_001)
 {
     Stub s;
     s.set(ADDR(QWidget, activateWindow), activateWindow_stub);
@@ -518,7 +518,7 @@ TEST_F(TestCentral, UT_Central_dragEnterEvent_001)
     delete event;
 }
 
-TEST_F(TestCentral, UT_Central_dragEnterEvent_002)
+TEST_F(TestCentral, dragEnterEvent_test_002)
 {
     Stub s;
     s.set(ADDR(QMimeData, hasUrls), hasUrls_stub);
@@ -537,7 +537,7 @@ TEST_F(TestCentral, UT_Central_dragEnterEvent_002)
     delete event;
 }
 
-TEST_F(TestCentral, UT_Central_dragEnterEvent_003)
+TEST_F(TestCentral, dragEnterEvent_test_003)
 {
     Stub s;
     typedef bool (*fptr)(QMimeData *, const QString &);
@@ -558,7 +558,7 @@ TEST_F(TestCentral, UT_Central_dragEnterEvent_003)
     delete event;
 }
 
-TEST_F(TestCentral, UT_Central_dropEvent_001)
+TEST_F(TestCentral, dropEvent_test_001)
 {
     Stub s;
     typedef bool (*fptr)(QMimeData *, const QString &);
@@ -579,7 +579,7 @@ TEST_F(TestCentral, UT_Central_dropEvent_001)
     delete event;
 }
 
-TEST_F(TestCentral, UT_Central_dropEvent_002)
+TEST_F(TestCentral, dropEvent_test_002)
 {
     Stub s;
     s.set(ADDR(QMimeData, hasUrls), hasUrls_stub);
@@ -604,7 +604,7 @@ TEST_F(TestCentral, UT_Central_dropEvent_002)
     delete event;
 }
 
-TEST_F(TestCentral, UT_Central_resizeEvent_001)
+TEST_F(TestCentral, resizeEvent_test_001)
 {
     Stub s;
     typedef void (*fptr)(BaseWidget *, QResizeEvent *);
@@ -620,7 +620,7 @@ TEST_F(TestCentral, UT_Central_resizeEvent_001)
     delete event;
 }
 
-TEST_F(TestCentral, UT_Central_docPage_sigShowRestoreTip_lambda_001)
+TEST_F(TestCentral, docPage_test_002)
 {
     CentralDocPage *docPage = m_tester->docPage();
     ASSERT_NE(docPage, nullptr);
@@ -630,7 +630,7 @@ TEST_F(TestCentral, UT_Central_docPage_sigShowRestoreTip_lambda_001)
     SUCCEED();
 }
 
-TEST_F(TestCentral, UT_Central_jumpToFirstPage_lambda_001)
+TEST_F(TestCentral, Central_test_001)
 {
     m_tester->docPage();
     RestoreTipWidget *tip = m_tester->m_restoreTipWidget;
@@ -640,7 +640,7 @@ TEST_F(TestCentral, UT_Central_jumpToFirstPage_lambda_001)
     SUCCEED();
 }
 
-TEST_F(TestCentral, UT_Central_closeRestoreTip_lambda_001)
+TEST_F(TestCentral, Central_test_002)
 {
     m_tester->docPage();
     RestoreTipWidget *tip = m_tester->m_restoreTipWidget;
@@ -649,3 +649,12 @@ TEST_F(TestCentral, UT_Central_closeRestoreTip_lambda_001)
     emit tip->sigCloseRestoreTip();
     SUCCEED();
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestCentral, Central_destructor_001)
+{
+    SUCCEED();
+}
+

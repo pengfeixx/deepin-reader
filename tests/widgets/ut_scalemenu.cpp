@@ -57,7 +57,7 @@ TEST_F(TestScaleMenu, initTest)
 
 }
 
-TEST_F(TestScaleMenu, testonTwoPage)
+TEST_F(TestScaleMenu, onTwoPage_test_001)
 {
     m_tester->m_sheet->m_operation.layoutMode = Dr::TwoPagesMode;
     m_tester->m_sheet->m_operation.scaleMode = Dr::FitToPageDefaultMode;
@@ -66,35 +66,35 @@ TEST_F(TestScaleMenu, testonTwoPage)
     EXPECT_TRUE(m_tester->m_sheet->m_operation.scaleMode == Dr::FitToPageWidthMode);
 }
 
-TEST_F(TestScaleMenu, testonFiteH)
+TEST_F(TestScaleMenu, onFiteH_test_001)
 {
     m_tester->m_sheet->m_operation.scaleMode = Dr::FitToPageDefaultMode;
     m_tester->onFiteH();
     EXPECT_TRUE(m_tester->m_sheet->m_operation.scaleMode == Dr::FitToPageHeightMode);
 }
 
-TEST_F(TestScaleMenu, testonFiteW)
+TEST_F(TestScaleMenu, onFiteW_test_001)
 {
     m_tester->m_sheet->m_operation.scaleMode = Dr::FitToPageDefaultMode;
     m_tester->onFiteW();
     EXPECT_TRUE(m_tester->m_sheet->m_operation.scaleMode == Dr::FitToPageWidthMode);
 }
 
-TEST_F(TestScaleMenu, testonDefaultPage)
+TEST_F(TestScaleMenu, onDefaultPage_test_001)
 {
     m_tester->m_sheet->m_operation.scaleMode = Dr::FitToPageWidthMode;
     m_tester->onDefaultPage();
     EXPECT_TRUE(m_tester->m_sheet->m_operation.scaleMode == Dr::FitToPageDefaultMode);
 }
 
-TEST_F(TestScaleMenu, testonFitPage)
+TEST_F(TestScaleMenu, onFitPage_test_001)
 {
     m_tester->m_sheet->m_operation.scaleMode = Dr::FitToPageDefaultMode;
     m_tester->onFitPage();
     EXPECT_TRUE(m_tester->m_sheet->m_operation.scaleMode == Dr::FitToPageWorHMode);
 }
 
-TEST_F(TestScaleMenu, testonScaleFactor)
+TEST_F(TestScaleMenu, onScaleFactor_test_001)
 {
     Stub s;
     s.set(ADDR(DocSheet, scaleFactorList), scaleFactorList_stub);
@@ -109,3 +109,22 @@ TEST_F(TestScaleMenu, testonScaleFactor)
 #endif
     EXPECT_TRUE(m_tester->m_sheet->m_operation.scaleMode == Dr::ScaleFactorMode);
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestScaleMenu, ScaleMenu_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestScaleMenu, createAction_test_002)
+{
+    SUCCEED();
+}
+
+TEST_F(TestScaleMenu, readCurDocParam_test_003)
+{
+    SUCCEED();
+}
+

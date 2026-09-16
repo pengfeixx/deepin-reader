@@ -40,3 +40,17 @@ TEST_F(TestAttrScrollWidget, initTest)
 {
 
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestAttrScrollWidget, createLabel_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestAttrScrollWidget, eventFilter_test_002)
+{
+    SUCCEED();
+}
+

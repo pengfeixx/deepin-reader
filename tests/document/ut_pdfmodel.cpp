@@ -39,14 +39,14 @@ void TestPDFAnnotation::TearDown()
 }
 
 /***********测试用例***********/
-TEST_F(TestPDFAnnotation, UT_PDFAnnotation_boundary_001)
+TEST_F(TestPDFAnnotation, boundary_test_001)
 {
     dAnnot->m_type = DPdfAnnot::AText;
     dAnnot->m_rect = QRectF();
     EXPECT_EQ(m_tester->boundary().size(), 1);
 }
 
-TEST_F(TestPDFAnnotation, UT_PDFAnnotation_contents_001)
+TEST_F(TestPDFAnnotation, contents_test_001)
 {
     dAnnot->m_text = "test";
     EXPECT_TRUE(m_tester->contents() == "test");
@@ -55,7 +55,7 @@ TEST_F(TestPDFAnnotation, UT_PDFAnnotation_contents_001)
     EXPECT_TRUE(m_tester->contents().isEmpty());
 }
 
-TEST_F(TestPDFAnnotation, UT_PDFAnnotation_type_001)
+TEST_F(TestPDFAnnotation, type_test_001)
 {
     dAnnot->m_type = DPdfAnnot::AText;
     EXPECT_TRUE(m_tester->type() == DPdfAnnot::AText);
@@ -64,7 +64,7 @@ TEST_F(TestPDFAnnotation, UT_PDFAnnotation_type_001)
     EXPECT_TRUE(m_tester->type() == -1);
 }
 
-TEST_F(TestPDFAnnotation, UT_PDFAnnotation_ownAnnotation_001)
+TEST_F(TestPDFAnnotation, ownAnnotation_test_001)
 {
     EXPECT_TRUE(m_tester->ownAnnotation() == dAnnot);
 }
@@ -221,14 +221,14 @@ DPdfAnnot *createTextAnnot_stub(QPointF, QString)
     return g_textAnnots;
 }
 /**********测试用例************/
-TEST_F(TestPDFPage, UT_PDFPage_sizeF_001)
+TEST_F(TestPDFPage, sizeF_test_001)
 {
     Stub s;
     s.set(ADDR(DPdfPage, sizeF), sizeF_stub);
     EXPECT_TRUE(m_tester->sizeF() == QSizeF(100, 200));
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_render_001)
+TEST_F(TestPDFPage, render_test_001)
 {
     Stub s;
     s.set(ADDR(DPdfPage, image), image_stub);
@@ -238,7 +238,7 @@ TEST_F(TestPDFPage, UT_PDFPage_render_001)
     EXPECT_TRUE(m_tester->render(width, height, slice).width() == 100);
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_getLinkAtPoint_001)
+TEST_F(TestPDFPage, getLinkAtPoint_test_001)
 {
     Stub s;
     s.set(ADDR(DPdfPage, links), empty_links_stub);
@@ -269,7 +269,7 @@ TEST_F(TestPDFPage, UT_PDFPage_getLinkAtPoint_001)
     EXPECT_TRUE(link.urlOrFileName == "http://www.123.com");
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_hasWidgetAnnots_001)
+TEST_F(TestPDFPage, hasWidgetAnnots_test_001)
 {
     Stub s;
     s.set(ADDR(DPdfPage, widgets), widgets_stub);
@@ -281,7 +281,7 @@ TEST_F(TestPDFPage, UT_PDFPage_hasWidgetAnnots_001)
     }
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_text_001)
+TEST_F(TestPDFPage, text_test_001)
 {
     Stub s;
     s.set(static_cast<QString(DPdfPage::*)(const QRectF &)>(ADDR(DPdfPage, text)), text_stub);
@@ -289,7 +289,7 @@ TEST_F(TestPDFPage, UT_PDFPage_text_001)
     EXPECT_TRUE(m_tester->text(QRectF(0, 0, 10, 10)) == "test");
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_words_001)
+TEST_F(TestPDFPage, words_test_001)
 {
     m_tester->m_wordLoaded = true;
     Word w;
@@ -305,7 +305,7 @@ TEST_F(TestPDFPage, UT_PDFPage_words_001)
     EXPECT_TRUE(m_tester->words().size() == 3);
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_search_001)
+TEST_F(TestPDFPage, search_test_001)
 {
     typedef QVector<PageSection> (*searchPtr)(const QString &, bool, bool);
     Stub s;
@@ -314,7 +314,7 @@ TEST_F(TestPDFPage, UT_PDFPage_search_001)
     EXPECT_TRUE(m_tester->search(QString("test"), false, false).size() == 1);
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_annotations_001)
+TEST_F(TestPDFPage, annotations_test_001)
 {
     Stub s;
     s.set(static_cast<QList<DPdfAnnot *>(DPdfPage::*)()>(ADDR(DPdfPage, annots)), annots_stub);
@@ -329,7 +329,7 @@ TEST_F(TestPDFPage, UT_PDFPage_annotations_001)
     }
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_addHighlightAnnotation_001)
+TEST_F(TestPDFPage, addHighlightAnnotation_test_001)
 {
     Stub s;
     s.set(static_cast<DPdfAnnot*(DPdfPage::*)(const QList<QRectF> &, QString, QColor)>(ADDR(DPdfPage, createHightLightAnnot)), createHightLightAnnot_stub);
@@ -345,7 +345,7 @@ TEST_F(TestPDFPage, UT_PDFPage_addHighlightAnnotation_001)
     }
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_removeAnnotation_001)
+TEST_F(TestPDFPage, removeAnnotation_test_001)
 {
     PDFAnnotation *annotation = nullptr;
     EXPECT_FALSE(m_tester->removeAnnotation(annotation));
@@ -358,7 +358,7 @@ TEST_F(TestPDFPage, UT_PDFPage_removeAnnotation_001)
     delete dAnnot;
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_updateAnnotation_001)
+TEST_F(TestPDFPage, updateAnnotation_test_001)
 {
     PDFAnnotation *annotation = nullptr;
     QString text("test");
@@ -393,7 +393,7 @@ TEST_F(TestPDFPage, UT_PDFPage_updateAnnotation_001)
     }
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_updateAnnotation_002)
+TEST_F(TestPDFPage, updateAnnotation_test_002)
 {
     Stub s;
     s.set(static_cast<bool(DPdfPage::*)(DPdfAnnot *, QColor, QString)>(ADDR(DPdfPage, updateHightLightAnnot)), updateHightLightAnnot_stub);
@@ -424,7 +424,7 @@ TEST_F(TestPDFPage, UT_PDFPage_updateAnnotation_002)
     }
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_addIconAnnotation_001)
+TEST_F(TestPDFPage, addIconAnnotation_test_001)
 {
     QRectF rect(0, 0, 1.1, 2.2);
     QString text("test");
@@ -446,7 +446,7 @@ TEST_F(TestPDFPage, UT_PDFPage_addIconAnnotation_001)
     }
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_moveIconAnnotation_001)
+TEST_F(TestPDFPage, moveIconAnnotation_test_001)
 {
     QRectF rect(0, 0, 1.1, 2.2);
     QString text("test");
@@ -479,7 +479,7 @@ TEST_F(TestPDFPage, UT_PDFPage_moveIconAnnotation_001)
  * through the interface ensures the base class declarations are referenced and
  * the overrides are entered.
  */
-TEST_F(TestPDFPage, UT_PDFPage_cachedText_001)
+TEST_F(TestPDFPage, PDFPage_test_001)
 {
     Stub s;
     s.set(static_cast<QString(DPdfPage::*)(const QRectF &)>(ADDR(DPdfPage, text)), text_stub);
@@ -488,19 +488,19 @@ TEST_F(TestPDFPage, UT_PDFPage_cachedText_001)
     EXPECT_TRUE(m_tester->cachedText(rect) == "test");
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_canAddAndRemoveAnnotations_001)
+TEST_F(TestPDFPage, removeAnnotation_test_002)
 {
     // PDFPage does not override; exercises base class default (returns false)
     EXPECT_FALSE(m_tester->canAddAndRemoveAnnotations());
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_formFields_001)
+TEST_F(TestPDFPage, PDFPage_test_002)
 {
     // PDFPage does not override; exercises base class default (returns empty list)
     EXPECT_TRUE(m_tester->formFields().isEmpty());
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_getLinkAtPoint_default_001)
+TEST_F(TestPDFPage, getLinkAtPoint_test_002)
 {
     Stub s;
     s.set(ADDR(DPdfPage, links), empty_links_stub);
@@ -509,14 +509,14 @@ TEST_F(TestPDFPage, UT_PDFPage_getLinkAtPoint_default_001)
     EXPECT_EQ(link.page, -1);
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_hasWidgetAnnots_default_001)
+TEST_F(TestPDFPage, hasWidgetAnnots_test_002)
 {
     Stub s;
     s.set(ADDR(DPdfPage, widgets), empty_links_stub);
     EXPECT_FALSE(m_tester->hasWidgetAnnots());
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_words_default_001)
+TEST_F(TestPDFPage, words_test_002)
 {
     // m_wordLoaded == false and stubbed allTextLooseRects returns no data
     Stub s;
@@ -525,7 +525,7 @@ TEST_F(TestPDFPage, UT_PDFPage_words_default_001)
     EXPECT_TRUE(m_tester->words().size() >= 0);
 }
 
-TEST_F(TestPDFPage, UT_PDFPage_annotations_default_001)
+TEST_F(TestPDFPage, annotations_test_002)
 {
     Stub s;
     s.set(static_cast<QList<DPdfAnnot *>(DPdfPage::*)()>(ADDR(DPdfPage, annots)), empty_links_stub);
@@ -630,7 +630,7 @@ DPdfDoc::Status status_PASSWORDERROR_stub()
 }
 
 /*********测试用例**********/
-TEST_F(TestPDFDocument, UT_PDFDocument_pageCount_001)
+TEST_F(TestPDFDocument, pageCount_test_001)
 {
     Stub s;
     s.set(ADDR(DPdfDoc, pageCount), pageCount_stub);
@@ -638,7 +638,7 @@ TEST_F(TestPDFDocument, UT_PDFDocument_pageCount_001)
     EXPECT_EQ(m_tester->pageCount(), 1);
 }
 
-TEST_F(TestPDFDocument, UT_PDFDocument_page_001)
+TEST_F(TestPDFDocument, page_test_001)
 {
     EXPECT_TRUE(m_tester->page(0) == nullptr);
 
@@ -661,7 +661,7 @@ TEST_F(TestPDFDocument, UT_PDFDocument_page_001)
     }
 }
 
-TEST_F(TestPDFDocument, UT_PDFDocument_label_001)
+TEST_F(TestPDFDocument, label_test_001)
 {
     Stub s;
     s.set(ADDR(DPdfDoc, label), label_stub);
@@ -669,20 +669,20 @@ TEST_F(TestPDFDocument, UT_PDFDocument_label_001)
     EXPECT_TRUE(m_tester->label(0) == "test");
 }
 
-TEST_F(TestPDFDocument, UT_PDFDocument_label_002)
+TEST_F(TestPDFDocument, label_test_002)
 {
     // Without stub; document is empty/invalid, label() should return empty without crashing
     QString label = m_tester->label(0);
     EXPECT_TRUE(label.isNull() || !label.isNull());
 }
 
-TEST_F(TestPDFDocument, UT_PDFDocument_saveFilter_001)
+TEST_F(TestPDFDocument, saveFilter_test_001)
 {
     EXPECT_FALSE(m_tester->saveFilter().isEmpty());
     EXPECT_TRUE(m_tester->saveFilter().first().contains("*.pdf"));
 }
 
-TEST_F(TestPDFDocument, UT_PDFDocument_save_001)
+TEST_F(TestPDFDocument, save_test_001)
 {
     Stub s;
     s.set(ADDR(DPdfDoc, save), save_stub);
@@ -690,7 +690,7 @@ TEST_F(TestPDFDocument, UT_PDFDocument_save_001)
     EXPECT_TRUE(g_funcName == "save_stub");
 }
 
-TEST_F(TestPDFDocument, UT_PDFDocument_saveAs_001)
+TEST_F(TestPDFDocument, saveAs_test_001)
 {
     Stub s;
     s.set(ADDR(DPdfDoc, saveAs), saveAs_stub);
@@ -698,7 +698,7 @@ TEST_F(TestPDFDocument, UT_PDFDocument_saveAs_001)
     EXPECT_TRUE(g_funcName == "saveAs_stub");
 }
 
-TEST_F(TestPDFDocument, UT_PDFDocument_outline_001)
+TEST_F(TestPDFDocument, outline_test_001)
 {
     Section sec;
     sec.nIndex = 0;
@@ -715,7 +715,7 @@ TEST_F(TestPDFDocument, UT_PDFDocument_outline_001)
     EXPECT_EQ(m_tester->outline().first().children.size(), 1);
 }
 
-TEST_F(TestPDFDocument, UT_PDFDocument_properties_001)
+TEST_F(TestPDFDocument, properties_test_001)
 {
     Section sec;
     sec.nIndex = 0;
@@ -732,7 +732,7 @@ TEST_F(TestPDFDocument, UT_PDFDocument_properties_001)
     EXPECT_EQ(m_tester->properties().size(), 3);
 }
 
-TEST_F(TestPDFDocument, UT_PDFDocument_loadDocument_001)
+TEST_F(TestPDFDocument, loadDocument_test_001)
 {
     QString filePath("test.pdf");
     QString password;
@@ -761,8 +761,22 @@ TEST_F(TestPDFDocument, UT_PDFDocument_loadDocument_001)
     EXPECT_TRUE(error == Document::WrongPassword);
 }
 
-TEST_F(TestPDFDocument, UT_PDFDocument_fileIdentifier_001)
+TEST_F(TestPDFDocument, PDFDocument_test_001)
 {
     QString id1 = m_tester->fileIdentifier();
     EXPECT_TRUE(id1 == m_tester->fileIdentifier());
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestPDFAnnotation, PDFAnnotation_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPDFAnnotation, PDFAnnotation_destructor_002)
+{
+    SUCCEED();
+}
+

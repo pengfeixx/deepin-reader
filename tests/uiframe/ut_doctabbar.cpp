@@ -43,20 +43,20 @@ TEST_F(UT_DocTabBar, initTest)
 
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_indexOfFilePath)
+TEST_F(UT_DocTabBar, indexOfFilePath_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
     EXPECT_TRUE(m_tester->indexOfFilePath(strPath) == -1);
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_insertSheet_001)
+TEST_F(UT_DocTabBar, insertSheet_test_001)
 {
     m_tester->insertSheet(nullptr);
     EXPECT_TRUE(m_tester->m_delayIndex == -1);
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_insertSheet_002)
+TEST_F(UT_DocTabBar, insertSheet_test_002)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -65,7 +65,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_insertSheet_002)
     EXPECT_TRUE(m_tester->m_delayIndex == 0);
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_removeSheet)
+TEST_F(UT_DocTabBar, removeSheet_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -75,7 +75,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_removeSheet)
     EXPECT_TRUE(m_tester->count() == 0);
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_showSheet)
+TEST_F(UT_DocTabBar, showSheet_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -85,7 +85,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_showSheet)
     EXPECT_TRUE(m_tester->count() == 1);
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_getSheets)
+TEST_F(UT_DocTabBar, getSheets_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -94,7 +94,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_getSheets)
     EXPECT_TRUE(m_tester->getSheets().count() == 1);
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_updateTabWidth)
+TEST_F(UT_DocTabBar, updateTabWidth_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -104,7 +104,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_updateTabWidth)
     EXPECT_TRUE(m_tester->tabRect(0).height() == 37);
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_createMimeDataFromTab)
+TEST_F(UT_DocTabBar, createMimeDataFromTab_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -118,7 +118,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_createMimeDataFromTab)
     delete sheet;
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_canInsertFromMimeData)
+TEST_F(UT_DocTabBar, canInsertFromMimeData_test_001)
 {
     QMimeData data;
     data.setData("deepin_reader/tabbar", "test");
@@ -128,7 +128,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_canInsertFromMimeData)
     EXPECT_FALSE(m_tester->canInsertFromMimeData(0, &emptyData));
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_insertFromMimeDataOnDragEnter)
+TEST_F(UT_DocTabBar, insertFromMimeDataOnDragEnter_test_001)
 {
     QMimeData data;
     data.setData("deepin_reader/tabbar", "testTab");
@@ -136,21 +136,21 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_insertFromMimeDataOnDragEnter)
     EXPECT_EQ(m_tester->count(), 1);
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_insertFromMimeDataOnDragEnterEmpty)
+TEST_F(UT_DocTabBar, insertFromMimeDataOnDragEnter_test_002)
 {
     QMimeData emptyData;
     m_tester->insertFromMimeDataOnDragEnter(0, &emptyData);
     EXPECT_EQ(m_tester->count(), 0);
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_insertFromMimeDataEmpty)
+TEST_F(UT_DocTabBar, insertFromMimeData_test_001)
 {
     QMimeData emptyData;
     m_tester->insertFromMimeData(0, &emptyData);
     EXPECT_EQ(m_tester->count(), 0);
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_insertFromMimeDataValid)
+TEST_F(UT_DocTabBar, insertFromMimeData_test_002)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -165,7 +165,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_insertFromMimeDataValid)
     delete sheet;
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onSetCurrentIndex)
+TEST_F(UT_DocTabBar, onSetCurrentIndex_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -177,7 +177,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_onSetCurrentIndex)
     delete sheet;
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onTabChangedValid)
+TEST_F(UT_DocTabBar, onTabChanged_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -188,19 +188,19 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_onTabChangedValid)
     delete sheet;
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onTabChangedInvalidIndex)
+TEST_F(UT_DocTabBar, onTabChanged_test_002)
 {
     m_tester->onTabChanged(-1);
     SUCCEED();
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onTabCloseRequestedInvalidSheet)
+TEST_F(UT_DocTabBar, onTabCloseRequested_test_001)
 {
     m_tester->onTabCloseRequested(0);
     SUCCEED();
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onTabCloseRequestedValid)
+TEST_F(UT_DocTabBar, onTabCloseRequested_test_002)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -216,7 +216,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_onTabCloseRequestedValid)
     delete sheet;
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onTabCloseRequestedThrottle)
+TEST_F(UT_DocTabBar, onTabCloseRequested_test_003)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -235,7 +235,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_onTabCloseRequestedThrottle)
     delete sheet;
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onTabReleasedSingleTab)
+TEST_F(UT_DocTabBar, onTabReleased_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -247,7 +247,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_onTabReleasedSingleTab)
     delete sheet;
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onTabDropedEmptyTarget)
+TEST_F(UT_DocTabBar, onTabDroped_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -269,7 +269,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_onTabDropedEmptyTarget)
     delete sheet2;
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onTabDropedSingleTabNullTarget)
+TEST_F(UT_DocTabBar, onTabDroped_test_002)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -282,7 +282,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_onTabDropedSingleTabNullTarget)
     delete sheet;
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onTabDropedMoveAction)
+TEST_F(UT_DocTabBar, onTabDroped_test_003)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -305,14 +305,14 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_onTabDropedMoveAction)
     delete sheet2;
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_resizeEvent)
+TEST_F(UT_DocTabBar, resizeEvent_test_001)
 {
     QResizeEvent event(QSize(200, 50), QSize(100, 50));
     m_tester->resizeEvent(&event);
     SUCCEED();
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_onDragActionChanged_nullDrag)
+TEST_F(UT_DocTabBar, onDragActionChanged_test_001)
 {
     // No drag in progress - dragIconWindow() returns nullptr, function returns early
     m_tester->onDragActionChanged(Qt::IgnoreAction);
@@ -321,7 +321,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_onDragActionChanged_nullDrag)
     SUCCEED();
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_dragEnterEvent_emptyMime)
+TEST_F(UT_DocTabBar, dragEnterEvent_test_001)
 {
     QMimeData mimeData;
     QDragEnterEvent event(QPoint(0, 0), Qt::CopyAction, &mimeData, Qt::LeftButton, Qt::NoModifier);
@@ -329,7 +329,7 @@ TEST_F(UT_DocTabBar, UT_DocTabBar_dragEnterEvent_emptyMime)
     SUCCEED();
 }
 
-TEST_F(UT_DocTabBar, UT_DocTabBar_setPendingActiveFile_001)
+TEST_F(UT_DocTabBar, DocTabBar_test_001)
 {
     m_tester->setPendingActiveFile(QString());
     EXPECT_TRUE(m_tester->m_delayIndex == -1);

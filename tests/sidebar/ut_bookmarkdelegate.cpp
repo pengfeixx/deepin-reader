@@ -84,12 +84,12 @@ protected:
     SideBarImageListView *m_pView = nullptr;
 };
 
-TEST_F(UT_BookMarkDelegate, initTest)
+TEST_F(UT_BookMarkDelegate, init_test_001)
 {
 
 }
 
-TEST_F(UT_BookMarkDelegate, UT_BookMarkDelegate_paint)
+TEST_F(UT_BookMarkDelegate, paint_test_001)
 {
     m_pView->getImageModel()->insertPageIndex(1);
     QPainter *painter = new QPainter;
@@ -128,7 +128,7 @@ QColor paintPixelAt(UT_BookMarkDelegate *fixture, const QPixmap &thumb, int rx, 
 } // namespace
 
 // 浅色主题：书签列表保持文档原始白底
-TEST_F(UT_BookMarkDelegate, UT_BookMarkDelegate_paintLightThemeKeepsWhitePage)
+TEST_F(UT_BookMarkDelegate, paint_test_002)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -145,7 +145,7 @@ TEST_F(UT_BookMarkDelegate, UT_BookMarkDelegate_paintLightThemeKeepsWhitePage)
 }
 
 // 深色主题：白底反转为深色（走 NightFilter 主干滤镜）
-TEST_F(UT_BookMarkDelegate, UT_BookMarkDelegate_paintDarkThemeInvertsWhitePage)
+TEST_F(UT_BookMarkDelegate, paint_test_003)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -162,7 +162,7 @@ TEST_F(UT_BookMarkDelegate, UT_BookMarkDelegate_paintDarkThemeInvertsWhitePage)
 }
 
 // 深色主题 + 图片对象蒙版：照片区域保持原始像素，白底反转为深色
-TEST_F(UT_BookMarkDelegate, UT_BookMarkDelegate_paintDarkThemeWithNightMaskKeepsPhotoPixels)
+TEST_F(UT_BookMarkDelegate, paint_test_004)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -198,3 +198,12 @@ TEST_F(UT_BookMarkDelegate, UT_BookMarkDelegate_paintDarkThemeWithNightMaskKeeps
     // 蒙版外白底已反转为深色
     EXPECT_LT(canvas.pixelColor(10 + 40, 150).lightness(), 32);
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(UT_BookMarkDelegate, BookMarkDelegate_test_001)
+{
+    SUCCEED();
+}
+

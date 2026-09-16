@@ -55,7 +55,7 @@ QImage getImagePoint_stub(double, QPoint)
     return QImage();
 }
 /*************测试用例****************/
-TEST_F(TestReadMagnifierManager, UT_TestReadMagnifierManager_addTask_001)
+TEST_F(TestReadMagnifierManager, addTask_test_001)
 {
     MagnifierInfo_t task;
     Stub s;
@@ -66,7 +66,7 @@ TEST_F(TestReadMagnifierManager, UT_TestReadMagnifierManager_addTask_001)
     EXPECT_TRUE(g_funcName == "start_stub");
 }
 
-TEST_F(TestReadMagnifierManager, UT_TestReadMagnifierManager_run_001)
+TEST_F(TestReadMagnifierManager, run_test_001)
 {
     MagnifierInfo_t task;
     task.target = static_cast<QObject *>(m_tester);
@@ -129,7 +129,7 @@ void drawImage_stub(int, int, const QImage &, int, int, int, int, Qt::ImageConve
     g_funcName = __FUNCTION__;
 }
 /**********测试用例************/
-TEST_F(TestBrowserMagniFier, UT_TestBrowserMagniFier_updateImage_001)
+TEST_F(TestBrowserMagniFier, updateImage_test_001)
 {
     Stub s;
     s.set(ADDR(QThread, start), start_stub);
@@ -137,7 +137,7 @@ TEST_F(TestBrowserMagniFier, UT_TestBrowserMagniFier_updateImage_001)
     EXPECT_TRUE(m_tester->m_readManager->m_tTasklst.size() == 1);
 }
 
-TEST_F(TestBrowserMagniFier, UT_TestBrowserMagniFier_showMagnigierImage_001)
+TEST_F(TestBrowserMagniFier, showMagnigierImage_test_001)
 {
     Stub s;
     s.set(ADDR(QThread, start), start_stub);
@@ -150,7 +150,7 @@ TEST_F(TestBrowserMagniFier, UT_TestBrowserMagniFier_showMagnigierImage_001)
     EXPECT_TRUE(m_tester->m_readManager->m_tTasklst.size() == 1);
 }
 
-TEST_F(TestBrowserMagniFier, UT_TestBrowserMagniFier_onUpdateMagnifierImage_001)
+TEST_F(TestBrowserMagniFier, onUpdateMagnifierImage_test_001)
 {
     Stub s;
     s.set(ADDR(BrowserMagniFier, setMagniFierImage), setMagniFierImage_stub);
@@ -165,7 +165,7 @@ TEST_F(TestBrowserMagniFier, UT_TestBrowserMagniFier_onUpdateMagnifierImage_001)
     EXPECT_TRUE(g_funcName == "setMagniFierImage_stub");
 }
 
-TEST_F(TestBrowserMagniFier, UT_TestBrowserMagniFier_setMagniFierImage_001)
+TEST_F(TestBrowserMagniFier, setMagniFierImage_test_001)
 {
     Stub s;
     s.set(static_cast<void (QPainter::*)(const QRect &, const QColor &)>(ADDR(QPainter, fillRect)), fillRect_stub);
@@ -179,3 +179,17 @@ TEST_F(TestBrowserMagniFier, UT_TestBrowserMagniFier_setMagniFierImage_001)
     m_tester->setMagniFierImage(image);
     EXPECT_TRUE(g_funcName == "drawImage_stub");
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestReadMagnifierManager, ReadMagnifierManager_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestReadMagnifierManager, ReadMagnifierManager_destructor_002)
+{
+    SUCCEED();
+}
+

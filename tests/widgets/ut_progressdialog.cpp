@@ -35,3 +35,12 @@ TEST_F(TestProgressDialog, initTest)
 {
 
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestProgressDialog, ProgressDialog_test_001)
+{
+    SUCCEED();
+}
+

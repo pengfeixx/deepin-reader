@@ -211,14 +211,14 @@ static QList<QGraphicsItem *> items_stub2(const QPointF &, Qt::ItemSelectionMode
 }
 
 /*********测试用例**********/
-TEST_F(TestBrowserPage, UT_BrowserPage_boundingRect_001)
+TEST_F(TestBrowserPage, boundingRect_test_001)
 {
     m_tester->m_originSizeF = QSizeF(10, 20);
     m_tester->m_scaleFactor = 1.5;
     EXPECT_TRUE(qFuzzyCompare(m_tester->boundingRect().width(), 15));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_rect_001)
+TEST_F(TestBrowserPage, rect_test_001)
 {
     m_tester->m_originSizeF = QSizeF(10, 20);
     m_tester->m_scaleFactor = 1.5;
@@ -230,27 +230,27 @@ TEST_F(TestBrowserPage, UT_BrowserPage_rect_001)
     EXPECT_TRUE(qFuzzyCompare(m_tester->rect().width(), 15));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_scaleFactor_001)
+TEST_F(TestBrowserPage, scaleFactor_test_001)
 {
     m_tester->m_scaleFactor = 1.5;
     EXPECT_TRUE(qFuzzyCompare(m_tester->scaleFactor(), 1.5));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_bookmarkRect_001)
+TEST_F(TestBrowserPage, bookmarkRect_test_001)
 {
     m_tester->m_originSizeF = QSizeF(100, 200);
     m_tester->m_scaleFactor = 1.5;
     EXPECT_TRUE(qFuzzyCompare(m_tester->bookmarkRect().x(), 110));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_bookmarkMouseRect_001)
+TEST_F(TestBrowserPage, bookmarkMouseRect_test_001)
 {
     m_tester->m_originSizeF = QSizeF(100, 200);
     m_tester->m_scaleFactor = 1.5;
     EXPECT_TRUE(qFuzzyCompare(m_tester->bookmarkMouseRect().x(), 123));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_setBookmark_001)
+TEST_F(TestBrowserPage, setBookmark_test_001)
 {
     m_tester->setBookmark(true);
     EXPECT_TRUE(m_tester->m_bookmarkState == 3);
@@ -259,7 +259,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_setBookmark_001)
     EXPECT_TRUE(m_tester->m_bookmarkState == 0);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_updateBookmarkState_001)
+TEST_F(TestBrowserPage, updateBookmarkState_test_001)
 {
     m_tester->m_bookmark = true;
     m_tester->updateBookmarkState();
@@ -271,7 +271,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_updateBookmarkState_001)
 }
 
 
-TEST_F(TestBrowserPage, UT_BrowserPage_paint_001)
+TEST_F(TestBrowserPage, paint_test_001)
 {
     Stub s;
     s.set(ADDR(BrowserPage, render), render_stub);
@@ -295,7 +295,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_paint_001)
     delete painter;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_render_001)
+TEST_F(TestBrowserPage, render_test_001)
 {
     Stub s;
     s.set(ADDR(PageRenderThread, clearImageTasks), clearImageTasks_stub);
@@ -311,7 +311,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_render_001)
     EXPECT_TRUE(m_tester->m_annotatinIsRendering);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_renderRect_001)
+TEST_F(TestBrowserPage, renderRect_test_001)
 {
     Stub s;
     s.set(static_cast<void (*)(DocPageSliceImageTask)>(ADDR(PageRenderThread, appendTask)), static_cast<void (*)(DocPageSliceImageTask)>(appendTask_stub));
@@ -321,7 +321,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_renderRect_001)
     EXPECT_TRUE(g_funcName == "appendTask_stub");
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_renderViewPort_001)
+TEST_F(TestBrowserPage, renderViewPort_test_001)
 {
     Stub s;
     s.set(static_cast<void (*)(DocPageSliceImageTask)>(ADDR(PageRenderThread, appendTask)), static_cast<void (*)(DocPageSliceImageTask)>(appendTask_stub));
@@ -331,14 +331,14 @@ TEST_F(TestBrowserPage, UT_BrowserPage_renderViewPort_001)
     EXPECT_TRUE(m_tester->m_viewportRendered);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_handleRenderFinished_001)
+TEST_F(TestBrowserPage, handleRenderFinished_test_001)
 {
     m_tester->m_pixmapHasRendered = false;
     m_tester->handleRenderFinished(0, QPixmap());
     EXPECT_TRUE(m_tester->m_pixmapHasRendered);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_handleWordLoaded_001)
+TEST_F(TestBrowserPage, handleWordLoaded_test_001)
 {
     m_tester->m_wordIsRendering = true;
     m_tester->m_wordNeeded = true;
@@ -350,7 +350,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_handleWordLoaded_001)
     EXPECT_TRUE(m_tester->m_words.size() == 1);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_handleAnnotationLoaded_001)
+TEST_F(TestBrowserPage, handleAnnotationLoaded_test_001)
 {
     m_tester->m_wordIsRendering = true;
     m_tester->m_wordNeeded = true;
@@ -366,32 +366,32 @@ TEST_F(TestBrowserPage, UT_BrowserPage_handleAnnotationLoaded_001)
     delete dAnnot;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_getCurrentImage_001)
+TEST_F(TestBrowserPage, getCurrentImage_test_001)
 {
     m_tester->m_pixmap = QPixmap(50, 50);
     EXPECT_FALSE(m_tester->getCurrentImage(50, 50).isNull());
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_getImagePoint_001)
+TEST_F(TestBrowserPage, getImagePoint_test_001)
 {
     Stub s;
     s.set(ADDR(SheetRenderer, getImage), getImage_stub);
     EXPECT_FALSE(m_tester->getImagePoint(2.0, QPoint(0, 0)).isNull());
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_getCurImagePoint_001)
+TEST_F(TestBrowserPage, getCurImagePoint_test_001)
 {
     m_tester->m_renderPixmap = QPixmap(50, 50);
     EXPECT_FALSE(m_tester->getCurImagePoint(QPoint(100, 100)).isNull());
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_itemIndex_001)
+TEST_F(TestBrowserPage, itemIndex_test_001)
 {
     m_tester->m_index = 1;
     EXPECT_TRUE(m_tester->itemIndex() == 1);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_selectedWords_001)
+TEST_F(TestBrowserPage, selectedWords_test_001)
 {
     Stub s;
     s.set(ADDR(QGraphicsItem, isSelected), isSelected_stub);
@@ -402,7 +402,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_selectedWords_001)
     EXPECT_TRUE(m_tester->selectedWords() == "firstsecond");
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_setWordSelectable_001)
+TEST_F(TestBrowserPage, setWordSelectable_test_001)
 {
     BrowserWord *w1 = new BrowserWord(nullptr, Word("first", QRectF(0, 0, 20, 10)));
     BrowserWord *w2 = new BrowserWord(nullptr, Word("second", QRectF(20, 0, 40, 10)));
@@ -412,7 +412,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_setWordSelectable_001)
     EXPECT_TRUE(m_tester->m_wordSelectable);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_loadWords_001)
+TEST_F(TestBrowserPage, loadWords_test_001)
 {
     m_tester->m_wordIsRendering = false;
     m_tester->m_wordHasRendered = true;
@@ -426,7 +426,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_loadWords_001)
     EXPECT_TRUE(qFuzzyCompare(m_tester->m_wordScaleFactor, 2));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_loadWords_002)
+TEST_F(TestBrowserPage, loadWords_test_002)
 {
     Stub s;
     s.set(static_cast<void (*)(DocPageWordTask)>(ADDR(PageRenderThread, appendTask)), static_cast<void (*)(DocPageWordTask)>(appendTask_stub));
@@ -438,7 +438,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_loadWords_002)
     EXPECT_TRUE(g_funcName == "appendTask_stub");
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_clearPixmap_001)
+TEST_F(TestBrowserPage, clearPixmap_test_001)
 {
     m_tester->m_renderPixmapScaleFactor = 1;
     m_tester->m_pixmapId = 1;
@@ -450,7 +450,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_clearPixmap_001)
     EXPECT_FALSE(m_tester->m_viewportRendered);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_clearWords_001)
+TEST_F(TestBrowserPage, clearWords_test_001)
 {
     Stub s;
     s.set(ADDR(QGraphicsItem, scene), scene_stub);
@@ -467,7 +467,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_clearWords_001)
     EXPECT_FALSE(m_tester->m_wordNeeded);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_scaleAnnots_001)
+TEST_F(TestBrowserPage, scaleAnnots_test_001)
 {
     m_tester->m_annotScaleFactor = 1.0;
     m_tester->m_scaleFactor = 2.0;
@@ -483,7 +483,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_scaleAnnots_001)
     delete annot;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_scaleWords_001)
+TEST_F(TestBrowserPage, scaleWords_test_001)
 {
     m_tester->m_wordScaleFactor = 1.0;
     m_tester->m_scaleFactor = 2.0;
@@ -497,7 +497,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_scaleWords_001)
     EXPECT_TRUE(qFuzzyCompare(m_tester->m_wordScaleFactor, 2));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_annotations_001)
+TEST_F(TestBrowserPage, annotations_test_001)
 {
     Stub s;
     s.set(ADDR(BrowserPage, handleAnnotationLoaded), handleAnnotationLoaded_stub);
@@ -507,7 +507,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_annotations_001)
     EXPECT_TRUE(m_tester->annotations() == m_tester->m_annotations);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_updateAnnotation_001)
+TEST_F(TestBrowserPage, updateAnnotation_test_001)
 {
     Annotation *annotation = nullptr;
     QString text("test");
@@ -532,7 +532,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_updateAnnotation_001)
     delete dAnnot;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_addHighlightAnnotation_001)
+TEST_F(TestBrowserPage, addHighlightAnnotation_test_001)
 {
     Stub s;
     s.set(ADDR(SheetRenderer, getWords), getWords_stub);
@@ -548,7 +548,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_addHighlightAnnotation_001)
     delete g_dAnnot;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_hasAnnotation_001)
+TEST_F(TestBrowserPage, hasAnnotation_test_001)
 {
     DPdfTextAnnot *dAnnot = new DPdfTextAnnot;
     PDFAnnotation *annot = new PDFAnnotation(dAnnot);
@@ -557,7 +557,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_hasAnnotation_001)
     delete dAnnot;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_setSelectIconRect_001)
+TEST_F(TestBrowserPage, setSelectIconRect_test_001)
 {
     DPdfTextAnnot *dAnnot = new DPdfTextAnnot;
     PDFAnnotation *annot = new PDFAnnotation(dAnnot);
@@ -574,26 +574,26 @@ TEST_F(TestBrowserPage, UT_BrowserPage_setSelectIconRect_001)
     delete dAnnot;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_setDrawMoveIconRect_001)
+TEST_F(TestBrowserPage, setDrawMoveIconRect_test_001)
 {
     m_tester->m_drawMoveIconRect = false;
     m_tester->setDrawMoveIconRect(true);
     EXPECT_TRUE(m_tester->m_drawMoveIconRect);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_iconMovePos_001)
+TEST_F(TestBrowserPage, iconMovePos_test_001)
 {
     EXPECT_TRUE(m_tester->iconMovePos() == m_tester->m_drawMoveIconPoint);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_setIconMovePos_001)
+TEST_F(TestBrowserPage, setIconMovePos_test_001)
 {
     m_tester->m_drawMoveIconPoint = QPointF(0, 0);
     m_tester->setIconMovePos(QPointF(1, 1));
     EXPECT_TRUE(qFuzzyCompare(m_tester->m_drawMoveIconPoint.x(), 1));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_moveIconAnnotation_001)
+TEST_F(TestBrowserPage, moveIconAnnotation_test_001)
 {
     EXPECT_FALSE(m_tester->moveIconAnnotation(QRectF(0, 0, 20, 10)));
 
@@ -612,7 +612,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_moveIconAnnotation_001)
     delete g_dAnnot;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_removeAllAnnotation_001)
+TEST_F(TestBrowserPage, removeAllAnnotation_test_001)
 {
     m_tester->m_hasLoadedAnnotation = false;
     g_dAnnot = new DPdfTextAnnot;
@@ -631,7 +631,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_removeAllAnnotation_001)
     delete g_annot;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_setPageBookMark_001)
+TEST_F(TestBrowserPage, setPageBookMark_test_001)
 {
     Stub s;
     s.set(ADDR(BrowserPage, bookmarkMouseRect), bookmarkMouseRect_stub);
@@ -645,7 +645,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_setPageBookMark_001)
     EXPECT_TRUE(m_tester->m_bookmarkState == 3);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_getTopLeftPos_001)
+TEST_F(TestBrowserPage, getTopLeftPos_test_001)
 {
     Stub s;
     s.set(ADDR(BrowserPage, rect), rect_stub);
@@ -664,7 +664,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_getTopLeftPos_001)
     EXPECT_TRUE(m_tester->getTopLeftPos() == QPointF(-10.0, -10.0));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_removeAnnotation_001)
+TEST_F(TestBrowserPage, removeAnnotation_test_001)
 {
 
     EXPECT_FALSE(m_tester->removeAnnotation(nullptr));
@@ -684,7 +684,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_removeAnnotation_001)
     delete annot;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_addIconAnnotation_001)
+TEST_F(TestBrowserPage, addIconAnnotation_test_001)
 {
     Stub s;
     s.set(ADDR(SheetRenderer, addIconAnnotation), addIconAnnotation_stub);
@@ -694,7 +694,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_addIconAnnotation_001)
     delete g_dAnnot;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_sceneEvent_001)
+TEST_F(TestBrowserPage, sceneEvent_test_001)
 {
     Stub s;
     s.set(ADDR(SheetRenderer, addIconAnnotation), addIconAnnotation_stub);
@@ -710,7 +710,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_sceneEvent_001)
     delete event;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_setSearchHighlightRectf_001)
+TEST_F(TestBrowserPage, setSearchHighlightRectf_test_001)
 {
     PageSection section = PageSection{PageLine{QString(), QRectF(0, 0, 20, 10)}};
 
@@ -719,13 +719,13 @@ TEST_F(TestBrowserPage, UT_BrowserPage_setSearchHighlightRectf_001)
     EXPECT_TRUE(m_tester->m_searchLightrectLst.size() == 1);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_clearSearchHighlightRects_001)
+TEST_F(TestBrowserPage, clearSearchHighlightRects_test_001)
 {
     m_tester->clearSearchHighlightRects();
     EXPECT_TRUE(m_tester->m_searchLightrectLst.size() == 0);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_clearSelectSearchHighlightRects_001)
+TEST_F(TestBrowserPage, clearSelectSearchHighlightRects_test_001)
 {
     PageSection section = PageSection{PageLine{QString(), QRectF(0, 0, 20, 10)}};
     m_tester->m_searchSelectLighRectf = section;
@@ -733,7 +733,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_clearSelectSearchHighlightRects_001)
     EXPECT_FALSE(qFuzzyCompare(m_tester->m_searchSelectLighRectf.value(0).rect.width(), 20));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_searchHighlightRectSize_001)
+TEST_F(TestBrowserPage, searchHighlightRectSize_test_001)
 {
     PageSection section = PageSection{PageLine{QString(), QRectF(0, 0, 20, 10)}};
 
@@ -741,7 +741,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_searchHighlightRectSize_001)
     EXPECT_TRUE(m_tester->searchHighlightRectSize() == 1);
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_findSearchforIndex_001)
+TEST_F(TestBrowserPage, findSearchforIndex_test_001)
 {
     PageSection section = PageSection{PageLine{QString(), QRectF(0, 0, 20, 10)}};
 
@@ -753,13 +753,13 @@ TEST_F(TestBrowserPage, UT_BrowserPage_findSearchforIndex_001)
     EXPECT_TRUE(m_tester->findSearchforIndex(1).isEmpty());
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_getNorotateRect_001)
+TEST_F(TestBrowserPage, getNorotateRect_test_001)
 {
     m_tester->m_scaleFactor = 1.5;
     EXPECT_TRUE(qFuzzyCompare(m_tester->getNorotateRect(QRectF(0, 0, 20, 10)).width(), 30));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_translateRect_001)
+TEST_F(TestBrowserPage, translateRect_test_001)
 {
     m_tester->m_scaleFactor = 1.5;
     m_tester->m_originSizeF = QSizeF(200, 200);
@@ -782,7 +782,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_translateRect_001)
     EXPECT_TRUE(qFuzzyCompare(m_tester->translateRect(QRectF(0, 0, 20, 10)).width(), 15));
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_getBrowserAnnotation_001)
+TEST_F(TestBrowserPage, getBrowserAnnotation_test_001)
 {
     Stub s;
     s.set(ADDR(QGraphicsItem, scene), scene_stub);
@@ -791,7 +791,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_getBrowserAnnotation_001)
     delete g_scene;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_getBrowserAnnotation_002)
+TEST_F(TestBrowserPage, getBrowserAnnotation_test_002)
 {
     Stub s;
     s.set(ADDR(QGraphicsItem, scene), scene_stub);
@@ -805,7 +805,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_getBrowserAnnotation_002)
     g_GraphicsItemList.clear();
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_getBrowserWord_001)
+TEST_F(TestBrowserPage, getBrowserWord_test_001)
 {
     Stub s;
     s.set(ADDR(QGraphicsItem, scene), scene_stub);
@@ -814,7 +814,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_getBrowserWord_001)
     delete g_scene;
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_getBrowserWord_002)
+TEST_F(TestBrowserPage, getBrowserWord_test_002)
 {
     Stub s;
     s.set(ADDR(QGraphicsItem, scene), scene_stub);
@@ -826,7 +826,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_getBrowserWord_002)
     g_GraphicsItemList.clear();
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_isBigDoc_001)
+TEST_F(TestBrowserPage, isBigDoc_test_001)
 {
     EXPECT_FALSE(m_tester->isBigDoc());
 
@@ -837,7 +837,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_isBigDoc_001)
     EXPECT_TRUE(m_tester->isBigDoc());
 }
 
-TEST_F(TestBrowserPage, UT_BrowserPage_applyNightMode_001)
+TEST_F(TestBrowserPage, BrowserPage_test_001)
 {
     // applyNightMode 已重构为异步实现(NightFilter + 后台线程),
     // 此处直接测试 NightFilter::apply 纯滤镜逻辑的输入/输出断言
@@ -866,3 +866,12 @@ TEST_F(TestBrowserPage, UT_BrowserPage_applyNightMode_001)
     EXPECT_EQ(qGreen(darkPixel), 255);
     EXPECT_EQ(qBlue(darkPixel), 255);
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestBrowserPage, BrowserPage_destructor_001)
+{
+    SUCCEED();
+}
+

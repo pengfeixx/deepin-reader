@@ -85,12 +85,12 @@ protected:
     SideBarImageListView *m_pView = nullptr;
 };
 
-TEST_F(UT_ThumbnailDelegate, initTest)
+TEST_F(UT_ThumbnailDelegate, init_test_001)
 {
 
 }
 
-TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paint)
+TEST_F(UT_ThumbnailDelegate, paint_test_001)
 {
     m_pView->getImageModel()->insertPageIndex(1);
     QPainter *painter = new QPainter();
@@ -100,7 +100,7 @@ TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paint)
     delete painter;
 }
 
-TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_drawBookMark)
+TEST_F(UT_ThumbnailDelegate, drawBookMark_test_001)
 {
     QPainter *painter = new QPainter();
     m_tester->drawBookMark(painter, m_pView->geometry(), true);
@@ -108,7 +108,7 @@ TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_drawBookMark)
     delete painter;
 }
 
-TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_drawBookMarkNotVisible)
+TEST_F(UT_ThumbnailDelegate, ThumbnailDelegate_test_001)
 {
     QPainter *painter = new QPainter();
     m_tester->drawBookMark(painter, m_pView->geometry(), false);
@@ -116,7 +116,7 @@ TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_drawBookMarkNotVisible)
     delete painter;
 }
 
-TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_sizeHint)
+TEST_F(UT_ThumbnailDelegate, sizeHint_test_001)
 {
     m_pView->getImageModel()->insertPageIndex(1);
     QStyleOptionViewItem option;
@@ -152,7 +152,7 @@ QColor paintCenterPixel(UT_ThumbnailDelegate *fixture, const QPixmap &thumb)
 
 // 缩略图外观只跟随系统深浅主题（不再跟随护眼模式）：
 // 浅色主题保持文档原始白底，深色主题反转为深色底
-TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintLightThemeKeepsWhitePage)
+TEST_F(UT_ThumbnailDelegate, ThumbnailDelegate_test_002)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -169,7 +169,7 @@ TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintLightThemeKeepsWhitePage)
 }
 
 // 深色主题下白底反转为深色（与 BookMark/Notes 列表观感一致）
-TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintDarkThemeInvertsWhitePage)
+TEST_F(UT_ThumbnailDelegate, ThumbnailDelegate_test_003)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -186,7 +186,7 @@ TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintDarkThemeInvertsWhitePage
 }
 
 // 护眼模式不再影响缩略图：夜间护眼开启时浅色主题下仍绘制原始白底
-TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintIgnoresEyeProtectionMode)
+TEST_F(UT_ThumbnailDelegate, ThumbnailDelegate_test_004)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -208,7 +208,7 @@ TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintIgnoresEyeProtectionMode)
 }
 
 // 深色主题 + 图片对象蒙版：蒙版区域(照片)保持原始像素，非蒙版区域(白底)反转为深色
-TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintDarkThemeWithNightMaskKeepsPhotoPixels)
+TEST_F(UT_ThumbnailDelegate, ThumbnailDelegate_test_005)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);
@@ -246,7 +246,7 @@ TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintDarkThemeWithNightMaskKee
 }
 
 // 深色主题 + 扫描页（图片 bbox 覆盖率 > 70%）：整页反色，蒙版不生效
-TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintDarkThemeScannedPageFullInvert)
+TEST_F(UT_ThumbnailDelegate, ThumbnailDelegate_test_006)
 {
     Stub s;
     typedef QSizeF(*fptr)(DocSheet *, int);

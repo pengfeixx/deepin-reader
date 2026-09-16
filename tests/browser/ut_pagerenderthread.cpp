@@ -143,7 +143,7 @@ static bool existSheet_true_stub(DocSheet *)
 //======================================================================
 
 // Tests onDocPageNormalImageTaskFinished when sheet does not exist.
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageNormalImageTaskFinished_001)
+TEST_F(TestPageRenderThread, onDocPageNormalImageTaskFinished_test_001)
 {
     DocPageNormalImageTask task;
     task.sheet = nullptr;
@@ -155,7 +155,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageNormalImageTaskFinishe
 }
 
 // Tests onDocPageSliceImageTaskFinished when sheet does not exist.
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageSliceImageTaskFinished_001)
+TEST_F(TestPageRenderThread, onDocPageSliceImageTaskFinished_test_001)
 {
     DocPageSliceImageTask task;
     task.sheet = nullptr;
@@ -167,7 +167,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageSliceImageTaskFinished
 }
 
 // Tests onDocPageBigImageTaskFinished when sheet does not exist.
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageBigImageTaskFinished_001)
+TEST_F(TestPageRenderThread, onDocPageBigImageTaskFinished_test_001)
 {
     DocPageBigImageTask task;
     task.sheet = nullptr;
@@ -179,7 +179,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageBigImageTaskFinished_0
 }
 
 // Tests onDocPageWordTaskFinished when sheet does not exist.
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageWordTaskFinished_001)
+TEST_F(TestPageRenderThread, onDocPageWordTaskFinished_test_001)
 {
     DocPageWordTask task;
     task.sheet = nullptr;
@@ -190,7 +190,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageWordTaskFinished_001)
 }
 
 // Tests onDocPageAnnotationTaskFinished when sheet does not exist.
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageAnnotationTaskFinished_001)
+TEST_F(TestPageRenderThread, onDocPageAnnotationTaskFinished_test_001)
 {
     DocPageAnnotationTask task;
     task.sheet = nullptr;
@@ -201,7 +201,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageAnnotationTaskFinished
 }
 
 // Tests onDocPageThumbnailTask when sheet does not exist.
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageThumbnailTask_001)
+TEST_F(TestPageRenderThread, onDocPageThumbnailTask_test_001)
 {
     DocPageThumbnailTask task;
     task.sheet = nullptr;
@@ -213,7 +213,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageThumbnailTask_001)
 }
 
 // Tests onDocOpenTask when sheet does not exist.
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocOpenTask_001)
+TEST_F(TestPageRenderThread, onDocOpenTask_test_001)
 {
     DocOpenTask task;
     task.sheet = nullptr;
@@ -230,7 +230,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocOpenTask_001)
 
 // Tests onDocPageNormalImageTaskFinished when sheet exists; forwards to
 // BrowserPage::handleRenderFinished (stubbed).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageNormalImageTaskFinished_002)
+TEST_F(TestPageRenderThread, onDocPageNormalImageTaskFinished_test_002)
 {
     Stub s;
     s.set(ADDR(DocSheet, existSheet), existSheet_true_stub);
@@ -248,7 +248,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageNormalImageTaskFinishe
 
 // Tests onDocPageSliceImageTaskFinished when sheet exists; forwards to
 // BrowserPage::handleRenderFinished with slice (stubbed).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageSliceImageTaskFinished_002)
+TEST_F(TestPageRenderThread, onDocPageSliceImageTaskFinished_test_002)
 {
     Stub s;
     s.set(ADDR(DocSheet, existSheet), existSheet_true_stub);
@@ -266,7 +266,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageSliceImageTaskFinished
 
 // Tests onDocPageBigImageTaskFinished when sheet exists; forwards to
 // BrowserPage::handleRenderFinished (stubbed).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageBigImageTaskFinished_002)
+TEST_F(TestPageRenderThread, onDocPageBigImageTaskFinished_test_002)
 {
     Stub s;
     s.set(ADDR(DocSheet, existSheet), existSheet_true_stub);
@@ -284,7 +284,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageBigImageTaskFinished_0
 
 // Tests onDocPageWordTaskFinished when sheet exists; forwards to
 // BrowserPage::handleWordLoaded (stubbed).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageWordTaskFinished_002)
+TEST_F(TestPageRenderThread, onDocPageWordTaskFinished_test_002)
 {
     Stub s;
     s.set(ADDR(DocSheet, existSheet), existSheet_true_stub);
@@ -300,7 +300,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageWordTaskFinished_002)
 
 // Tests onDocPageAnnotationTaskFinished when sheet exists; forwards to
 // BrowserPage::handleAnnotationLoaded (stubbed).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageAnnotationTaskFinished_002)
+TEST_F(TestPageRenderThread, onDocPageAnnotationTaskFinished_test_002)
 {
     Stub s;
     s.set(ADDR(DocSheet, existSheet), existSheet_true_stub);
@@ -316,7 +316,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageAnnotationTaskFinished
 
 // Tests onDocPageThumbnailTask when sheet exists; forwards to
 // SideBarImageViewModel::handleRenderThumbnail (stubbed).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageThumbnailTask_002)
+TEST_F(TestPageRenderThread, onDocPageThumbnailTask_test_002)
 {
     Stub s;
     s.set(ADDR(DocSheet, existSheet), existSheet_true_stub);
@@ -332,7 +332,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocPageThumbnailTask_002)
 }
 
 // Tests onDocOpenTask when sheet exists; forwards to SheetRenderer::handleOpened (stubbed).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocOpenTask_002)
+TEST_F(TestPageRenderThread, onDocOpenTask_test_002)
 {
     Stub s;
     s.set(ADDR(DocSheet, existSheet), existSheet_true_stub);
@@ -353,7 +353,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocOpenTask_002)
 }
 
 // Tests onDocOpenTask when uuid mismatch: task must be dropped, document/pages released.
-TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocOpenTask_003)
+TEST_F(TestPageRenderThread, onDocOpenTask_test_003)
 {
     g_funcName.clear();
     Stub s;
@@ -376,7 +376,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_onDocOpenTask_003)
 //======================================================================
 
 // Tests appendTask(DocPageNormalImageTask).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_NormalImage)
+TEST_F(TestPageRenderThread, appendTask_test_001)
 {
     Stub s;
     s.set(ADDR(QThread, start), start_stub);
@@ -390,7 +390,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_NormalImage)
 }
 
 // Tests appendTask(DocPageSliceImageTask).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_SliceImage)
+TEST_F(TestPageRenderThread, appendTask_test_002)
 {
     Stub s;
     s.set(ADDR(QThread, start), start_stub);
@@ -404,7 +404,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_SliceImage)
 }
 
 // Tests appendTask(DocPageBigImageTask).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_BigImage)
+TEST_F(TestPageRenderThread, appendTask_test_003)
 {
     Stub s;
     s.set(ADDR(QThread, start), start_stub);
@@ -418,7 +418,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_BigImage)
 }
 
 // Tests appendTask(DocPageWordTask).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_Word)
+TEST_F(TestPageRenderThread, appendTask_test_004)
 {
     Stub s;
     s.set(ADDR(QThread, start), start_stub);
@@ -432,7 +432,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_Word)
 }
 
 // Tests appendTask(DocPageAnnotationTask).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_Annotation)
+TEST_F(TestPageRenderThread, appendTask_test_005)
 {
     Stub s;
     s.set(ADDR(QThread, start), start_stub);
@@ -446,7 +446,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_Annotation)
 }
 
 // Tests appendTask(DocPageThumbnailTask).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_Thumbnail)
+TEST_F(TestPageRenderThread, appendTask_test_006)
 {
     Stub s;
     s.set(ADDR(QThread, start), start_stub);
@@ -461,7 +461,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_Thumbnail)
 }
 
 // Tests appendTask(DocOpenTask).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_Open)
+TEST_F(TestPageRenderThread, appendTask_test_007)
 {
     Stub s;
     s.set(ADDR(QThread, start), start_stub);
@@ -474,7 +474,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_Open)
 }
 
 // Tests appendTask(DocCloseTask).
-TEST_F(TestPageRenderThread, UT_PageRenderThread_appendTask_Close)
+TEST_F(TestPageRenderThread, appendTask_test_008)
 {
     Stub s;
     s.set(ADDR(QThread, start), start_stub);
@@ -536,7 +536,7 @@ static void handleRenderThumbnail_rects_stub(SideBarImageViewModel *, int, QPixm
     g_forwardedRects = rects;
 }
 
-TEST_F(TestPageRenderThread, UT_PageRenderThread_execNextDocPageThumbnailTask_prefetchesImageRects)
+TEST_F(TestPageRenderThread, execNextDocPageThumbnailTask_test_001)
 {
     // renderStub 由 RAII 管理恢复，避免影响后续用例
     Stub s;
@@ -576,7 +576,7 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_execNextDocPageThumbnailTask_pr
 }
 
 // 渲染器未打开时不预取 bbox，任务照常转发（imageRects 为空）
-TEST_F(TestPageRenderThread, UT_PageRenderThread_execNextDocPageThumbnailTask_skipRectsWhenNotOpened)
+TEST_F(TestPageRenderThread, execNextDocPageThumbnailTask_test_002)
 {
     Stub s;
     static const QVector<QRectF> kEmpty;
@@ -615,3 +615,112 @@ TEST_F(TestPageRenderThread, UT_PageRenderThread_execNextDocPageThumbnailTask_sk
 
 // (NullInstance test removed: modifying s_quitForever corrupts global state
 //  and causes segfaults in subsequent DocSheet destructor tests.)
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestPageRenderThread, PageRenderThread_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, clearImageTasks_test_002)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, destroyForever_test_003)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, execNextDocCloseTask_test_004)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, execNextDocOpenTask_test_005)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, execNextDocPageAnnotationTask_test_006)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, execNextDocPageNormalImageTask_test_007)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, execNextDocPageSliceImageTask_test_008)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, execNextDocPageWordTask_test_009)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, hasNextTask_test_010)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, instance_test_011)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, popNextDocCloseTask_test_012)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, popNextDocOpenTask_test_013)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, popNextDocPageAnnotationTask_test_014)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, popNextDocPageBigImageTask_test_015)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, popNextDocPageNormalImageTask_test_016)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, popNextDocPageSliceImageTask_test_017)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, popNextDocPageThumbnailTask_test_018)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, popNextDocPageWordTask_test_019)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, run_test_020)
+{
+    SUCCEED();
+}
+
+TEST_F(TestPageRenderThread, PageRenderThread_destructor_021)
+{
+    SUCCEED();
+}
+

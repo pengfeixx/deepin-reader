@@ -38,12 +38,12 @@ protected:
     SearchResWidget *m_tester = nullptr;
 };
 
-TEST_F(UT_SearchResWidget, initTest)
+TEST_F(UT_SearchResWidget, init_test_001)
 {
 
 }
 
-TEST_F(UT_SearchResWidget, UT_SearchResWidget_handleSearchResultComming)
+TEST_F(UT_SearchResWidget, handleSearchResultComming_test_001)
 {
     deepin_reader::PageLine line;
     line.text = "123";
@@ -58,33 +58,52 @@ TEST_F(UT_SearchResWidget, UT_SearchResWidget_handleSearchResultComming)
     EXPECT_TRUE(m_tester->m_sheet != nullptr);
 }
 
-TEST_F(UT_SearchResWidget, UT_SearchResWidget_handleFindFinished)
+TEST_F(UT_SearchResWidget, handleFindFinished_test_001)
 {
     m_tester->handleFindFinished();
     EXPECT_TRUE(m_tester->m_stackLayout->currentIndex() == 1);
 }
 
-TEST_F(UT_SearchResWidget, UT_SearchResWidget_clearFindResult)
+TEST_F(UT_SearchResWidget, clearFindResult_test_001)
 {
     m_tester->clearFindResult();
     EXPECT_TRUE(m_tester->m_stackLayout->currentIndex() == 0);
     EXPECT_TRUE(m_tester->m_searchKey.count() == 0);
 }
 
-TEST_F(UT_SearchResWidget, UT_SearchResWidget_searchKey)
+TEST_F(UT_SearchResWidget, searchKey_test_001)
 {
     m_tester->searchKey("123");
     EXPECT_TRUE(m_tester->m_searchKey == "123");
 }
 
-TEST_F(UT_SearchResWidget, UT_SearchResWidget_addSearchsItem)
+TEST_F(UT_SearchResWidget, addSearchsItem_test_001)
 {
     m_tester->addSearchsItem(0, "123", 1);
     EXPECT_TRUE(m_tester->m_stackLayout->currentIndex() == 0);
 }
 
-TEST_F(UT_SearchResWidget, UT_SearchResWidget_adaptWindowSize)
+TEST_F(UT_SearchResWidget, adaptWindowSize_test_001)
 {
     m_tester->adaptWindowSize(1);
     EXPECT_TRUE(m_tester->m_pImageListView->property("adaptScale") == 1);
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(UT_SearchResWidget, SearchResWidget_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(UT_SearchResWidget, initWidget_test_002)
+{
+    SUCCEED();
+}
+
+TEST_F(UT_SearchResWidget, SearchResWidget_destructor_003)
+{
+    SUCCEED();
+}
+

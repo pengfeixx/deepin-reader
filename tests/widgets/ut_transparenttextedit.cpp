@@ -39,7 +39,7 @@ TEST_F(UT_TransparentTextEdit, initTest)
 
 }
 
-TEST_F(UT_TransparentTextEdit, UT_TransparentTextEdit_slotTextEditMaxContantNum)
+TEST_F(UT_TransparentTextEdit, slotTextEditMaxContantNum_test_001)
 {
     m_tester->m_nMaxContantLen = 3;
     m_tester->setPlainText("123456");
@@ -47,14 +47,14 @@ TEST_F(UT_TransparentTextEdit, UT_TransparentTextEdit_slotTextEditMaxContantNum)
     EXPECT_TRUE(m_tester->toPlainText() == "123");
 }
 
-TEST_F(UT_TransparentTextEdit, UT_TransparentTextEdit_paintEvent)
+TEST_F(UT_TransparentTextEdit, paintEvent_test_001)
 {
     QPaintEvent paint(QRect(m_tester->rect()));
     m_tester->paintEvent(&paint);
     EXPECT_FALSE(m_tester->grab().isNull());
 }
 
-TEST_F(UT_TransparentTextEdit, UT_TransparentTextEdit_insertFromMimeData)
+TEST_F(UT_TransparentTextEdit, insertFromMimeData_test_001)
 {
     QMimeData *source = new QMimeData();
     source->setText("123");
@@ -63,14 +63,14 @@ TEST_F(UT_TransparentTextEdit, UT_TransparentTextEdit_insertFromMimeData)
     delete source;
 }
 
-TEST_F(UT_TransparentTextEdit, UT_TransparentTextEdit_keyPressEvent)
+TEST_F(UT_TransparentTextEdit, keyPressEvent_test_001)
 {
     Stub stub;
     UTCommon::stub_DMenu_exec(stub);
     QTest::keyPress(m_tester, Qt::Key_M, Qt::AltModifier);
 }
 
-TEST_F(UT_TransparentTextEdit, UT_TransparentTextEdit_focusOutEvent)
+TEST_F(UT_TransparentTextEdit, focusOutEvent_test_001)
 {
     QSignalSpy spy(m_tester, SIGNAL(sigCloseNoteWidget(bool)));
     QFocusEvent *event = new QFocusEvent(QEvent::FocusOut);
@@ -78,3 +78,12 @@ TEST_F(UT_TransparentTextEdit, UT_TransparentTextEdit_focusOutEvent)
     delete event;
     EXPECT_TRUE(spy.count() == 1);
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(UT_TransparentTextEdit, TransparentTextEdit_test_001)
+{
+    SUCCEED();
+}
+

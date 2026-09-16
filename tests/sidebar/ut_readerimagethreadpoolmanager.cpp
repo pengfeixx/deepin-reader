@@ -35,12 +35,12 @@ protected:
     ReadImageTask *m_tester;
 };
 
-TEST_F(UT_ReadImageTask, initTest)
+TEST_F(UT_ReadImageTask, init_test_001)
 {
 
 }
 
-TEST_F(UT_ReadImageTask, UT_ReadImageTask_addgetDocImageTask)
+TEST_F(UT_ReadImageTask, addgetDocImageTask_test_001)
 {
     ReaderImageParam_t readImageParam;
     readImageParam.pageIndex = 1;
@@ -48,7 +48,7 @@ TEST_F(UT_ReadImageTask, UT_ReadImageTask_addgetDocImageTask)
     EXPECT_TRUE(m_tester->m_docParam.pageIndex == 1);
 }
 
-TEST_F(UT_ReadImageTask, UT_ReadImageTask_setThreadPoolManager)
+TEST_F(UT_ReadImageTask, setThreadPoolManager_test_001)
 {
     QObject *object = new QObject();
     m_tester->setThreadPoolManager(object);
@@ -56,7 +56,7 @@ TEST_F(UT_ReadImageTask, UT_ReadImageTask_setThreadPoolManager)
     delete object;
 }
 
-TEST_F(UT_ReadImageTask, UT_ReadImageTask_runNoSheet)
+TEST_F(UT_ReadImageTask, run_test_001)
 {
     // run() with no sheet set should be safe (no crash, no-op)
     m_tester->run();
@@ -79,32 +79,32 @@ protected:
     ReaderImageThreadPoolManager *m_tester;
 };
 
-TEST_F(UT_ReaderImageThreadPoolManager, initTest)
+TEST_F(UT_ReaderImageThreadPoolManager, init_test_001)
 {
     EXPECT_NE(m_tester, nullptr);
 }
 
-TEST_F(UT_ReaderImageThreadPoolManager, UT_getInstanceSingleton)
+TEST_F(UT_ReaderImageThreadPoolManager, getInstance_test_001)
 {
     ReaderImageThreadPoolManager *instance1 = ReaderImageThreadPoolManager::getInstance();
     ReaderImageThreadPoolManager *instance2 = ReaderImageThreadPoolManager::getInstance();
     EXPECT_EQ(instance1, instance2);
 }
 
-TEST_F(UT_ReaderImageThreadPoolManager, UT_getImageForDocSheetEmpty)
+TEST_F(UT_ReaderImageThreadPoolManager, getImageForDocSheet_test_001)
 {
     QPixmap pix = m_tester->getImageForDocSheet(nullptr, 0);
     EXPECT_TRUE(pix.isNull());
 }
 
-TEST_F(UT_ReaderImageThreadPoolManager, UT_onDocProxyDestroyedUnknown)
+TEST_F(UT_ReaderImageThreadPoolManager, onDocProxyDestroyed_test_001)
 {
     QObject obj;
     m_tester->onDocProxyDestroyed(&obj);
     SUCCEED();
 }
 
-TEST_F(UT_ReaderImageThreadPoolManager, UT_onReceiverDestroyedUnknown)
+TEST_F(UT_ReaderImageThreadPoolManager, onReceiverDestroyed_test_001)
 {
     QObject obj;
     m_tester->onReceiverDestroyed(&obj);
@@ -134,7 +134,7 @@ static int pageCount_stub_pool()
     return 2;
 }
 
-TEST_F(UT_ReaderImageThreadPoolManager, UT_setImageForDocSheet)
+TEST_F(UT_ReaderImageThreadPoolManager, setImageForDocSheet_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -157,7 +157,7 @@ TEST_F(UT_ReaderImageThreadPoolManager, UT_setImageForDocSheet)
     SUCCEED();
 }
 
-TEST_F(UT_ReaderImageThreadPoolManager, UT_onTaskFinished)
+TEST_F(UT_ReaderImageThreadPoolManager, onTaskFinished_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";
@@ -179,7 +179,7 @@ TEST_F(UT_ReaderImageThreadPoolManager, UT_onTaskFinished)
     SUCCEED();
 }
 
-TEST_F(UT_ReaderImageThreadPoolManager, UT_addgetDocImageTask)
+TEST_F(UT_ReaderImageThreadPoolManager, addgetDocImageTask_test_001)
 {
     QString strPath = UTSOURCEDIR;
     strPath += "/files/1.pdf";

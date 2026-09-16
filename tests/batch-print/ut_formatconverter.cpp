@@ -55,7 +55,7 @@ TEST_F(FormatConverterTest, PdfPassthroughReturnsOriginalPath) {
     EXPECT_EQ(outputPdfPath, tempFile.fileName());
 }
 
-TEST_F(FormatConverterTest, UnknownFormatFails) {
+TEST_F(FormatConverterTest, format_test_001) {
     QTemporaryFile tempFile(QStringLiteral("XXXXXX.unknown"));
     ASSERT_TRUE(tempFile.open());
     tempFile.write("dummy content");

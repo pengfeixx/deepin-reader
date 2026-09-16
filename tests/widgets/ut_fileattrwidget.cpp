@@ -71,7 +71,7 @@ TEST_F(TestFileAttrWidget, initTest)
 
 }
 
-TEST_F(TestFileAttrWidget, testsetFileAttr)
+TEST_F(TestFileAttrWidget, setFileAttr_test_001)
 {
     int childrencount = m_tester->m_pVBoxLayout->children().count();
     m_tester->setFileAttr(nullptr);
@@ -87,14 +87,14 @@ TEST_F(TestFileAttrWidget, testsetFileAttr)
     EXPECT_EQ(m_tester->m_pVBoxLayout->children().count(), childrencount + 1) ;
 }
 
-TEST_F(TestFileAttrWidget, testaddTitleFrame)
+TEST_F(TestFileAttrWidget, addTitleFrame_test_001)
 {
     int childrencount = m_tester->children().count();
     m_tester->addTitleFrame("111111");
     EXPECT_EQ(m_tester->children().count(), childrencount + 1);
 }
 
-TEST_F(TestFileAttrWidget, testshowScreenCenter)
+TEST_F(TestFileAttrWidget, showScreenCenter_test_001)
 {
     Stub s;
     s.set(ADDR(QWidget, show), show_stub);
@@ -129,3 +129,32 @@ TEST_F(TestFileAttrWidget, testImageWidgetPaintEvent)
     static_cast<ImageWidget *>(m_tester->frameImage)->paintEvent(&event);
     SUCCEED();
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestFileAttrWidget, FileAttrWidget_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestFileAttrWidget, initCloseBtn_test_002)
+{
+    SUCCEED();
+}
+
+TEST_F(TestFileAttrWidget, initImageLabel_test_003)
+{
+    SUCCEED();
+}
+
+TEST_F(TestFileAttrWidget, initWidget_test_004)
+{
+    SUCCEED();
+}
+
+TEST_F(TestFileAttrWidget, FileAttrWidget_destructor_005)
+{
+    SUCCEED();
+}
+

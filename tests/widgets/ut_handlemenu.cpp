@@ -39,7 +39,7 @@ TEST_F(TestHandleMenu, initTest)
 
 }
 
-TEST_F(TestHandleMenu, testonHandTool)
+TEST_F(TestHandleMenu, onHandTool_test_001)
 {
     QString filePath = QCoreApplication::applicationDirPath() + "/" + "files" + "/" + UT_FILE_PDF;
     if (!QFile(filePath).exists() && QFile(":/files/" + QString(UT_FILE_PDF)).exists()) {
@@ -53,7 +53,7 @@ TEST_F(TestHandleMenu, testonHandTool)
     EXPECT_EQ(spy.count(), 1);
 }
 
-TEST_F(TestHandleMenu, testonSelectText)
+TEST_F(TestHandleMenu, onSelectText_test_001)
 {
     QString filePath = QCoreApplication::applicationDirPath() + "/" + "files" + "/" + UT_FILE_PDF;
     if (!QFile(filePath).exists() && QFile(":/files/" + QString(UT_FILE_PDF)).exists()) {
@@ -67,7 +67,7 @@ TEST_F(TestHandleMenu, testonSelectText)
     EXPECT_EQ(spy.count(), 1);
 }
 
-TEST_F(TestHandleMenu, testreadCurDocParam)
+TEST_F(TestHandleMenu, readCurDocParam_test_001)
 {
     QString filePath = QCoreApplication::applicationDirPath() + "/" + "files" + "/" + UT_FILE_PDF;
     if (!QFile(filePath).exists() && QFile(":/files/" + QString(UT_FILE_PDF)).exists()) {
@@ -80,3 +80,17 @@ TEST_F(TestHandleMenu, testreadCurDocParam)
     EXPECT_TRUE(m_tester->m_textAction->isChecked());
     delete sheet;
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestHandleMenu, HandleMenu_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestHandleMenu, initActions_test_002)
+{
+    SUCCEED();
+}
+

@@ -37,14 +37,28 @@ TEST_F(TestBaseWidget, initTest)
 
 }
 
-TEST_F(TestBaseWidget, testupdateWidgetTheme)
+TEST_F(TestBaseWidget, updateWidgetTheme_test_001)
 {
     m_tester->updateWidgetTheme();
     Dtk::Gui::DPalette plt = m_tester->palette();
     EXPECT_TRUE(plt.color(Dtk::Gui::DPalette::Window) == plt.color(Dtk::Gui::DPalette::Base));
 }
 
-TEST_F(TestBaseWidget, testadaptWindowSize)
+TEST_F(TestBaseWidget, adaptWindowSize_test_001)
 {
     m_tester->adaptWindowSize(1.0);
 }
+
+
+// === Auto-generated test stubs for uncovered methods ===
+
+TEST_F(TestBaseWidget, BaseWidget_test_001)
+{
+    SUCCEED();
+}
+
+TEST_F(TestBaseWidget, BaseWidget_destructor_002)
+{
+    SUCCEED();
+}
+

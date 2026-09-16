@@ -118,7 +118,7 @@ TEST_F(TestTextEditWidget, initTest)
 
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_onShowMenu)
+TEST_F(TestTextEditWidget, TextEditWidget_test_001)
 {
     Stub stub;
     UTCommon::stub_QWidget_isVisible(stub, true);
@@ -127,31 +127,31 @@ TEST_F(TestTextEditWidget, test_TestTextEditWidget_onShowMenu)
     EXPECT_TRUE(m_tester->m_pTextEdit != nullptr);
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_setEditText)
+TEST_F(TestTextEditWidget, TextEditWidget_test_002)
 {
     m_tester->setEditText("123");
     EXPECT_TRUE(m_tester->m_pTextEdit->toPlainText() == "123");
     EXPECT_TRUE(m_tester->m_strNote == "123");
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_setAnnotation)
+TEST_F(TestTextEditWidget, TextEditWidget_test_003)
 {
     m_tester->setAnnotation(nullptr);
     EXPECT_TRUE(m_tester->m_annotation == nullptr);
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_setEditFocus)
+TEST_F(TestTextEditWidget, setEditFocus_test_001)
 {
     m_tester->setEditFocus();
     EXPECT_TRUE(m_tester->m_pTextEdit != nullptr);
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_getTextEdit)
+TEST_F(TestTextEditWidget, getTextEdit_test_001)
 {
     EXPECT_TRUE(m_tester->getTextEdit() == m_tester->m_pTextEdit);
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_hideEvent_001)
+TEST_F(TestTextEditWidget, TextEditWidget_test_004)
 {
     DPdfTextAnnot *pDPdfAnnot  = new DPdfTextAnnot();
     deepin_reader::PDFAnnotation *p = new deepin_reader::PDFAnnotation(pDPdfAnnot);
@@ -166,7 +166,7 @@ TEST_F(TestTextEditWidget, test_TestTextEditWidget_hideEvent_001)
     delete event;
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_hideEvent_002)
+TEST_F(TestTextEditWidget, TextEditWidget_test_005)
 {
     DPdfTextAnnot *pDPdfAnnot  = new DPdfTextAnnot();
     deepin_reader::PDFAnnotation *p = new deepin_reader::PDFAnnotation(pDPdfAnnot);
@@ -182,7 +182,7 @@ TEST_F(TestTextEditWidget, test_TestTextEditWidget_hideEvent_002)
     delete event;
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_onTouchPadEvent_001)
+TEST_F(TestTextEditWidget, TextEditWidget_test_006)
 {
     m_tester->onTouchPadEvent("", "up", 0);
 }
@@ -194,7 +194,7 @@ void qTimer_start_stub()
     return;
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_onTouchPadEvent_002)
+TEST_F(TestTextEditWidget, TextEditWidget_test_007)
 {
     Stub stub;
     stub.set((void(QTimer::*)())ADDR(QTimer, start), qTimer_start_stub);
@@ -202,14 +202,14 @@ TEST_F(TestTextEditWidget, test_TestTextEditWidget_onTouchPadEvent_002)
     EXPECT_TRUE(g_funcname == "qTimer_start_stub");
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_paintEvent)
+TEST_F(TestTextEditWidget, TextEditWidget_test_008)
 {
     QPaintEvent paint(QRect(m_tester->rect()));
     m_tester->paintEvent(&paint);
     EXPECT_FALSE(m_tester->grab().isNull());
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_focusOutEvent)
+TEST_F(TestTextEditWidget, TextEditWidget_test_009)
 {
     QSignalSpy spy(m_tester, SIGNAL(sigCloseNoteWidget(bool)));
     QFocusEvent *event = new QFocusEvent(QEvent::FocusOut);
@@ -218,7 +218,7 @@ TEST_F(TestTextEditWidget, test_TestTextEditWidget_focusOutEvent)
     EXPECT_TRUE(spy.count() == 1);
 }
 
-TEST_F(TestTextEditWidget, test_TestTextEditWidget_showMenuTimerLambda)
+TEST_F(TestTextEditWidget, TextEditWidget_test_010)
 {
     // Trigger the lambda connected to m_showMenuTimer->timeout
     Stub stub;
