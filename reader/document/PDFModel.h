@@ -118,6 +118,8 @@ public:
 
     Properties properties() const override;
 
+    QString fileIdentifier() const override;
+
     static PDFDocument *loadDocument(const QString &filePath, const QString &password, deepin_reader::Document::Error &error);
 
 private:

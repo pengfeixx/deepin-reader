@@ -10,12 +10,51 @@
 #include "ddlog.h"
 
 #include <QDebug>
+#include <QFile>
+#include <QRegularExpression>
 #include <QScreen>
 #include <QThread>
 
 #include <functional>
 
 #define LOCK_DOCUMENT QMutexLocker docMutexLocker(m_docMutex);
+
+namespace {
+
+// 系统 libdeepin-pdfium (1.5.x) 未提供 /ID 接口，这里直接解析 PDF 文件中的文档
+// 标识符：trailer 字典或交叉引用流字典的 /ID[值1 值2]，按规范值1 为永久 ID
+// （增量保存、移动/重命名均不变）。两个值各自支持十六进制 <...> 与字面量
+// (...) 两种语法。增量更新会把最新 trailer 追加到文件末尾，故扫描文件尾部
+// 并取最后一次出现。解析失败（加密/损坏/非常规布局）返回空串，调用方回退
+// 到内容指纹匹配。
+QString extractPdfFileIdentifier(const QString &filePath)
+{
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly))
+        return QString();
+
+    file.seek(qMax<qint64>(0, file.size() - 8192));
+    const QString text = QString::fromLatin1(file.read(8192));
+
+    // /ID 数组：[值1 值2]，值可为 <hex> 或 (literal)；字面量内允许 \x 转义
+    static const QRegularExpression re(
+            QLatin1String("/ID\\s*\\[\\s*"
+                          "(?:<([0-9a-fA-F]+)>|\\(((?:\\\\.|[^\\\\)])*)\\))"
+                          "\\s*"
+                          "(?:<[0-9a-fA-F]+>|\\((?:\\\\.|[^\\\\)])*\\))"
+                          "\\s*\\]"));
+    QString id;
+    QRegularExpressionMatchIterator it = re.globalMatch(text);
+    while (it.hasNext()) {                       // 取最后一次出现（最新增量更新的 trailer）
+        const QRegularExpressionMatch m = it.next();
+        // 值1：十六进制时归一化小写；字面量时保持原始字节（同一文件解析结果稳定）
+        const QString hex = m.captured(1);
+        id = hex.isNull() ? m.captured(2) : hex.toLower();
+    }
+    return id;
+}
+
+} // namespace
 
 namespace deepin_reader {
 PDFAnnotation::PDFAnnotation(DPdfAnnot *dannotation) : Annotation(),
@@ -494,6 +533,15 @@ bool PDFDocument::save() const
     qCInfo(appLog) << "Saving PDF document";
 
     return m_document->save();
+}
+
+QString PDFDocument::fileIdentifier() const
+{
+    if (!m_document)
+        return QString();
+    // 系统 libdeepin-pdfium (1.5.x) 未提供 /ID 接口，改为在 reader 侧直接解析
+    // PDF 文件中的文档标识符（见 extractPdfFileIdentifier）
+    return extractPdfFileIdentifier(m_document->filePath());
 }
 
 bool PDFDocument::saveAs(const QString &filePath) const

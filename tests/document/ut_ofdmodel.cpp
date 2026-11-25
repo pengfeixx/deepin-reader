@@ -707,6 +707,7 @@ TEST(OfdApi, metadataAndIdentifier)
     std::unique_ptr<OfdDocument> doc(OfdDocument::loadDocument(path, error));
     ASSERT_NE(doc, nullptr);
     const Properties props = doc->properties();
+    EXPECT_EQ(doc->fileIdentifier(), QStringLiteral("文档-ID"));
     EXPECT_EQ(props.value("Title").toString(), QStringLiteral("标题"));
     EXPECT_EQ(props.value("Author").toString(), QStringLiteral("作者"));
     EXPECT_EQ(props.value("Subject").toString(), QStringLiteral("主题"));
@@ -717,6 +718,7 @@ TEST(OfdApi, metadataAndIdentifier)
     EXPECT_EQ(props.value("CreationDate").toDateTime().date(), QDate(2026, 9, 9));
     EXPECT_EQ(props.value("ModificationDate").toDateTime().offsetFromUtc(), 8 * 3600);
     EXPECT_EQ(props.value("PageCount").toInt(), 1);
+    EXPECT_EQ(doc->fileIdentifier(), QStringLiteral("文档-ID"));
 }
 
 TEST(OfdApi, missingMetadataAndInvalidDate)
@@ -729,6 +731,7 @@ TEST(OfdApi, missingMetadataAndInvalidDate)
     std::unique_ptr<OfdDocument> doc(OfdDocument::loadDocument(path, error));
     ASSERT_NE(doc, nullptr);
     const Properties props = doc->properties();
+    EXPECT_TRUE(doc->fileIdentifier().isEmpty());
     EXPECT_FALSE(props.contains("Title"));
     EXPECT_FALSE(props.value("CreationDate").toDateTime().isValid());
     EXPECT_EQ(props.value("CreationDateRaw").toString(), QStringLiteral("not-a-date"));

@@ -204,6 +204,11 @@ public:
     bool save();
 
     /**
+     * @brief 获取文档内置唯一标识符
+     */
+    QString fileIdentifier() const;
+
+    /**
      * @brief saveAs
      * 另存为
      * @param filePath

@@ -772,6 +772,12 @@ TEST_F(TestPDFDocument, UT_PDFDocument_loadDocument_001)
     EXPECT_TRUE(error == Document::WrongPassword);
 }
 
+TEST_F(TestPDFDocument, UT_PDFDocument_fileIdentifier_001)
+{
+    QString id1 = m_tester->fileIdentifier();
+    EXPECT_TRUE(id1 == m_tester->fileIdentifier());
+}
+
 // ==================== PMS 批次 2 补强 ====================
 // 真实文件 fixture: normal.pdf / broken.pdf (UTSOURCEDIR/files/)
 // 注意: PDFDocument 析构会 delete m_document, fixture 只 delete m_tester。

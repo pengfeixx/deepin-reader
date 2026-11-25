@@ -264,6 +264,13 @@ bool SheetRenderer::save()
     return success;
 }
 
+QString SheetRenderer::fileIdentifier() const
+{
+    if (m_document == nullptr)
+        return QString();
+    return m_document->fileIdentifier();
+}
+
 void SheetRenderer::loadPageLable()
 {
     qCDebug(appLog) << "SheetRenderer::loadPageLable start";

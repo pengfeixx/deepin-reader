@@ -921,6 +921,60 @@ TEST_F(TestDatabase, UT_Database_mergeDuplicateRecords_002)
     QFile::remove(docUsb);
 }
 
+TEST_F(TestDatabase, UT_Database_mergeDuplicateRecords_003)
+{
+    // 都无书签：取 lastOpened 较新者；同时验证 docId 匹配分支（hash 不同、docId 相同）
+    const QString dir = "/tmp/deepin_reader_ut_bookmark";
+    QDir().mkpath(dir);
+    QString src = UTSOURCEDIR;
+    src += "/files/normal.pdf";
+    const QString docLocal = dir + "/merge3_local.pdf";
+    const QString docUsb = dir + "/merge3_usb.pdf";
+    QFile::remove(docLocal);
+    QFile::remove(docUsb);
+    ASSERT_TRUE(QFile::copy(src, docLocal));
+    // 追加数据使 hash 不同，但 docId 相同（模拟同一文档的不同修改版本）
+    ASSERT_TRUE(QFile::copy(src, docUsb));
+    {
+        QFile f(docUsb);
+        ASSERT_TRUE(f.open(QIODevice::Append));
+        f.write(QByteArray(4096, 'y'));
+    }
+    const QString hashUsb = Database::computeContentHash(docUsb);
+    const QString hashLocal = Database::computeContentHash(docLocal);
+    ASSERT_NE(hashUsb, hashLocal);
+
+    ut_cleanup_path(m_tester, docLocal);
+    ut_cleanup_path(m_tester, docUsb);
+
+    const qint64 now = QDateTime::currentMSecsSinceEpoch();
+    // U盘记录：较新（currentPage=9）
+    ut_insert_operation(m_tester, docUsb, 9, hashUsb, now);
+    // 本地记录：较旧（currentPage=3），docId 与U盘记录相同
+    ut_insert_operation(m_tester, docLocal, 3, hashLocal, now - 60000);
+    QSqlQuery setDocId(m_tester->m_database);
+    ASSERT_TRUE(setDocId.exec("UPDATE operation SET docId = 'ut-merge-docid' "
+                              "WHERE filePath IN ('" + docUsb + "', '" + docLocal + "')"));
+    ASSERT_EQ(setDocId.numRowsAffected(), 2);
+
+    // 文件移动场景：本地源文件已不存在（源文件仍存在时各自独立，不合并）
+    ASSERT_TRUE(QFile::remove(docLocal));
+
+    {
+        DocSheet sheetUsbAgain(Dr::FileType::PDF, docUsb, nullptr);
+        EXPECT_TRUE(m_tester->readOperation(&sheetUsbAgain));
+        // docId 匹配到 local 记录，但其 lastOpened 较旧且无书签 → 状态保持U盘自己的（较新）
+        EXPECT_EQ(sheetUsbAgain.m_operation.currentPage, 9);
+    }
+
+    // 同 docId 的旧路径记录已清理
+    EXPECT_EQ(ut_operation_count(m_tester, docLocal), 0);
+
+    ut_cleanup_path(m_tester, docUsb);
+    QFile::remove(docLocal);
+    QFile::remove(docUsb);
+}
+
 TEST_F(TestDatabase, UT_Database_matchContentUsbExisting_001)
 {
     // matchOperationByContent 目标路径已有旧记录（同名替换场景）：

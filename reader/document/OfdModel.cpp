@@ -350,6 +350,11 @@ Properties OfdDocument::properties() const
     return props;
 }
 
+QString OfdDocument::fileIdentifier() const
+{
+    return m_properties.value("DocumentId").toString();
+}
+
 void OfdDocument::loadMetadata()
 {
     m_properties["Format"] = QStringLiteral("OFD");
