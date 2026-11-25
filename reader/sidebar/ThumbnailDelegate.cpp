@@ -68,12 +68,15 @@ void ThumbnailDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
             painter->setClipPath(clipPath);
             // 缩略图反色只跟随系统深色主题：深色主题下白底文档反转为黑底白字
             // （与书签/注释列表观感一致），浅色主题照常绘制原图。
-            // 反色统一走主干夜间滤镜 NightFilter（CIELAB L* 反转，不再用旧 HSL 方案）
+            // 反色统一走主干夜间滤镜 NightFilter（CIELAB L* 反转，不再用旧 HSL 方案），
+            // 图片对象区域蒙版随缩略图由渲染线程预取（与主视图同源），照片区域不反色，
+            // 并含扫描页覆盖率特判（超过阈值整页反色，避免回贴/蒙版异常）
             const bool darkTheme = (DTK_NAMESPACE::Gui::DGuiApplicationHelper::instance()->themeType() == DTK_NAMESPACE::Gui::DGuiApplicationHelper::DarkType);
+            const QVector<QRectF> imageRects = index.data(ImageinfoType_e::IMAGE_NIGHT_MASK).value<QVector<QRectF>>();
 
             // 反色结果按未旋转的原始缩略图缓存，再叠加旋转，避免每次重绘都逐像素反色
             const QPixmap displayPixmap = darkTheme
-                                          ? nightPixmap(rawPixmap).transformed(transform)
+                                          ? nightPixmap(rawPixmap, imageRects).transformed(transform)
                                           : pixmap;
 
             painter->drawPixmap(rect.x(), rect.y(), rect.width(), rect.height(), displayPixmap);
@@ -110,7 +113,7 @@ QSize ThumbnailDelegate::sizeHint(const QStyleOptionViewItem &option, const QMod
     return DStyledItemDelegate::sizeHint(option, index);
 }
 
-QPixmap ThumbnailDelegate::nightPixmap(const QPixmap &src) const
+QPixmap ThumbnailDelegate::nightPixmap(const QPixmap &src, const QVector<QRectF> &imageRects) const
 {
     if (src.isNull())
         return src;
@@ -121,7 +124,7 @@ QPixmap ThumbnailDelegate::nightPixmap(const QPixmap &src) const
         return m_nightPixmapCache;
 
     m_nightSourceCache = src;
-    m_nightPixmapCache = QPixmap::fromImage(NightFilter::applyPage(src.toImage()));
+    m_nightPixmapCache = QPixmap::fromImage(NightFilter::applyPage(src.toImage(), imageRects));
     m_nightPixmapCache.setDevicePixelRatio(src.devicePixelRatio());
     return m_nightPixmapCache;
 }

@@ -840,16 +840,16 @@ TEST_F(TestBrowserPage, UT_BrowserPage_isBigDoc_001)
 TEST_F(TestBrowserPage, UT_BrowserPage_applyNightMode_001)
 {
     // applyNightMode 已重构为异步实现(NightFilter + 后台线程),
-    // 此处直接测试 NightFilter::applyPage 纯滤镜逻辑的输入/输出断言
+    // 此处直接测试 NightFilter::apply 纯滤镜逻辑的输入/输出断言
 
     // 空图像输入返回空图像
     QImage nullImg;
-    EXPECT_TRUE(NightFilter::applyPage(nullImg).isNull());
+    EXPECT_TRUE(NightFilter::apply(nullImg).isNull());
 
     // 白色图像经夜间滤镜反色后应为深色背景
     QImage whiteImg(16, 16, QImage::Format_ARGB32);
     whiteImg.fill(Qt::white);
-    QImage nightImg = NightFilter::applyPage(whiteImg);
+    QImage nightImg = NightFilter::apply(whiteImg);
     EXPECT_FALSE(nightImg.isNull());
     QRgb pixel = nightImg.pixel(0, 0);
     EXPECT_LT(qRed(pixel), 128);
@@ -859,7 +859,7 @@ TEST_F(TestBrowserPage, UT_BrowserPage_applyNightMode_001)
     // 深色像素(boostSourceBelow 以下)反色后应提纯白
     QImage darkImg(16, 16, QImage::Format_ARGB32);
     darkImg.fill(Qt::black);
-    QImage darkNight = NightFilter::applyPage(darkImg);
+    QImage darkNight = NightFilter::apply(darkImg);
     EXPECT_FALSE(darkNight.isNull());
     QRgb darkPixel = darkNight.pixel(0, 0);
     EXPECT_EQ(qRed(darkPixel), 255);

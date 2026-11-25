@@ -236,6 +236,12 @@ public:
      * 用于在文件被移动/重命名后识别同一文档，返回空串表示无可用 ID
      */
     virtual QString fileIdentifier() const { return QString(); }
+    /**
+     * @brief 图片对象包围盒(与 image(index,width,height) 整页输出像素对齐)
+     * 默认返回空(无对象信息的文档格式,夜间模式回退整页处理)
+     */
+    virtual QVector<QRectF> imageObjectRects(int index, int width, int height) const
+    { Q_UNUSED(index) Q_UNUSED(width) Q_UNUSED(height) return QVector<QRectF>(); }
 };
 
 class DocumentFactory

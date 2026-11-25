@@ -497,6 +497,12 @@ void PageRenderThread::run()
         if (m_quit)
             break;
 
+        // 预取图片对象 bbox(夜间蒙版用):在工作线程取,避免 UI 线程与渲染争文档锁
+        if (DocSheet::existSheetByUuid(task.uuid) && task.renderer->opened()) {
+            task.imageRects = task.renderer->getImageObjectRects(
+                        task.pageIndex, task.rect.width(), task.rect.height());
+        }
+
         emit sigDocPageBigImageTaskFinished(task, pixmap);
     }
 
@@ -692,6 +698,9 @@ bool PageRenderThread::execNextDocPageNormalImageTask()
         qCWarning(appLog) << "Failed to get image for page:" << task.pageIndex;
     } else {
         qCDebug(appLog) << "Image rendered successfully for page:" << task.pageIndex;
+        // 预取图片对象 bbox(夜间蒙版用):在工作线程取,避免 UI 线程与渲染争文档锁
+        task.imageRects = task.renderer->getImageObjectRects(
+                    task.pageIndex, targetWidth, targetHeight);
         emit sigDocPageNormalImageTaskFinished(task, QPixmap::fromImage(image));
     }
 
@@ -808,6 +817,11 @@ bool PageRenderThread::execNextDocPageThumbnailTask()
     QImage image = task.renderer->getImage(task.index, 174, 174);
 
     if (!image.isNull()) {
+        // 预取图片对象 bbox(夜间/深色蒙版用):在工作线程取,避免 UI 线程与渲染争文档锁;
+        // 与 getImage 同尺寸(174,174)请求,蒙版与缩略图输出像素一一对齐
+        if (DocSheet::existSheetByUuid(task.uuid) && task.renderer->opened()) {
+            task.imageRects = task.renderer->getImageObjectRects(task.index, 174, 174);
+        }
         emit sigDocPageThumbnailTaskFinished(task, QPixmap::fromImage(image));
     }
     qCDebug(appLog) << "执行缩略图任务已完成";
@@ -904,6 +918,7 @@ void PageRenderThread::onDocPageNormalImageTaskFinished(DocPageNormalImageTask t
     if (DocSheet::existSheet(task.sheet)) {
         if (nullptr == task.page || !BrowserPage::existPage(task.page))
             return;   // 页面为空或已析构,丢弃残留回包
+        task.page->setImageObjectRects(task.imageRects, task.rect.width(), task.rect.height());
         task.page->handleRenderFinished(task.pixmapId, pixmap);
     }
     // qCDebug(appLog) << "PageRenderThread::onDocPageNormalImageTaskFinished() - On doc page normal image task finished completed";
@@ -926,6 +941,7 @@ void PageRenderThread::onDocPageBigImageTaskFinished(DocPageBigImageTask task, Q
     if (DocSheet::existSheet(task.sheet)) {
         if (nullptr == task.page || !BrowserPage::existPage(task.page))
             return;   // 页面为空或已析构,丢弃残留回包
+        task.page->setImageObjectRects(task.imageRects, task.rect.width(), task.rect.height());
         task.page->handleRenderFinished(task.pixmapId, pixmap);
     }
     // qCDebug(appLog) << "PageRenderThread::onDocPageBigImageTaskFinished() - On doc page big image task finished completed";
@@ -957,7 +973,7 @@ void PageRenderThread::onDocPageThumbnailTask(DocPageThumbnailTask task, QPixmap
 {
     // qCDebug(appLog) << "PageRenderThread::onDocPageThumbnailTask() - Starting on doc page thumbnail task";
     if (DocSheet::existSheet(task.sheet)) {
-        task.model->handleRenderThumbnail(task.index, pixmap);
+        task.model->handleRenderThumbnail(task.index, pixmap, task.imageRects);
     }
     // qCDebug(appLog) << "PageRenderThread::onDocPageThumbnailTask() - On doc page thumbnail task completed";
 }

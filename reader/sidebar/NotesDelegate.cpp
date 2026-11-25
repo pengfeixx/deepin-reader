@@ -49,14 +49,29 @@ void NotesDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
             clipPath.addRoundedRect(rect, borderRadius, borderRadius);
             painter->setClipPath(clipPath);
             // 深色主题下将白底缩略图反色为黑底白字（仅绘制时反色，不改缓存原图）：
-            // 统一走主干夜间滤镜 NightFilter（CIELAB L* 反转）
+            // 统一走主干夜间滤镜 NightFilter（CIELAB L* 反转），图片对象区域不反色
+            // （照片零负片，与主视图蒙版行为一致），含扫描页整页反色特判。
             if (DTK_NAMESPACE::Gui::DGuiApplicationHelper::instance()->themeType() == DTK_NAMESPACE::Gui::DGuiApplicationHelper::DarkType) {
+                // 图片对象 bbox（与存储缩略图像素对齐，渲染线程预取）
+                const QVector<QRectF> imageRects = index.data(ImageinfoType_e::IMAGE_NIGHT_MASK).value<QVector<QRectF>>();
                 // 按源缩略图 cacheKey() 缓存反色结果，避免每次重绘重复逐像素计算
                 QPixmap invertedPixmap;
                 if (QPixmap *cached = m_darkPixmapCache.object(pixmap.cacheKey())) {
                     invertedPixmap = *cached;
                 } else {
-                    invertedPixmap = QPixmap::fromImage(NightFilter::applyPage(scalePix.toImage()));
+                    // bbox 是存储缩略图（174px）坐标，而 scalePix 是等比缩小后的图，
+                    // 须先映射到 scalePix 坐标，否则覆盖率特判/蒙版区域全错
+                    QVector<QRectF> scaledRects;
+                    scaledRects.reserve(imageRects.size());
+                    const qreal sx = pixmap.isNull() || pixmap.width() == 0
+                                             ? 0.0 : qreal(scalePix.width()) / pixmap.width();
+                    const qreal sy = pixmap.isNull() || pixmap.height() == 0
+                                             ? 0.0 : qreal(scalePix.height()) / pixmap.height();
+                    for (const QRectF &r : imageRects)
+                        scaledRects.append(QRectF(r.x() * sx, r.y() * sy,
+                                                  r.width() * sx, r.height() * sy));
+
+                    invertedPixmap = QPixmap::fromImage(NightFilter::applyPage(scalePix.toImage(), scaledRects));
                     invertedPixmap.setDevicePixelRatio(scalePix.devicePixelRatio());
                     if (!invertedPixmap.isNull())
                         m_darkPixmapCache.insert(pixmap.cacheKey(), new QPixmap(invertedPixmap),
