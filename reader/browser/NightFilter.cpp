@@ -5,8 +5,6 @@
 #include "NightFilter.h"
 
 #include <QtGlobal>
-#include <QPainter>
-#include <QMutexLocker>
 #include <QtMath>
 #include <cmath>
 #include <QDebug>
@@ -93,13 +91,6 @@ void labToSrgb(double L, double a, double bb, int &r, int &g, int &b)
 
 namespace {
 
-/** 图片域:仅按系数调暗,色相与明暗结构保持不变 */
-inline QRgb dimPixelImage(QRgb px, qreal k)
-{
-    return qRgba(qRound(qRed(px) * k), qRound(qGreen(px) * k), qRound(qBlue(px) * k), qAlpha(px));
-}
-
-} // namespace
 /**
  * @brief invertPixelExact 精确路径:CIELAB L* 反转 + 两端收敛
  *   - L' = 100 - L:白底→深底,黑字→亮字,色度(a/b)完整保留
@@ -130,7 +121,6 @@ inline QRgb invertPixelExact(QRgb px, const Options &opt)
 // 查询零计算:1 次索引 + 1 次内存读,≈5-10ns/像素。
 // 精度:灰阶/常规色 ≤2/255;极端饱和色(反色后出 sRGB 色域被钳制)≤24/255,
 // 提白不连续面(L*=27)被插值平滑,文字抗锯齿边缘更柔和,人眼不可辨。
-namespace {
 
 struct InvertLut {
     static constexpr int kGrid = 65;             // 基表每轴网格数(网格点取 i*255/64)
@@ -228,7 +218,7 @@ inline QRgb invertPixelLut(QRgb px)
 
 } // namespace
 
-QImage apply(const QImage &src, const QImage *mask, const Options &opt)
+QImage applyPage(const QImage &src, const Options &opt)
 {
     if (src.isNull())
         return src;
@@ -239,81 +229,23 @@ QImage apply(const QImage &src, const QImage *mask, const Options &opt)
         img = img.convertToFormat(QImage::Format_ARGB32);
     }
 
-    // 蒙版尺寸不匹配时忽略(防错位;mask 为空表示整页反色)
-    const bool useMask = (mask != nullptr && !mask->isNull() && mask->size() == img.size());
-    const bool hasImageArea = useMask && opt.imagePolicy != ImageInvert;
-
     const int w = img.width();
     const int h = img.height();
 
-    // 默认参数走 LUT 快速路径;非默认参数(实验环境变量)回退精确计算
+    // 默认参数走 LUT 快速路径;非默认参数回退精确计算
     const bool useLut = (Options().minLightness == opt.minLightness
                          && Options().boostSourceBelow == opt.boostSourceBelow);
 
     for (int y = 0; y < h; ++y) {
         QRgb *line = reinterpret_cast<QRgb *>(img.scanLine(y));
-        const uchar *maskLine = useMask ? mask->scanLine(y) : nullptr;
 
         for (int x = 0; x < w; ++x) {
             const QRgb px = line[x];
-
-            // 蒙版命中且为不透明像素才视为图片内容;
-            // 透明 PNG 的 bbox 内 alpha=0 像素实际是页面背景,仍走反色域
-            if (hasImageArea && maskLine[x] == 0xFF && qAlpha(px) > 0) {
-                line[x] = (ImageOriginal == opt.imagePolicy) ? px : dimPixelImage(px, opt.imageDimFactor);
-            } else {
-                line[x] = useLut ? invertPixelLut(px) : invertPixelExact(px, opt);
-            }
+            line[x] = useLut ? invertPixelLut(px) : invertPixelExact(px, opt);
         }
     }
 
     return img;
-}
-
-QImage applyPage(const QImage &src, const QVector<QRectF> &imageRects,
-                 const Options &opt, double *coverageOut)
-{
-    if (coverageOut)
-        *coverageOut = 0.0;
-    if (src.isNull())
-        return src;
-
-    // 蒙版仅在有图片对象且策略需要分区时构建;Invert 策略 = 整页反色,无需蒙版
-    if (opt.imagePolicy == ImageInvert || imageRects.isEmpty())
-        return apply(src, nullptr, opt);
-
-    const qint64 total = static_cast<qint64>(src.width()) * src.height();
-    if (total <= 0)
-        return apply(src, nullptr, opt);
-
-    // bbox 面积估算覆盖率(重叠对象会略高估,阈值场景宽松无妨)
-    double area = 0;
-    for (const QRectF &r : imageRects)
-        area += qMax(0.0, r.width()) * qMax(0.0, r.height());
-    const double coverage = qMin(1.0, area / double(total));
-    if (coverageOut)
-        *coverageOut = coverage;
-
-    // 扫描页特判:图片几乎铺满整页(扫描件/漫画),保留图片则白底刺眼,
-    // 文字可读性优先,回退整页反色
-    if (coverage > kScannedCoverThreshold)
-        return apply(src, nullptr, opt);
-
-    QImage mask(src.size(), QImage::Format_Grayscale8);
-    if (mask.isNull())
-        return apply(src, nullptr, opt);
-    mask.fill(0);
-    {
-        QPainter p(&mask);
-        p.setPen(Qt::NoPen);
-        p.setBrush(Qt::white);
-        for (const QRectF &r : imageRects) {
-            // 膨胀 2px 吸收图像边缘的抗锯齿过渡带,避免图片边缘出现反色色边
-            p.drawRect(r.adjusted(-2, -2, 2, 2));
-        }
-    }
-
-    return apply(src, &mask, opt);
 }
 
 } // namespace NightFilter

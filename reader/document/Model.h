@@ -190,12 +190,6 @@ public:
     virtual QSizeF sizeF() const = 0;
     virtual int resolution() const { return 72; }
     virtual QImage render(int width, int height, const QRect &slice = QRect()) const = 0;
-    /**
-     * @brief 图片对象包围盒(与 render(width,height) 整页输出像素对齐)
-     * 默认返回空(无对象信息的文档格式,夜间模式回退整页处理)
-     */
-    virtual QVector<QRectF> imageObjectRects(int width, int height) const
-    { Q_UNUSED(width) Q_UNUSED(height) return QVector<QRectF>(); }
     // LCOV_EXCL_START
     virtual Link getLinkAtPoint(const QPointF &) { return Link(); }
     virtual QString text(const QRectF &rect) const = 0;
@@ -237,11 +231,6 @@ public:
     virtual bool saveAs(const QString &filePath) const = 0;
     virtual Outline outline() const { return Outline(); } // LCOV_EXCL_LINE
     virtual Properties properties() const = 0;
-    /**
-     * @brief 获取文档内置的唯一标识符（如 PDF 的 /ID）
-     * 用于在文件被移动/重命名后识别同一文档，返回空串表示无可用 ID
-     */
-    virtual QString fileIdentifier() const { return QString(); }
 };
 
 class DocumentFactory

@@ -109,7 +109,7 @@ public:
 
     /**
      * @brief matchOperationByContent
-     * 通过文件内容特征（docId 优先，其次 fileSize+内容哈希）匹配已保存的操作记录，
+     * 通过文件内容特征（fileSize+内容哈希）匹配已保存的操作记录，
      * 用于目标路径自身无记录时恢复阅读状态。两种命中方式：
      * 1. 迁移：源文件已确认不存在（可靠的本地路径经存在性确认），
      *    视为移动/重命名，记录与书签整体迁移到新路径；
@@ -205,7 +205,7 @@ private:
 
     /**
      * @brief mergeDuplicateRecords
-     * 合并同内容（docId 或 fileSize+contentHash 相同）且源文件已不存在的
+     * 合并同内容（fileSize+contentHash 相同）且源文件已不存在的
      * 其他路径记录到当前路径，作为文件移动/重命名后状态迁移的收尾
      * （目标路径已有同内容记录时 matchOperationByContent 不会被调用，
      * 旧路径残留记录在此清理：阅读状态取 lastOpened 较新者，删除源记录，

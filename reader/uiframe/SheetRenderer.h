@@ -83,15 +83,6 @@ public:
     QImage getImage(int index, int width, int height, const QRect &slice = QRect());
 
     /**
-     * @brief getImageObjectRects 图片对象包围盒(夜间模式对象蒙版用,实验)
-     * @param index 页索引
-     * @param width (in pixel) 目标渲染宽(与 getImage 对齐)
-     * @param height (in pixel)
-     * @return 图片对象包围盒列表,像素坐标;非 PDF 文档返回空
-     */
-    QVector<QRectF> getImageObjectRects(int index, int width, int height);
-
-    /**
      * @brief getLinkAtPoint
      * 获取点的link
      * @param point
@@ -211,11 +202,6 @@ public:
      * @return
      */
     bool save();
-
-    /**
-     * @brief 获取文档内置唯一标识符
-     */
-    QString fileIdentifier() const;
 
     /**
      * @brief saveAs

@@ -35,7 +35,6 @@ public:
     bool saveAs(const QString &filePath) const override;
     Outline outline() const override;
     Properties properties() const override;
-    QString fileIdentifier() const override;
 
     QString filePath() const { return m_filePath; }
     qreal xRes() const { return m_xRes; }

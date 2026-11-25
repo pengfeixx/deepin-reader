@@ -110,13 +110,6 @@ QImage PDFPage::render(int width, int height, const QRect &slice) const
     return result;
 }
 
-QVector<QRectF> PDFPage::imageObjectRects(int width, int height) const
-{
-    LOCK_DOCUMENT
-
-    return m_page->imageObjectRects(width, height);
-}
-
 Link PDFPage::getLinkAtPoint(const QPointF &pos)
 {
     // qCDebug(appLog) << "PDFPage::getLinkAtPoint() - Getting link at point:" << pos;
@@ -501,13 +494,6 @@ bool PDFDocument::save() const
     qCInfo(appLog) << "Saving PDF document";
 
     return m_document->save();
-}
-
-QString PDFDocument::fileIdentifier() const
-{
-    if (!m_document)
-        return QString();
-    return m_document->fileIdentifier();
 }
 
 bool PDFDocument::saveAs(const QString &filePath) const

@@ -1,3 +1,9 @@
+deepin-reader (6.6.6) unstable; urgency=medium
+
+  * refactor: remove fileIdentifier/imageObjectRects features
+
+ -- xiepengfei <xiepengfei@uniontech.com>  Wed, 25 Nov 2026 14:20:22 +0800
+
 deepin-reader (6.6.5) unstable; urgency=medium
 
   * fix: enable N-up printing in preview via paintRequested

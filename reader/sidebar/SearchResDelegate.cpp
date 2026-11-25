@@ -41,11 +41,9 @@ void SearchResDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 
         if (!pixmap.isNull()) {
             // 深色主题下搜索结果页的页面小图与缩略图侧栏一致走主干夜间滤镜
-            // （CIELAB L* 反转，图片对象区域保持原色，扫描页整页反色特判），
-            // 浅色主题照常绘制原图；先按原始尺寸反色再缩放，蒙版坐标无需换算
+            // （CIELAB L* 反转），浅色主题照常绘制原图；先按原始尺寸反色再缩放
             const bool darkTheme = (DTK_NAMESPACE::Gui::DGuiApplicationHelper::instance()->themeType() == DTK_NAMESPACE::Gui::DGuiApplicationHelper::DarkType);
-            const QVector<QRectF> imageRects = index.data(ImageinfoType_e::IMAGE_NIGHT_MASK).value<QVector<QRectF>>();
-            const QPixmap &displayPixmap = darkTheme ? nightPixmap(pixmap, imageRects) : pixmap;
+            const QPixmap &displayPixmap = darkTheme ? nightPixmap(pixmap) : pixmap;
             const QPixmap &scalePix = displayPixmap.scaled(pageSize);
             //clipPath pixmap
             painter->save();
@@ -131,7 +129,7 @@ QSize SearchResDelegate::sizeHint(const QStyleOptionViewItem &option, const QMod
     return size;
 }
 
-QPixmap SearchResDelegate::nightPixmap(const QPixmap &src, const QVector<QRectF> &imageRects) const
+QPixmap SearchResDelegate::nightPixmap(const QPixmap &src) const
 {
     if (src.isNull())
         return src;
@@ -142,7 +140,7 @@ QPixmap SearchResDelegate::nightPixmap(const QPixmap &src, const QVector<QRectF>
         return m_nightPixmapCache;
 
     m_nightSourceCache = src;
-    m_nightPixmapCache = QPixmap::fromImage(NightFilter::applyPage(src.toImage(), imageRects));
+    m_nightPixmapCache = QPixmap::fromImage(NightFilter::applyPage(src.toImage()));
     m_nightPixmapCache.setDevicePixelRatio(src.devicePixelRatio());
     return m_nightPixmapCache;
 }

@@ -122,7 +122,6 @@ bool Database::prepareOperation()
                     ",fileSize INTEGER DEFAULT 0"
                     ",lastModified INTEGER DEFAULT 0"
                     ",contentHash TEXT DEFAULT ''"
-                    ",docId TEXT DEFAULT ''"
                     ",lastOpened INTEGER DEFAULT 0"
                     ")")) {
         qCInfo(appLog) << query.lastError();
@@ -202,7 +201,6 @@ bool Database::migrateOperationTable()
         {"fileSize",       "INTEGER DEFAULT 0"},
         {"lastModified",   "INTEGER DEFAULT 0"},
         {"contentHash",    "TEXT DEFAULT ''"},
-        {"docId",          "TEXT DEFAULT ''"},
         {"lastOpened",     "INTEGER DEFAULT 0"}
     };
 
@@ -320,17 +318,15 @@ bool Database::saveOperation(DocSheet *sheet, const QString &cachedContentHash)
     QString contentHash = cachedContentHash.isEmpty()
         ? computeContentHash(sheet->filePath())
         : cachedContentHash;
-    // 获取文档内置唯一标识符（如 PDF 的 /ID），用于文件移动/重命名后识别
-    QString docId = sheet->m_renderer ? sheet->m_renderer->fileIdentifier() : QString();
 
     QSqlQuery query(m_database);
     query.prepare("REPLACE INTO "
                   "operation(filePath,layoutMode,mouseShape,scaleMode,rotation,scaleFactor,"
                   "sidebarVisible,sidebarIndex,currentPage,sidebarWidth,sidebarWidthChanged,scrollPosition,expandedSections,"
-                  "fileSize,lastModified,contentHash,docId,lastOpened)"
+                  "fileSize,lastModified,contentHash,lastOpened)"
                   " VALUES(:filePath,:layoutMode,:mouseShape,:scaleMode,:rotation,:scaleFactor,"
                   ":sidebarVisible,:sidebarIndex,:currentPage,:sidebarWidth,:sidebarWidthChanged,:scrollPosition,:expandedSections,"
-                  ":fileSize,:lastModified,:contentHash,:docId,:lastOpened)");
+                  ":fileSize,:lastModified,:contentHash,:lastOpened)");
     query.bindValue(":filePath", sheet->filePath());
     query.bindValue(":layoutMode", sheet->m_operation.layoutMode);
     query.bindValue(":mouseShape", sheet->m_operation.mouseShape);
@@ -353,7 +349,6 @@ bool Database::saveOperation(DocSheet *sheet, const QString &cachedContentHash)
     query.bindValue(":fileSize", fileSize);
     query.bindValue(":lastModified", lastModified);
     query.bindValue(":contentHash", contentHash);
-    query.bindValue(":docId", docId);
     query.bindValue(":lastOpened", QDateTime::currentMSecsSinceEpoch());
 
     if (!query.exec()) {
@@ -372,12 +367,9 @@ bool Database::matchOperationByContent(const QFileInfo &fileInfo, DocSheet *shee
     qint64 fileSize = fileInfo.size();
     qint64 lastModified = fileInfo.lastModified().toMSecsSinceEpoch();
     QString contentHash = computeContentHash(fileInfo.absoluteFilePath());
-    // 获取文档内置唯一标识符（PDF 的 /ID）
-    QString docId = sheet->m_renderer ? sheet->m_renderer->fileIdentifier() : QString();
 
     qCDebug(appLog) << "Matching by content: size=" << fileSize
-                    << "mtime=" << lastModified << "hash=" << contentHash.left(16) << "..."
-                    << "docId=" << docId.left(16) << "...";
+                    << "mtime=" << lastModified << "hash=" << contentHash.left(16) << "...";
 
     Transaction matchTransaction(m_database);
 
@@ -392,41 +384,12 @@ bool Database::matchOperationByContent(const QFileInfo &fileInfo, DocSheet *shee
         return row;
     };
 
-    // 优先通过 docId 匹配（PDF /ID，改名/移动不变，最可靠）
-    if (!docId.isEmpty()) {
-        QSqlQuery idQuery(m_database);
+    {
+        QSqlQuery query(m_database);
+        // 通过 fileSize + contentHash 匹配（同一份内容的移动/重命名/副本）
+        // 不使用 lastModified：保存注释会修改文件 mtime，导致移动文件后匹配失败
         // 排除目标路径自身的记录：同一份文件可能在目标路径已有旧记录，
         // 选中它会导致 oldPath == newPath，做一次无效迁移
-        idQuery.prepare("SELECT * FROM operation WHERE docId = :docId AND docId != '' AND filePath != :filePath");
-        idQuery.bindValue(":docId", docId);
-        idQuery.bindValue(":filePath", fileInfo.absoluteFilePath());
-        if (idQuery.exec()) {
-            // docId 相同时选最近修改的记录。
-            // 源文件已消失的进入迁移池；仍存在的进入借用池：
-            // 同一份内容在多个路径共存时不得夺走源路径的记录，
-            // 但新路径首次打开（自身无记录）可借用一份源状态
-            while (idQuery.next()) {
-                const QVariantMap row = rowToMap(idQuery);
-                const qint64 modTime = row.value("lastModified").toLongLong();
-                if (!isPathProvablyGone(row.value("filePath").toString())) {
-                    if (borrowRow.isEmpty() || modTime > borrowRow.value("lastModified").toLongLong())
-                        borrowRow = row;
-                    continue;
-                }
-                if (bestRow.isEmpty() || modTime > bestRow.value("lastModified").toLongLong())
-                    bestRow = row;
-            }
-            if (!bestRow.isEmpty()) {
-                qCInfo(appLog) << "Matched by docId:" << docId.left(16) << "...";
-            }
-        }
-    }
-
-    // docId 未命中时，回退到 fileSize + contentHash 匹配
-    if (bestRow.isEmpty()) {
-        QSqlQuery query(m_database);
-        // 不使用 lastModified：保存注释会修改文件 mtime，导致移动文件后匹配失败
-        // 排除目标路径自身记录，理由同 docId 分支
         query.prepare("SELECT * FROM operation WHERE fileSize = :fileSize "
                       "AND contentHash = :contentHash AND filePath != :filePath");
         query.bindValue(":fileSize", fileSize);
@@ -439,7 +402,9 @@ bool Database::matchOperationByContent(const QFileInfo &fileInfo, DocSheet *shee
         }
 
         // 匹配到多条记录时选最后修改时间最近的一条；
-        // 源文件已消失的进入迁移池，仍存在的进入借用池（理由同 docId 分支）
+        // 源文件已消失的进入迁移池，仍存在的进入借用池：
+        // 同一份内容在多个路径共存时不得夺走源路径的记录，
+        // 但新路径首次打开（自身无记录）可借用一份源状态
         while (query.next()) {
             const QVariantMap row = rowToMap(query);
             const qint64 modTime = row.value("lastModified").toLongLong();
@@ -569,14 +534,13 @@ bool Database::mergeDuplicateRecords(DocSheet *sheet)
 
     // 读取当前记录的内容特征（指纹已在 readOperation 中校验通过）
     QSqlQuery curQuery(m_database);
-    curQuery.prepare("SELECT fileSize, contentHash, docId, lastOpened FROM operation WHERE filePath = :filePath");
+    curQuery.prepare("SELECT fileSize, contentHash, lastOpened FROM operation WHERE filePath = :filePath");
     curQuery.bindValue(":filePath", newPath);
     if (!curQuery.exec() || !curQuery.next()) {
         return false;
     }
     const qint64 fileSize = curQuery.value("fileSize").toLongLong();
     const QString contentHash = curQuery.value("contentHash").toString();
-    const QString docId = curQuery.value("docId").toString();
     qint64 curLastOpened = curQuery.value("lastOpened").toLongLong();
 
     // 无指纹无法可靠判定同内容，不做合并
@@ -584,13 +548,11 @@ bool Database::mergeDuplicateRecords(DocSheet *sheet)
         return false;
     }
 
-    // 查找同内容的其他路径记录：docId 相同（非空）或 fileSize+指纹相同
+    // 查找同内容的其他路径记录：fileSize+指纹相同
     QSqlQuery dupQuery(m_database);
     dupQuery.prepare("SELECT * FROM operation WHERE filePath != :newPath AND "
-                     "((docId != '' AND docId = :docId) OR "
-                     "(fileSize = :fileSize AND contentHash = :contentHash))");
+                     "(fileSize = :fileSize AND contentHash = :contentHash)");
     dupQuery.bindValue(":newPath", newPath);
-    dupQuery.bindValue(":docId", docId);
     dupQuery.bindValue(":fileSize", fileSize);
     dupQuery.bindValue(":contentHash", contentHash);
     if (!dupQuery.exec()) {
