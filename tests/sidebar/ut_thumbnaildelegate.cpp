@@ -207,45 +207,7 @@ TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintIgnoresEyeProtectionMode)
     EXPECT_GT(center.lightness(), 239);
 }
 
-// 深色主题 + 图片对象蒙版：蒙版区域(照片)保持原始像素，非蒙版区域(白底)反转为深色
-TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintDarkThemeWithNightMaskKeepsPhotoPixels)
-{
-    Stub s;
-    typedef QSizeF(*fptr)(DocSheet *, int);
-    fptr pageSizeFunc = (fptr)(&DocSheet::pageSizeByIndex);
-    s.set(pageSizeFunc, pageSizeByIndex_stub);
-
-    ThemeGuard dark(DGuiApplicationHelper::DarkType);
-
-    // 左半为纯色照片块(70,70,70)，右半白底；蒙版仅罩住照片，覆盖率 < 70% 不触发扫描页整页反色
-    QPixmap mixed(174, 246);
-    mixed.fill(Qt::white);
-    QPainter p(&mixed);
-    p.fillRect(0, 0, 87, 246, QColor(70, 70, 70));
-    p.end();
-
-    m_pView->getImageModel()->insertPageIndex(0);
-    m_sheet->setThumbnail(0, mixed, QVector<QRectF>() << QRectF(0, 0, 87, 246));
-
-    const QModelIndex index = m_pView->getImageModel()->index(0, 0);
-    ASSERT_TRUE(index.isValid());
-
-    QStyleOptionViewItem option;
-    option.rect = QRect(0, 0, 240, 300);
-
-    QImage canvas(240, 300, QImage::Format_ARGB32_Premultiplied);
-    canvas.fill(Qt::red);
-    QPainter painter(&canvas);
-    m_tester->paint(&painter, option, index);
-    painter.end();
-
-    // 蒙版区域像素保持不变（imageDimFactor=1 时 dimPixelImage 不修改像素值）
-    EXPECT_EQ(canvas.pixelColor(60, 150), QColor(70, 70, 70));
-    // 蒙版外白底已反转为深色
-    EXPECT_LT(canvas.pixelColor(180, 150).lightness(), 32);
-}
-
-// 深色主题 + 扫描页（图片 bbox 覆盖率 > 70%）：整页反色，蒙版不生效
+// 深色主题：整页反色，深色像素反转后提亮为白
 TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintDarkThemeScannedPageFullInvert)
 {
     Stub s;
@@ -255,12 +217,12 @@ TEST_F(UT_ThumbnailDelegate, UT_ThumbnailDelegate_paintDarkThemeScannedPageFullI
 
     ThemeGuard dark(DGuiApplicationHelper::DarkType);
 
-    // 整页照片(米黄纸面色)：bbox 覆盖率 100%，按扫描页整页反色，深色像素反转后提亮为白
+    // 整页照片(米黄纸面色)：整页反色后深色像素提亮为白
     QPixmap scanned(174, 246);
     scanned.fill(QColor(60, 60, 60));
 
     m_pView->getImageModel()->insertPageIndex(0);
-    m_sheet->setThumbnail(0, scanned, QVector<QRectF>() << QRectF(0, 0, 174, 246));
+    m_sheet->setThumbnail(0, scanned);
 
     const QModelIndex index = m_pView->getImageModel()->index(0, 0);
     ASSERT_TRUE(index.isValid());

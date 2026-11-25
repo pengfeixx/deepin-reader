@@ -540,17 +540,10 @@ QPixmap DocSheet::thumbnail(int index)
     return m_thumbnailMap.value(index);
 }
 
-QVector<QRectF> DocSheet::thumbnailImageRects(int index)
-{
-    // qCDebug(appLog) << "thumbnailImageRects";
-    return m_thumbnailImageRects.value(index);
-}
-
-void DocSheet::setThumbnail(int index, QPixmap pixmap, const QVector<QRectF> &imageRects)
+void DocSheet::setThumbnail(int index, QPixmap pixmap)
 {
     // qCDebug(appLog) << "setThumbnail";
     m_thumbnailMap[index] = pixmap;
-    m_thumbnailImageRects[index] = imageRects;
 }
 
 void DocSheet::setScaleMode(Dr::ScaleMode mode)

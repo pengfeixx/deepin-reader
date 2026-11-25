@@ -198,38 +198,6 @@ TEST_F(TestSideBarImageViewModel, testhandleRenderThumbnail)
     m_tester->handleRenderThumbnail(0, QPixmap());
 }
 
-// handleRenderThumbnail 第三参(图片对象 bbox)需存入 DocSheet，供 data(IMAGE_NIGHT_MASK) 读取
-TEST_F(TestSideBarImageViewModel, testhandleRenderThumbnailStoresImageRects)
-{
-    const QVector<QRectF> rects { QRectF(1, 2, 3, 4), QRectF(5, 6, 7, 8) };
-    QPixmap thumb(174, 174);
-    thumb.fill(Qt::white);
-
-    m_tester->handleRenderThumbnail(0, thumb, rects);
-
-    EXPECT_TRUE(m_sheet->thumbnailImageRects(0) == rects);
-
-    // data(IMAGE_NIGHT_MASK) 返回同一份 bbox，供代理反色时跳过图片区域
-    m_tester->insertPageIndex(0);
-    const QModelIndex index = m_tester->index(0, 0);
-    ASSERT_TRUE(index.isValid());
-    const QVector<QRectF> got =
-            index.data(ImageinfoType_e::IMAGE_NIGHT_MASK).value<QVector<QRectF>>();
-    EXPECT_TRUE(got == rects);
-}
-
-// 未设置蒙版时 IMAGE_NIGHT_MASK 返回空列表（整页反色，不跳过图片区域）
-TEST_F(TestSideBarImageViewModel, testImageNightMaskDefaultsEmpty)
-{
-    m_tester->insertPageIndex(0);
-    const QModelIndex index = m_tester->index(0, 0);
-    ASSERT_TRUE(index.isValid());
-    const QVector<QRectF> got =
-            index.data(ImageinfoType_e::IMAGE_NIGHT_MASK).value<QVector<QRectF>>();
-    EXPECT_TRUE(got.isEmpty());
-    EXPECT_TRUE(m_sheet->thumbnailImageRects(0).isEmpty());
-}
-
 TEST_F(TestSideBarImageViewModel, testonBatchUpdateTimer)
 {
     // Trigger onBatchUpdateTimer directly
@@ -263,8 +231,8 @@ TEST_F(TestSideBarImageViewModel, BUG343541_handleRenderThumbnail_batchDebounce)
     // 缩略图渲染去抖：连续渲染仅启动一次批量刷新 timer，
     // timer 触发后发出 dataChanged 且待更新集合清空
     m_tester->initModelLst(QList<ImagePageInfo_t>() << ImagePageInfo_t(0) << ImagePageInfo_t(1), true);
-    m_tester->handleRenderThumbnail(0, QPixmap(10, 10), QVector<QRectF>() << QRectF(0, 0, 10, 10));
-    m_tester->handleRenderThumbnail(1, QPixmap(10, 10), QVector<QRectF>() << QRectF(0, 0, 10, 10));
+    m_tester->handleRenderThumbnail(0, QPixmap(10, 10));
+    m_tester->handleRenderThumbnail(1, QPixmap(10, 10));
     EXPECT_TRUE(m_tester->m_pendingUpdatePages.contains(0));
     EXPECT_TRUE(m_tester->m_pendingUpdatePages.contains(1));
     EXPECT_TRUE(m_tester->m_batchUpdateTimer->isActive());

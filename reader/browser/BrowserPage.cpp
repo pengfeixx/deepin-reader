@@ -198,28 +198,6 @@ void BrowserPage::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
                 painter->setCompositionMode(QPainter::CompositionMode_Difference);
                 painter->fillRect(boundingRect(), Qt::white);
                 painter->restore();
-
-                // 2) 图片对象区回贴原图:照片零负片,缩放后 bbox 随渲染尺寸等比换算
-                if (!m_imageRects.isEmpty() && m_rectsPixmapWidth > 0
-                        && m_rectsPixmapHeight > 0) {
-                    const qreal kx = boundingRect().width() / m_rectsPixmapWidth;
-                    const qreal ky = boundingRect().height() / m_rectsPixmapHeight;
-                    painter->save();
-                    painter->setClipRect(boundingRect());
-                    // drawPixmap 源矩形不感知 DPR,需按设备像素换算
-                    const qreal dpr = dApp->devicePixelRatio();
-                    for (const QRectF &r : m_imageRects) {
-                        // 外扩 1 逻辑像素吸收边缘抗锯齿带,与 NightFilter 蒙版膨胀同理
-                        const QRectF target = QRectF(r.x() * kx - 1, r.y() * ky - 1,
-                                                     r.width() * kx + 2, r.height() * ky + 2)
-                                              & boundingRect();
-                        if (!target.isEmpty())
-                            painter->drawPixmap(target, m_renderPixmap,
-                                                QRectF(target.x() * dpr, target.y() * dpr,
-                                                       target.width() * dpr, target.height() * dpr));
-                    }
-                    painter->restore();
-                }
             }
         } else {
             painter->drawPixmap(0, 0, m_nightPixmap);
@@ -1378,14 +1356,6 @@ bool BrowserPage::isBigDoc()
     return isBig;
 }
 
-void BrowserPage::setImageObjectRects(const QVector<QRectF> &rects, int pixmapWidth, int pixmapHeight)
-{
-    m_imageRects = rects;
-    m_rectsPixmapWidth = pixmapWidth;
-    m_rectsPixmapHeight = pixmapHeight;
-    m_rectsFetched = true;
-}
-
 void BrowserPage::startNightJob()
 {
     if (m_renderPixmap.isNull())
@@ -1404,31 +1374,7 @@ void BrowserPage::startNightJob()
     m_nightDirty = false;
     m_nightJobRunning = true;
 
-    // 蒙版 bbox 通常由渲染线程随整页渲染预取并带回;未命中时(如打开文档后
-    // 才切入夜间模式的存量页)在 UI 线程同步补取一次,页对象列表有缓存,代价低
-    QVector<QRectF> rects = m_imageRects;
-    if (!m_rectsFetched && m_sheet && m_sheet->renderer() && m_sheet->renderer()->opened()) {
-        rects = m_sheet->renderer()->getImageObjectRects(itemIndex(), src.width(), src.height());
-        m_rectsPixmapWidth = src.width();
-        m_rectsPixmapHeight = src.height();
-    }
-
-    // rects 是预取时渲染尺寸下的物理像素坐标;缩放/旋转后当前渲染尺寸不同,
-    // 必须等比换算到新尺寸,否则蒙版错位——实际照片区被反相,旧位置留下
-    // 原色残影(缩放残影的根因)
-    if (!rects.isEmpty() && m_rectsPixmapWidth > 0 && m_rectsPixmapHeight > 0
-            && (m_rectsPixmapWidth != src.width() || m_rectsPixmapHeight != src.height())) {
-        const qreal kx = qreal(src.width()) / m_rectsPixmapWidth;
-        const qreal ky = qreal(src.height()) / m_rectsPixmapHeight;
-        for (QRectF &r : rects)
-            r = QRectF(r.x() * kx, r.y() * ky, r.width() * kx, r.height() * ky);
-    }
-
-    EyeProtectionManager *epMgr = EyeProtectionManager::instance();
-
     NightFilter::Options opt;
-    opt.imagePolicy = static_cast<NightFilter::ImagePolicy>(epMgr->nightImagePolicy());
-    opt.imageDimFactor = epMgr->nightImageDimFactor();
 
     if (!m_nightWatcher) {
         m_nightWatcher = new QFutureWatcher<QImage>();   // 无 parent:BrowserPage 非 QObject,在析构中手动删除
@@ -1438,9 +1384,9 @@ void BrowserPage::startNightJob()
                 m_nightWatcher, [this]() { onNightImageReady(); });
     }
 
-    m_nightWatcher->setFuture(QtConcurrent::run([src, rects, opt]() {
-        // 纯函数 + 私有副本,无锁无线程安全风险;含蒙版构建/扫描页特判
-        return NightFilter::applyPage(src, rects, opt);
+    m_nightWatcher->setFuture(QtConcurrent::run([src, opt]() {
+        // 纯函数 + 私有副本,无锁无线程安全风险
+        return NightFilter::applyPage(src, opt);
     }));
 }
 
